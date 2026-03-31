@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+class Brand extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'logo',
+        'is_active'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean'
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($brand) {
+            if (empty($brand->slug)) {
+                $brand->slug = Str::slug($brand->name);
+            }
+        });
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function getLogoUrlAttribute()
+    {
+        if (!$this->logo) {
+            return asset('images/placeholder-brand.png');
+        }
+        if (str_starts_with($this->logo, 'http')) {
+            return $this->logo;
+        }
+        return Storage::url($this->logo);
+    }
+}

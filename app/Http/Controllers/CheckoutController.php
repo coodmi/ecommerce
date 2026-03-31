@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\CheckoutField;
+use App\Models\Order;
+use App\Models\OrderItem;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class CheckoutController extends Controller
+{
+    public function index()
+    {
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return redirect()->route('shop')->with('error', 'Your cart is empty.');
+        }
+
+        $total = 0;
+        foreach ($cart as $details) {
+            $total += $details['price'] * $details['quantity'];
+        }
+
+        $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
+
+        return view('pages.checkout', compact('cart', 'total', 'fields'));
+    }
+
+    public function store(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return response()->json(['success' => false, 'message' => 'Your cart is empty.'], 400);
+        }
+
+        $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
+
+        $rules = [];
+        foreach ($fields as $field) {
+            $rule = $field->is_required ? ['required'] : ['nullable'];
+            if ($field->type === 'email') $rule[] = 'email';
+            $rules[$field->name] = implode('|', $rule);
+        }
+
+        $validatedData = $request->validate($rules);
+
+        try {
+            DB::beginTransaction();
+
+            $total = 0;
+            foreach ($cart as $details) {
+                $total += $details['price'] * $details['quantity'];
+            }
+
+            $order = Order::create([
+                'user_id'          => auth()->id(),
+                'total_amount'     => $total,
+                'status'           => 'pending',
+                'checkout_details' => $validatedData,
+                'payment_method'   => 'Cash on Delivery',
+            ]);
+
+            foreach ($cart as $id => $details) {
+                $productId = $details['product_id'] ?? (is_numeric($id) ? $id : explode('-', $id)[0]);
+
+                OrderItem::create([
+                    'order_id'   => $order->id,
+                    'product_id' => $productId,
+                    'quantity'   => $details['quantity'],
+                    'price'      => $details['price'],
+                    'color'      => $details['color'] ?? null,
+                    'size'       => $details['size'] ?? null,
+                ]);
+            }
+
+            session()->forget('cart');
+            DB::commit();
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'Order placed successfully!',
+                'redirect' => route('order.invoice', $order->id),
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function invoice(Order $order)
+    {
+        // Only the owner or admin can view the invoice
+        if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $order->load(['items.product.primaryImage', 'user']);
+
+        return view('pages.invoice', compact('order'));
+    }
+}
