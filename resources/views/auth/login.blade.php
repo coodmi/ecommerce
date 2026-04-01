@@ -6,8 +6,13 @@
 <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 px-4">
     <div class="w-full max-w-sm relative z-10">
         <div class="bg-white rounded-2xl shadow-xl p-8">
+            @php
+                $loginBrand = \App\Models\Page::where('slug','header')->with('sections')->first();
+                $loginBrandContent = $loginBrand ? ($loginBrand->sections->where('key','brand')->first()?->content ?? []) : [];
+                $loginLogo = isset($loginBrandContent['logo']) ? asset('storage/' . $loginBrandContent['logo']) : asset('images/shankhobazar.png');
+            @endphp
             <div class="flex justify-center mb-6">
-                <img src="{{ asset('images/shankhobazar.png') }}" alt="Logo" class="h-16 w-auto object-contain">
+                <img src="{{ $loginLogo }}" alt="Logo" class="h-16 w-auto object-contain">
             </div>
             <h2 class="text-2xl font-bold text-gray-900 text-center mb-1">Sign In</h2>
             <p class="text-sm text-gray-400 text-center mb-6">Enter your credentials to continue</p>
