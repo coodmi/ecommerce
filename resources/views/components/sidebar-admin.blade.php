@@ -124,6 +124,32 @@
                 <span class="font-medium">Footer Settings</span>
             </a>
 
+            <!-- Policy Pages -->
+            @php
+                $policyPages = \App\Models\Page::whereIn('slug', ['privacy-policy','terms-conditions','refund-policy'])->get();
+            @endphp
+            <div x-data="{ open: {{ $policyPages->contains(fn($p) => request()->is('admin/pages/'.$p->id.'/edit')) ? 'true' : 'false' }} }" class="space-y-1">
+                <button @click="open = !open"
+                   class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all group cursor-pointer focus:outline-none hover:bg-slate-700/50">
+                    <i class="fas fa-file-shield text-lg text-orange-300 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Policy Pages</span>
+                    <i class="fas fa-chevron-down ml-auto text-xs transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open" x-cloak
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="pl-11 pr-2 space-y-1">
+                    @foreach($policyPages as $pp)
+                    <a href="{{ route('admin.pages.edit', $pp->id) }}"
+                       class="flex items-center space-x-2 py-2 text-sm {{ request()->is('admin/pages/'.$pp->id.'/edit') ? 'text-primary font-bold' : 'text-gray-400 hover:text-white' }} transition-all duration-200 hover:translate-x-1">
+                        <span class="w-1.5 h-1.5 rounded-full {{ request()->is('admin/pages/'.$pp->id.'/edit') ? 'bg-primary' : 'bg-slate-600' }}"></span>
+                        <span>{{ $pp->name }}</span>
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+
             <!-- Contact Messages -->
             @php $unreadMsgs = \App\Models\ContactMessage::where('status','unread')->count(); @endphp
             <a href="{{ route('admin.contact-messages.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->is('admin/contact-messages*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
