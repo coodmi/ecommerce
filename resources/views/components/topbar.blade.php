@@ -17,8 +17,69 @@
             </div>
         </div>
 
-        <!-- Right: Profile -->
-        <div class="flex items-center space-x-4">
+        <!-- Right: Notifications & Profile -->
+        <div class="flex items-center space-x-3">
+
+            @if(Auth::check() && Auth::user()->isAdmin())
+            @php
+                $newOrders = \App\Models\Order::where('status', 'pending')
+                    ->where('created_at', '>=', now()->subHours(24))
+                    ->latest()->take(5)->get();
+                $newOrdersCount = $newOrders->count();
+            @endphp
+            {{-- Notification Bell --}}
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open"
+                        class="relative p-2 text-gray-600 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
+                    <i class="fas fa-bell text-xl"></i>
+                    @if($newOrdersCount > 0)
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    @endif
+                </button>
+
+                <div x-show="open" @click.away="open = false"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     class="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50"
+                     style="display:none;">
+                    <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                        <h3 class="font-semibold text-gray-900 text-sm">New Orders</h3>
+                        @if($newOrdersCount > 0)
+                            <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-0.5 rounded-full">{{ $newOrdersCount }} new</span>
+                        @endif
+                    </div>
+                    <div class="max-h-72 overflow-y-auto">
+                        @forelse($newOrders as $order)
+                        <a href="{{ route('admin.orders.show', $order) }}"
+                           class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition border-b border-gray-50 last:border-0">
+                            <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i class="fas fa-shopping-bag text-primary text-xs"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-gray-800">Order #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-gray-500 truncate">{{ $order->user->name ?? ($order->checkout_details['full_name'] ?? 'Guest') }}</p>
+                                <p class="text-xs text-gray-400">{{ $order->created_at->diffForHumans() }}</p>
+                            </div>
+                            <span class="text-xs font-bold text-gray-900 flex-shrink-0">${{ number_format($order->total_amount, 2) }}</span>
+                        </a>
+                        @empty
+                        <div class="px-4 py-6 text-center text-sm text-gray-400">
+                            <i class="fas fa-check-circle text-green-400 text-2xl mb-2 block"></i>
+                            No new orders in the last 24h
+                        </div>
+                        @endforelse
+                    </div>
+                    @if($newOrdersCount > 0)
+                    <div class="px-4 py-3 border-t border-gray-100">
+                        <a href="{{ route('admin.orders.index') }}" class="block text-center text-xs font-semibold text-primary hover:text-primary/80">
+                            View all orders →
+                        </a>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
 
             <!-- Profile Dropdown -->
             <div class="relative" x-data="{ open: false }">
