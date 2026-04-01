@@ -702,30 +702,61 @@ function testimonialSlider() {
 </script>
 
 <!-- Ending Banner Section -->
-<section class="py-20 text-white relative overflow-hidden" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
-    </div>
-    
-    <div class="container mx-auto px-4 text-center relative z-10">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 leading-tight">
-                Ready to Start Your <span class="text-yellow-300">Shopping Journey?</span>
-            </h2>
-            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-                Join thousands of satisfied customers and discover amazing products at unbeatable prices.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/shop" class="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform inline-flex items-center justify-center gap-3">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Start Shopping Now</span>
-                </a>
-                <a href="/contact" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 inline-flex items-center justify-center gap-3">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact Us</span>
-                </a>
+<section class="relative py-24 overflow-hidden">
+    {{-- Gradient background --}}
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 50%, #db2777 100%);"></div>
+
+    {{-- Decorative circles --}}
+    <div class="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full"></div>
+
+    <div class="container mx-auto px-4 relative z-10 text-center">
+        {{-- Badge --}}
+        <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
+            <span class="w-2 h-2 bg-yellow-300 rounded-full animate-pulse"></span>
+            Thousands of happy customers
+        </div>
+
+        <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-5 leading-tight">
+            Ready to Start Your<br>
+            <span class="text-yellow-300">Shopping Journey?</span>
+        </h2>
+
+        <p class="text-white/70 text-lg mb-10 max-w-xl mx-auto">
+            Discover amazing products at unbeatable prices with fast delivery guaranteed.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/shop"
+               class="group inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-yellow-300 hover:text-gray-900 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 transform">
+                <i class="fas fa-shopping-bag group-hover:scale-110 transition-transform"></i>
+                Start Shopping Now
+            </a>
+            <a href="/contact"
+               class="group inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 transform">
+                <i class="fas fa-envelope group-hover:scale-110 transition-transform"></i>
+                Contact Us
+            </a>
+        </div>
+
+        {{-- Stats row --}}
+        <div class="flex flex-wrap justify-center gap-8 mt-14 text-white/80 text-sm">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-users text-yellow-300"></i>
+                <span><strong class="text-white">10,000+</strong> Happy Customers</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-box text-yellow-300"></i>
+                <span><strong class="text-white">500+</strong> Products</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-truck text-yellow-300"></i>
+                <span><strong class="text-white">Fast</strong> Delivery</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shield-alt text-yellow-300"></i>
+                <span><strong class="text-white">Secure</strong> Payments</span>
             </div>
         </div>
     </div>
