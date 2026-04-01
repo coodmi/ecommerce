@@ -10,25 +10,25 @@
     $bottomFooter = $footerSections->get('bottom_footer', []);
 @endphp
 
-<footer class="bg-gray-900 text-gray-300">
+<footer class="bg-white border-t border-gray-100 text-gray-600">
     <!-- Main Footer -->
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto px-4 py-14">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             <!-- Company Info -->
             <div class="lg:col-span-2">
-                <div class="mb-6">
-                    <div class="h-20 flex items-center">
+                <div class="mb-5">
+                    <div class="h-16 flex items-center">
                         <img src="{{ isset($companyInfo['logo']) ? asset('storage/' . $companyInfo['logo']) : asset('images/shankhobazar.png') }}" alt="Shankhobazar Logo" class="h-full w-auto object-contain">
                     </div>
                 </div>
-                <p class="text-gray-400 mb-6 leading-relaxed">
+                <p class="text-gray-500 mb-6 leading-relaxed text-sm">
                     {{ $companyInfo['description'] ?? 'Your premium shopping destination for quality products. We bring you the best deals, authentic products, and exceptional customer service.' }}
                 </p>
             </div>
 
             <!-- Quick Links -->
             <div>
-                <h4 class="text-white font-semibold text-lg mb-6">{{ $quickLinks['title'] ?? 'Quick Links' }}</h4>
+                <h4 class="text-gray-900 font-bold text-sm uppercase tracking-wider mb-5">{{ $quickLinks['title'] ?? 'Quick Links' }}</h4>
                 <ul class="space-y-3">
                     @php
                     $defaultLinks = [
@@ -40,8 +40,8 @@
                     @endphp
                     @foreach($links as $link)
                     <li>
-                        <a href="{{ $link['url'] ?? '#' }}" class="hover:text-secondary transition duration-300 flex items-center">
-                            <i class="fas fa-chevron-right text-xs mr-2"></i> {{ $link['name'] ?? '' }}
+                        <a href="{{ $link['url'] ?? '#' }}" class="text-sm text-gray-500 hover:text-primary transition duration-300 flex items-center gap-1.5">
+                            <i class="fas fa-chevron-right text-[10px] text-primary"></i> {{ $link['name'] ?? '' }}
                         </a>
                     </li>
                     @endforeach
@@ -50,12 +50,12 @@
 
             <!-- Customer Service -->
             <div>
-                <h4 class="text-white font-semibold text-lg mb-6">{{ $customerService['title'] ?? 'Customer Service' }}</h4>
+                <h4 class="text-gray-900 font-bold text-sm uppercase tracking-wider mb-5">{{ $customerService['title'] ?? 'Customer Service' }}</h4>
                 <ul class="space-y-3">
                     @foreach($customerService['items'] ?? [] as $link)
                     <li>
-                        <a href="{{ $link['url'] ?? '#' }}" class="hover:text-secondary transition duration-300 flex items-center">
-                            <i class="fas fa-chevron-right text-xs mr-2"></i> {{ $link['name'] ?? '' }}
+                        <a href="{{ $link['url'] ?? '#' }}" class="text-sm text-gray-500 hover:text-primary transition duration-300 flex items-center gap-1.5">
+                            <i class="fas fa-chevron-right text-[10px] text-primary"></i> {{ $link['name'] ?? '' }}
                         </a>
                     </li>
                     @endforeach
@@ -64,12 +64,12 @@
 
             <!-- Policies -->
             <div>
-                <h4 class="text-white font-semibold text-lg mb-6">{{ $policies['title'] ?? 'Policies' }}</h4>
+                <h4 class="text-gray-900 font-bold text-sm uppercase tracking-wider mb-5">{{ $policies['title'] ?? 'Policies' }}</h4>
                 <ul class="space-y-3">
                     @foreach($policies['items'] ?? [] as $link)
                     <li>
-                        <a href="{{ $link['url'] ?? '#' }}" class="hover:text-secondary transition duration-300 flex items-center">
-                            <i class="fas fa-chevron-right text-xs mr-2"></i> {{ $link['name'] ?? '' }}
+                        <a href="{{ $link['url'] ?? '#' }}" class="text-sm text-gray-500 hover:text-primary transition duration-300 flex items-center gap-1.5">
+                            <i class="fas fa-chevron-right text-[10px] text-primary"></i> {{ $link['name'] ?? '' }}
                         </a>
                     </li>
                     @endforeach
@@ -78,37 +78,38 @@
 
             <!-- Contact Info -->
             <div>
-                <h4 class="text-white font-semibold text-lg mb-6">{{ $contactInfo['title'] ?? 'Contact Info' }}</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <i class="fas fa-map-marker-alt text-white mt-1 mr-3"></i>
-                        <span class="text-sm">{{ $contactInfo['address'] ?? '123 Shopping Street, Dhaka 1200, Bangladesh' }}</span>
+                <h4 class="text-gray-900 font-bold text-sm uppercase tracking-wider mb-5">{{ $contactInfo['title'] ?? 'Contact Info' }}</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2 text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt text-primary mt-0.5"></i>
+                        <span>{{ $contactInfo['address'] ?? '123 Shopping Street, Dhaka 1200, Bangladesh' }}</span>
                     </li>
                 </ul>
-                
+
                 <!-- Social Media Icons -->
-                <div class="flex space-x-3 mt-6">
+                <div class="flex space-x-2 mt-6">
                     @foreach($companyInfo['items'] ?? [] as $social)
-                    <a href="{{ $social['url'] ?? '#' }}" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition duration-300 text-sm" title="{{ $social['name'] ?? '' }}">
+                    <a href="{{ $social['url'] ?? '#' }}" title="{{ $social['name'] ?? '' }}"
+                       class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white text-gray-500 transition duration-300 text-xs">
                         <i class="{{ $social['icon'] ?? 'fab fa-facebook-f' }}"></i>
                     </a>
                     @endforeach
                 </div>
             </div>
         </div>
-
-        <!-- Newsletter Section Removed -->
     </div>
 
     <!-- Bottom Footer -->
-    <div class="bg-gray-950 py-6">
+    <div class="border-t border-gray-100 bg-gray-50 py-5">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <p class="text-center md:text-left text-gray-400 text-sm mb-4 md:mb-0">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+                <p class="text-gray-400 text-xs">
                     &copy; {{ $bottomFooter['copyright_text'] ?? date('Y') . ' Shankhobazar. All rights reserved.' }}
                 </p>
-                <p class="text-center md:text-right text-gray-400 text-sm">
-                    {{ $bottomFooter['credit_text'] ?? 'Designed and developed by' }} <a href="{{ $bottomFooter['developer_url'] ?? 'https://alphainno.com' }}" target="_blank" class="text-primary hover:text-white transition font-medium">{{ $bottomFooter['developer_name'] ?? 'Alphainno' }}</a>
+                <p class="text-gray-400 text-xs">
+                    {{ $bottomFooter['credit_text'] ?? 'Designed and developed by' }}
+                    <a href="{{ $bottomFooter['developer_url'] ?? 'https://alphainno.com' }}" target="_blank"
+                       class="text-primary hover:underline font-medium">{{ $bottomFooter['developer_name'] ?? 'Alphainno' }}</a>
                 </p>
             </div>
         </div>
