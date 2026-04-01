@@ -124,6 +124,16 @@
                 <span class="font-medium">Footer Settings</span>
             </a>
 
+            <!-- Contact Messages -->
+            @php $unreadMsgs = \App\Models\ContactMessage::where('status','unread')->count(); @endphp
+            <a href="{{ route('admin.contact-messages.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->is('admin/contact-messages*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
+                <i class="fas fa-envelope text-lg {{ request()->is('admin/contact-messages*') ? 'text-white' : 'text-teal-400' }} group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Contact Messages</span>
+                @if($unreadMsgs > 0)
+                    <span class="ml-auto bg-red-500/20 text-red-300 text-xs px-2 py-1 rounded-full">{{ $unreadMsgs }}</span>
+                @endif
+            </a>
+
             <!-- Reviews -->
             <a href="{{ route('admin.reviews.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.reviews.index') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
                 <i class="fas fa-star text-lg {{ request()->routeIs('admin.reviews.index') ? 'text-white' : 'text-orange-400' }} group-hover:scale-110 transition-transform"></i>

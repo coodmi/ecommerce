@@ -118,63 +118,54 @@
                         </div>
 
                         <div class="flex-1 flex flex-col">
-                            <form class="space-y-4 flex-1 flex flex-col">
+                            @if(session('contact_success'))
+                            <div class="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                                <i class="fas fa-check-circle text-green-500"></i> {{ session('contact_success') }}
+                            </div>
+                            @endif
+                            <form method="POST" action="{{ route('contact.store') }}" class="space-y-4 flex-1 flex flex-col">
+                                @csrf
                                 <!-- Name -->
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-1">
-                                        Full Name <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="text"
-                                           placeholder="John Doe"
-                                           class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm"
-                                           required>
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+                                    <input type="text" name="name" value="{{ old('name') }}" placeholder="John Doe"
+                                           class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm" required>
                                 </div>
 
                                 <!-- Email -->
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-1">
-                                        Email Address <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="email"
-                                           placeholder="john@example.com"
-                                           class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm"
-                                           required>
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address <span class="text-red-500">*</span></label>
+                                    <input type="email" name="email" value="{{ old('email') }}" placeholder="john@example.com"
+                                           class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm" required>
                                 </div>
 
                                 <!-- Phone -->
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-1">
-                                        Phone Number
-                                    </label>
-                                    <input type="tel"
-                                           placeholder="+880 1234-567890"
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
+                                    <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+880 1234-567890"
                                            class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm">
                                 </div>
 
                                 <!-- Subject -->
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-1">
-                                        Subject <span class="text-red-500">*</span>
-                                    </label>
-                                    <select class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm" required>
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Subject <span class="text-red-500">*</span></label>
+                                    <select name="subject" class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm" required>
                                         <option value="">Select a subject</option>
-                                        <option>General Inquiry</option>
-                                        <option>Product Support</option>
-                                        <option>Order Issue</option>
-                                        <option>Refund Request</option>
-                                        <option>Partnership</option>
-                                        <option>Other</option>
+                                        <option {{ old('subject') == 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+                                        <option {{ old('subject') == 'Product Support' ? 'selected' : '' }}>Product Support</option>
+                                        <option {{ old('subject') == 'Order Issue' ? 'selected' : '' }}>Order Issue</option>
+                                        <option {{ old('subject') == 'Refund Request' ? 'selected' : '' }}>Refund Request</option>
+                                        <option {{ old('subject') == 'Partnership' ? 'selected' : '' }}>Partnership</option>
+                                        <option {{ old('subject') == 'Other' ? 'selected' : '' }}>Other</option>
                                     </select>
                                 </div>
 
                                 <!-- Message -->
                                 <div class="flex-1">
-                                    <label class="block text-sm font-bold text-gray-700 mb-1">
-                                        Message <span class="text-red-500">*</span>
-                                    </label>
-                                    <textarea placeholder="Tell us how we can help you..."
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Message <span class="text-red-500">*</span></label>
+                                    <textarea name="message" placeholder="Tell us how we can help you..."
                                               class="w-full h-full min-h-[120px] px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all resize-none text-sm"
-                                              required></textarea>
+                                              required>{{ old('message') }}</textarea>
                                 </div>
 
                                 <div class="mt-auto pt-4">
