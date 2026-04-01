@@ -703,13 +703,9 @@ function testimonialSlider() {
 
 <!-- Ending Banner Section -->
 <section class="relative py-24 overflow-hidden">
-    {{-- Solid dark bg with primary color tint --}}
-    <div class="absolute inset-0 bg-gray-950"></div>
-    <div class="absolute inset-0 opacity-20" style="background-color: var(--primary-color);"></div>
-
-    {{-- Decorative glow blobs using primary --}}
-    <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full blur-3xl opacity-30" style="background-color: var(--primary-color);"></div>
-    <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full blur-3xl opacity-20" style="background-color: var(--primary-color);"></div>
+    <div class="absolute inset-0" style="background-color: var(--primary-color);"></div>
+    <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full blur-3xl bg-white/10"></div>
+    <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full blur-3xl bg-white/10"></div>
 
     <div class="container mx-auto px-4 relative z-10 text-center">
         {{-- Badge --}}
