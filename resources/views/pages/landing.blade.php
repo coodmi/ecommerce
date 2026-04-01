@@ -619,94 +619,87 @@
             <p class="text-gray-600">Real feedback from our valued customers</p>
         </div>
 
-        <!-- Testimonials Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Testimonial 1 -->
-            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 text-center">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face" alt="Sarah Johnson" class="w-full h-full object-cover">
-                </div>
-                <div class="flex justify-center mb-3">
-                    <div class="flex text-yellow-400 text-sm">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+        {{-- Testimonial Slider --}}
+        <div class="relative" x-data="testimonialSlider()">
+            <div class="overflow-hidden">
+                <div class="flex transition-transform duration-700 ease-in-out"
+                     :style="'transform: translateX(-' + (current * 100 / visibleCount) + '%)'">
+
+                    @php
+                    $testimonials = [
+                        ['img' => 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face', 'name' => 'Sarah Johnson',   'text' => '"Amazing quality products and super fast delivery! I\'ve been shopping here for months and never disappointed."'],
+                        ['img' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face', 'name' => 'Michael Chen',    'text' => '"Best online shopping experience ever! The website is easy to navigate, prices are competitive, and quality exceeds expectations."'],
+                        ['img' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=face', 'name' => 'Emily Rodriguez', 'text' => '"Incredible variety of products and unbeatable deals! I love the flash sales and the loyalty program. Highly recommend!"'],
+                        ['img' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face', 'name' => 'David Wilson',    'text' => '"Outstanding service and premium quality products. The delivery is always on time and the packaging is excellent."'],
+                        ['img' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=64&h=64&fit=crop&crop=face', 'name' => 'Lisa Park',       'text' => '"I\'ve tried many online stores but this one stands out. Great prices, fast shipping, and excellent customer support!"'],
+                        ['img' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=face', 'name' => 'James Miller',    'text' => '"Absolutely love this store! The product quality is top-notch and the deals are unbeatable. Will definitely shop again."'],
+                    ];
+                    @endphp
+
+                    @foreach($testimonials as $t)
+                    <div class="flex-shrink-0 px-3"
+                         :style="'width: ' + (100 / visibleCount) + '%'">
+                        <div class="bg-white rounded-2xl p-6 shadow-md text-center h-full flex flex-col items-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
+                                <img src="{{ $t['img'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex justify-center mb-3 text-yellow-400 text-sm gap-0.5">
+                                @for($i=0;$i<5;$i++)<i class="fas fa-star"></i>@endfor
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-4">{{ $t['text'] }}</p>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">{{ $t['name'] }}</h4>
+                                <p class="text-xs text-primary">Verified Customer</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p class="text-gray-700 mb-4 leading-relaxed text-sm">"Amazing quality products and super fast delivery! I've been shopping here for months and never disappointed."</p>
-                <div>
-                    <h4 class="font-semibold text-gray-900">Sarah Johnson</h4>
-                    <p class="text-xs text-primary">Verified Customer</p>
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Testimonial 2 -->
-            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 text-center">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face" alt="Michael Chen" class="w-full h-full object-cover">
+            {{-- Controls --}}
+            <div class="flex items-center justify-center gap-3 mt-8">
+                <button @click="prev()"
+                        class="w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary transition">
+                    <i class="fas fa-chevron-left text-xs"></i>
+                </button>
+                <div class="flex gap-2">
+                    <template x-for="i in totalDots" :key="i">
+                        <button @click="goTo(i - 1)"
+                                class="rounded-full transition-all duration-300"
+                                :class="current === (i - 1) ? 'w-6 h-2.5 bg-primary' : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'">
+                        </button>
+                    </template>
                 </div>
-                <div class="flex justify-center mb-3">
-                    <div class="flex text-yellow-400 text-sm">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="text-gray-700 mb-4 leading-relaxed text-sm">"Best online shopping experience ever! The website is easy to navigate, prices are competitive, and quality exceeds expectations."</p>
-                <div>
-                    <h4 class="font-semibold text-gray-900">Michael Chen</h4>
-                    <p class="text-xs text-primary">Verified Customer</p>
-                </div>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 text-center">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=face" alt="Emily Rodriguez" class="w-full h-full object-cover">
-                </div>
-                <div class="flex justify-center mb-3">
-                    <div class="flex text-yellow-400 text-sm">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="text-gray-700 mb-4 leading-relaxed text-sm">"Incredible variety of products and unbeatable deals! I love the flash sales and the loyalty program. Highly recommend!"</p>
-                <div>
-                    <h4 class="font-semibold text-gray-900">Emily Rodriguez</h4>
-                    <p class="text-xs text-primary">Verified Customer</p>
-                </div>
-            </div>
-
-            <!-- Testimonial 4 -->
-            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 text-center">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="David Wilson" class="w-full h-full object-cover">
-                </div>
-                <div class="flex justify-center mb-3">
-                    <div class="flex text-yellow-400 text-sm">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="text-gray-700 mb-4 leading-relaxed text-sm">"Outstanding service and premium quality products. The delivery is always on time and the packaging is excellent."</p>
-                <div>
-                    <h4 class="font-semibold text-gray-900">David Wilson</h4>
-                    <p class="text-xs text-primary">Verified Customer</p>
-                </div>
+                <button @click="next()"
+                        class="w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary transition">
+                    <i class="fas fa-chevron-right text-xs"></i>
+                </button>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+function testimonialSlider() {
+    return {
+        current: 0,
+        total: 6,
+        timer: null,
+        get visibleCount() { return window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1; },
+        get totalDots() { return Math.ceil(this.total / this.visibleCount); },
+        init() {
+            this.startAuto();
+            window.addEventListener('resize', () => this.$nextTick());
+        },
+        startAuto() { this.timer = setInterval(() => this.next(), 4000); },
+        resetAuto() { clearInterval(this.timer); this.startAuto(); },
+        next() { this.current = (this.current + 1) % this.totalDots; },
+        prev() { this.current = (this.current - 1 + this.totalDots) % this.totalDots; this.resetAuto(); },
+        goTo(i) { this.current = i; this.resetAuto(); },
+    }
+}
+</script>
 
 <!-- Ending Banner Section -->
 <section class="py-20 text-white relative overflow-hidden" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
