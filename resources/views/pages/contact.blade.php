@@ -109,9 +109,6 @@
                             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display mb-2">
                                 {{ $formAreaContent['title'] ?? 'Drop Us a Message' }}
                             </h2>
-                            <p class="text-gray-500 text-sm">
-                                {{ $formAreaContent['description'] ?? "Fill out the form below and we'll get back to you within 24 hours" }}
-                            </p>
                         </div>
 
                         <div class="flex-1 flex flex-col">
