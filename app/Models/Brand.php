@@ -40,7 +40,7 @@ class Brand extends Model
     public function getLogoUrlAttribute()
     {
         if (!$this->logo) {
-            return asset('images/placeholder-brand.png');
+            return null;
         }
         if (str_starts_with($this->logo, 'http')) {
             return $this->logo;

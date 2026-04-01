@@ -5,16 +5,34 @@
 @section('content')
 <div class="p-6" x-data="{}">
     <!-- Page Header -->
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center justify-between mb-6">
         <div>
             <h1 class="text-3xl font-display font-bold text-gray-900">Brands Management</h1>
             <p class="text-gray-600 mt-1">Manage product brands</p>
         </div>
         <a href="{{ route('admin.brands.create') }}"
-           class="px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg transition-all hover:scale-[1.02] transform">
+           class="px-6 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all">
             <i class="fas fa-plus mr-2"></i>Add Brand
         </a>
     </div>
+
+    {{-- Search --}}
+    <form method="GET" action="{{ route('admin.brands.index') }}" class="flex gap-3 mb-6">
+        <div class="relative flex-1 max-w-md">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+            <input type="text" name="search" value="{{ request('search') }}"
+                   placeholder="Search by brand name..."
+                   class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm bg-white">
+        </div>
+        <button type="submit" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition shadow-sm">
+            Search
+        </button>
+        @if(request('search'))
+            <a href="{{ route('admin.brands.index') }}" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition">
+                Clear
+            </a>
+        @endif
+    </form>
 
     <!-- Brands Table -->
     <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
@@ -101,6 +119,12 @@
                 </tbody>
             </table>
         </div>
+
+        @if($brands->hasPages())
+        <div class="px-6 py-4 border-t border-gray-100 bg-slate-50/50">
+            {{ $brands->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

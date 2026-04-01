@@ -14,7 +14,6 @@
                 <img :src="img" alt="" class="w-full h-full object-cover object-center">
             </div>
         </template>
-        <!-- Dark overlay so text stays readable -->
         <div class="absolute inset-0 bg-black/60"></div>
     </div>
 
@@ -35,15 +34,31 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span>Shop Now</span>
                     </a>
-                    <a href="#" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 text-center inline-flex items-center justify-center gap-2">
-                        <i class="fas fa-play-circle"></i>
-                        <span>Watch Video</span>
-                    </a>
                 </div>
             </div>
-            
-
         </div>
+    </div>
+
+    {{-- Prev / Next + Dot Indicators centered at bottom --}}
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+        <button @click="prev(); resetAuto()"
+                class="w-9 h-9 bg-white/15 hover:bg-white/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110">
+            <i class="fas fa-chevron-left text-white text-xs"></i>
+        </button>
+
+        <div class="flex items-center gap-2">
+            <template x-for="(img, index) in bgImages" :key="index">
+                <button @click="goTo(index)"
+                        class="transition-all duration-300 rounded-full"
+                        :class="bgCurrent === index ? 'w-6 h-2.5 bg-white' : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/70'">
+                </button>
+            </template>
+        </div>
+
+        <button @click="next(); resetAuto()"
+                class="w-9 h-9 bg-white/15 hover:bg-white/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110">
+            <i class="fas fa-chevron-right text-white text-xs"></i>
+        </button>
     </div>
 
     <script>
@@ -56,11 +71,18 @@
                     'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=900&fit=crop',
                     'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&h=900&fit=crop'
                 ],
-                init() {
-                    setInterval(() => {
-                        this.bgCurrent = (this.bgCurrent + 1) % this.bgImages.length;
-                    }, 5000);
-                }
+                timer: null,
+                init() { this.startAuto(); },
+                startAuto() {
+                    this.timer = setInterval(() => this.next(), 5000);
+                },
+                resetAuto() {
+                    clearInterval(this.timer);
+                    this.startAuto();
+                },
+                next() { this.bgCurrent = (this.bgCurrent + 1) % this.bgImages.length; },
+                prev() { this.bgCurrent = (this.bgCurrent - 1 + this.bgImages.length) % this.bgImages.length; },
+                goTo(i) { this.bgCurrent = i; this.resetAuto(); }
             }
         }
     </script>
@@ -111,10 +133,10 @@
 
         <div class="relative group px-4 md:px-8" id="cat-carousel-wrap">
             <!-- Navigation Buttons -->
-            <button id="cat-prev" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-white focus:outline-none" style="color:var(--primary-color);" onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
+            <button id="cat-prev" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-white focus:outline-none" style="color:var(--primary-color);" onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
                 <i class="fas fa-chevron-left text-lg md:text-xl"></i>
             </button>
-            <button id="cat-next" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-white focus:outline-none" style="color:var(--primary-color);" onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
+            <button id="cat-next" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-white focus:outline-none" style="color:var(--primary-color);" onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
                 <i class="fas fa-chevron-right text-lg md:text-xl"></i>
             </button>
 
@@ -408,6 +430,122 @@
         </div>
     </div>
 </section>
+
+<!-- Shop by Brand Section -->
+@if($brands->count() > 0)
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">Shop by Brand</h2>
+            <p class="text-gray-500">Discover products from your favorite brands</p>
+        </div>
+
+        {{-- Mobile: horizontal slider | Desktop: 6-col grid --}}
+        <div class="relative group" id="brand-carousel-wrap">
+
+            {{-- Prev/Next buttons --}}
+            <button id="brand-prev"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center border border-gray-100
+                           opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 focus:outline-none"
+                    style="color:var(--primary-color);"
+                    onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'"
+                    onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
+                <i class="fas fa-chevron-left text-sm"></i>
+            </button>
+            <button id="brand-next"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center border border-gray-100
+                           opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 focus:outline-none"
+                    style="color:var(--primary-color);"
+                    onmouseover="this.style.background='var(--primary-color)';this.style.color='#fff'"
+                    onmouseout="this.style.background='';this.style.color='var(--primary-color)'">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+
+            {{-- Slider track --}}
+            <div class="overflow-hidden px-4 md:px-8 py-4">
+                <div id="brand-track" class="flex gap-4 md:grid md:gap-5"
+                     style="transition:transform 0.5s ease-in-out;will-change:transform;cursor:grab;user-select:none;">
+                    @foreach($brands as $brand)
+                    <div class="brand-card flex-none">
+                        <a href="{{ route('shop') }}?brand={{ $brand->id }}"
+                           class="group/card bg-white rounded-2xl p-4 shadow-sm hover:shadow-md border border-gray-100 hover:border-primary/20 transition-all duration-300 flex flex-col items-center gap-2 h-full">
+                            <div class="w-14 h-14 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                @if($brand->logo_url)
+                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}"
+                                         class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300">
+                                @else
+                                    <span class="text-lg font-bold text-gray-300">{{ strtoupper(substr($brand->name,0,2)) }}</span>
+                                @endif
+                            </div>
+                            <p class="font-semibold text-gray-700 text-xs group-hover/card:text-primary transition-colors truncate w-full text-center">{{ $brand->name }}</p>
+                            <p class="text-[11px] text-gray-400 -mt-1">{{ $brand->products_count }} items</p>
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{{ route('shop') }}"
+               class="inline-flex items-center gap-2 px-8 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition shadow-sm">
+                View All Brands <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .brand-card { width: 130px; }
+    @media (min-width: 768px) {
+        #brand-track { display: grid !important; grid-template-columns: repeat(6,1fr); transform: none !important; cursor: default !important; }
+        .brand-card { width: auto; }
+    }
+</style>
+
+<script>
+(function() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const track   = document.getElementById('brand-track');
+        const prevBtn = document.getElementById('brand-prev');
+        const nextBtn = document.getElementById('brand-next');
+        if (!track || window.innerWidth >= 768) return;
+
+        let offset = 0, cardW = 0;
+
+        function measure() {
+            const card = track.querySelector('.brand-card');
+            if (!card) return;
+            cardW = card.offsetWidth + parseFloat(getComputedStyle(track).gap || 16);
+        }
+        function moveTo(idx, animate) {
+            track.style.transition = animate ? 'transform 0.5s ease-in-out' : 'none';
+            track.style.transform  = `translateX(-${idx * cardW}px)`;
+        }
+
+        measure();
+        const total = track.querySelectorAll('.brand-card').length;
+
+        nextBtn.addEventListener('click', () => {
+            offset = Math.min(offset + 1, total - 2);
+            moveTo(offset, true);
+        });
+        prevBtn.addEventListener('click', () => {
+            offset = Math.max(offset - 1, 0);
+            moveTo(offset, true);
+        });
+
+        // Touch drag
+        let tx = 0, to = 0, dragging = false;
+        track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; to = offset; track.style.transition='none'; }, {passive:true});
+        track.addEventListener('touchmove',  e => { const d = tx - e.touches[0].clientX; track.style.transform=`translateX(-${(to*cardW)+d}px)`; }, {passive:true});
+        track.addEventListener('touchend',   e => { const d = tx - e.changedTouches[0].clientX; offset = Math.max(0, Math.min(to + Math.round(d/cardW), total-2)); moveTo(offset,true); });
+
+        window.addEventListener('resize', () => { if(window.innerWidth >= 768) return; measure(); moveTo(offset,false); });
+    });
+})();
+</script>
+@endif
 
 <!-- Featured Products Section -->
 <section class="py-16 bg-white">

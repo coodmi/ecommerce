@@ -97,12 +97,6 @@
                 <span class="font-medium">Checkout Fields</span>
             </a>
 
-            <!-- Analytics -->
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-700/50 transition-all group cursor-pointer">
-                <i class="fas fa-chart-pie text-lg text-cyan-400 group-hover:scale-110 transition-transform"></i>
-                <span class="font-medium">Analytics</span>
-            </a>
-
             <!-- Deals & Offers -->
             @php
                 $dealsPage = \App\Models\Page::where('slug', 'deals')->first();

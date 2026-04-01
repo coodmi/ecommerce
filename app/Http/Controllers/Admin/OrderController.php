@@ -14,16 +14,20 @@ class OrderController extends Controller
 
         if ($search = trim($request->get('search', ''))) {
             $query->where(function ($q) use ($search) {
-                // Search by order ID (numeric)
-                if (is_numeric($search)) {
-                    $q->where('id', $search);
+                // Strip common prefixes so "#EA-00006", "EA-00006", "00006", "6" all work
+                $numericId = preg_replace('/[^0-9]/', '', $search);
+
+                if ($numericId !== '') {
+                    $q->orWhere('id', (int)$numericId);
                 }
+
                 // Search by customer name or email via user relation
                 $q->orWhereHas('user', function ($uq) use ($search) {
                     $uq->where('name', 'like', "%{$search}%")
                        ->orWhere('email', 'like', "%{$search}%");
                 });
-                // Search in checkout_details JSON (name/email entered at checkout)
+
+                // Search in checkout_details JSON
                 $q->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(checkout_details, '$.full_name')) LIKE ?", ["%{$search}%"])
                   ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(checkout_details, '$.email')) LIKE ?", ["%{$search}%"]);
             });

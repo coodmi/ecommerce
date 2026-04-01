@@ -1,8 +1,8 @@
 <!-- Top Navigation -->
 <header class="bg-white shadow-sm z-30">
     <div class="flex items-center justify-between px-6 py-4">
-        <!-- Left: Menu Button & Search -->
-        <div class="flex items-center space-x-4 flex-1">
+        <!-- Left: Menu Button -->
+        <div class="flex items-center space-x-4">
             <button id="openSidebar" class="lg:hidden text-gray-600 hover:text-primary transition-colors cursor-pointer">
                 <i class="fas fa-bars text-xl"></i>
             </button>
@@ -14,21 +14,6 @@
                     $logo = isset($brand['logo']) ? asset('storage/' . $brand['logo']) : asset('images/shankhobazar.png');
                 @endphp
                 <img src="{{ $logo }}" alt="Logo" class="h-full w-auto object-contain">
-            </div>
-
-            <div class="hidden md:flex items-center flex-1 max-w-md">
-                <div class="relative w-full">
-                    <form method="GET" action="{{ route('admin.products.index') }}">
-                        <input type="text"
-                               name="search"
-                               value="{{ request('search') }}"
-                               placeholder="Search products..."
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
-                        <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
             </div>
         </div>
 

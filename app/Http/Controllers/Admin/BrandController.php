@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $brands = Brand::withCount('products')->latest()->get();
+        $query = Brand::withCount('products')->latest();
+
+        if ($search = trim($request->get('search', ''))) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $brands = $query->paginate(15)->withQueryString();
         return view('dashboard.admin.brands.index', compact('brands'));
     }
 

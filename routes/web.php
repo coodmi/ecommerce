@@ -16,11 +16,17 @@ Route::get('/', function () {
         ->take(8)
         ->get();
 
+    // Get active brands with product count
+    $brands = \App\Models\Brand::where('is_active', true)
+        ->withCount('products')
+        ->latest()
+        ->get();
+
     // Get Home page sections for dynamic content
     $page = \App\Models\Page::where('slug', 'home')->with('sections')->first();
     $sections = $page ? $page->sections->pluck('content', 'key') : collect();
 
-    return view('pages.landing', compact('popularCategories', 'dealProducts', 'sections'));
+    return view('pages.landing', compact('popularCategories', 'dealProducts', 'sections', 'brands'));
 });
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class, 'index'])->name('shop');

@@ -17,6 +17,24 @@
         </a>
     </div>
 
+    {{-- Search --}}
+    <form method="GET" action="{{ route('admin.categories.index') }}" class="flex gap-3 mb-6">
+        <div class="relative flex-1 max-w-md">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+            <input type="text" name="search" value="{{ request('search') }}"
+                   placeholder="Search by name or description..."
+                   class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm bg-white">
+        </div>
+        <button type="submit" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition shadow-sm">
+            Search
+        </button>
+        @if(request('search'))
+            <a href="{{ route('admin.categories.index') }}" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition">
+                Clear
+            </a>
+        @endif
+    </form>
+
     {{-- Alerts --}}
     @if(session('success'))
         <div class="mb-4 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm">
