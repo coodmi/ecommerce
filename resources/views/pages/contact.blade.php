@@ -101,18 +101,15 @@
 <section class="py-12 bg-gradient-to-b from-white to-purple-50">
     <div class="container mx-auto px-4">
         <div class="max-w-5xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-8">
+            <div class="grid lg:grid-cols-2 gap-8 items-stretch">
                 <!-- Left: Form -->
                 <div class="slide-in-left">
                     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 h-full flex flex-col">
                         <div class="mb-6">
-                            <div class="inline-block bg-linear-to-r from-primary to-primary/80 text-white px-3 py-1 rounded-full font-bold text-xs mb-3">
-                                {{ $formAreaContent['badge'] ?? 'SEND MESSAGE' }}
-                            </div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display mb-3">
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display mb-2">
                                 {{ $formAreaContent['title'] ?? 'Drop Us a Message' }}
                             </h2>
-                            <p class="text-gray-600 text-sm">
+                            <p class="text-gray-500 text-sm">
                                 {{ $formAreaContent['description'] ?? "Fill out the form below and we'll get back to you within 24 hours" }}
                             </p>
                         </div>
