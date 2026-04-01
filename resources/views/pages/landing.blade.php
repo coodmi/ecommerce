@@ -719,7 +719,7 @@ function testimonialSlider() {
             <span class="text-yellow-300">Shopping Journey?</span>
         </h2>
 
-        <p class="text-white/70 text-lg mb-10 max-w-xl mx-auto">
+        <p class="text-white text-lg mb-10 max-w-xl mx-auto">
             Discover amazing products at unbeatable prices with fast delivery guaranteed.
         </p>
 
