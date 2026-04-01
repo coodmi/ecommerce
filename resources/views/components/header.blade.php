@@ -34,7 +34,7 @@
             <!-- Logo -->
             <a href="/" class="flex-shrink-0">
                 <img src="{{ isset($brand['logo']) ? asset('storage/' . $brand['logo']) : asset('images/shankhobazar.png') }}"
-                     alt="Logo" class="h-10 w-auto object-contain">
+                     alt="Logo" class="h-14 w-auto object-contain">
             </a>
 
             <!-- Mobile Search -->
@@ -97,7 +97,7 @@
             <!-- Logo -->
             <a href="/" class="flex-shrink-0">
                 <img src="{{ isset($brand['logo']) ? asset('storage/' . $brand['logo']) : asset('images/shankhobazar.png') }}"
-                     alt="Logo" class="h-12 w-auto object-contain">
+                     alt="Logo" class="h-16 w-auto object-contain">
             </a>
 
             <!-- Desktop Nav -->
