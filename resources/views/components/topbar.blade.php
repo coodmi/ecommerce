@@ -17,21 +17,8 @@
             </div>
         </div>
 
-        <!-- Right: Notifications & Profile -->
+        <!-- Right: Profile -->
         <div class="flex items-center space-x-4">
-            <!-- Notifications -->
-            <div class="relative">
-                <button class="relative p-2 text-gray-600 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
-                    <i class="fas fa-bell text-xl"></i>
-                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-            </div>
-
-            <!-- Messages -->
-            <button class="relative p-2 text-gray-600 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
-                <i class="fas fa-envelope text-xl"></i>
-                <span class="absolute top-1 right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
-            </button>
 
             <!-- Profile Dropdown -->
             <div class="relative" x-data="{ open: false }">
