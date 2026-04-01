@@ -12,19 +12,16 @@
     </div>
 
     <div class="w-full max-w-md relative z-10">
-        <!-- Logo -->
-        <div class="text-center mb-8">
+        <!-- Login Card -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+            {{-- Logo inside card --}}
             <div class="flex justify-center mb-6">
-                <div class="h-24 transition-transform hover:scale-105">
+                <div class="h-20 transition-transform hover:scale-105">
                     <img src="{{ asset('images/shankhobazar.png') }}" alt="Shankhobazar Logo" class="h-full w-auto object-contain">
                 </div>
             </div>
-            <p class="text-purple-100 text-lg">Admin Dashboard Login</p>
-        </div>
 
-        <!-- Login Card -->
-        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
-            <div class="mb-8">
+            <div class="mb-8 text-center">
                 <h2 class="text-3xl font-bold text-gray-900 font-display mb-2">Welcome Back!</h2>
                 <p class="text-gray-600">Sign in to access your dashboard</p>
             </div>
