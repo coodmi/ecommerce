@@ -741,25 +741,6 @@ function testimonialSlider() {
             </a>
         </div>
 
-        {{-- Stats row --}}
-        <div class="flex flex-wrap justify-center gap-8 mt-14 text-white/80 text-sm">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-users text-yellow-300"></i>
-                <span><strong class="text-white">10,000+</strong> Happy Customers</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-box text-yellow-300"></i>
-                <span><strong class="text-white">500+</strong> Products</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-truck text-yellow-300"></i>
-                <span><strong class="text-white">Fast</strong> Delivery</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-shield-alt text-yellow-300"></i>
-                <span><strong class="text-white">Secure</strong> Payments</span>
-            </div>
-        </div>
     </div>
 </section>
 
