@@ -703,13 +703,13 @@ function testimonialSlider() {
 
 <!-- Ending Banner Section -->
 <section class="relative py-24 overflow-hidden">
-    {{-- Gradient background --}}
-    <div class="absolute inset-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 50%, #db2777 100%);"></div>
+    {{-- Solid dark bg with primary color tint --}}
+    <div class="absolute inset-0 bg-gray-950"></div>
+    <div class="absolute inset-0 opacity-20" style="background-color: var(--primary-color);"></div>
 
-    {{-- Decorative circles --}}
-    <div class="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full"></div>
+    {{-- Decorative glow blobs using primary --}}
+    <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full blur-3xl opacity-30" style="background-color: var(--primary-color);"></div>
+    <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full blur-3xl opacity-20" style="background-color: var(--primary-color);"></div>
 
     <div class="container mx-auto px-4 relative z-10 text-center">
         {{-- Badge --}}
@@ -729,7 +729,8 @@ function testimonialSlider() {
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/shop"
-               class="group inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-yellow-300 hover:text-gray-900 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 transform">
+               class="group inline-flex items-center justify-center gap-2 bg-white font-bold px-8 py-4 rounded-2xl hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 transform"
+               style="color: var(--primary-color);">
                 <i class="fas fa-shopping-bag group-hover:scale-110 transition-transform"></i>
                 Start Shopping Now
             </a>
