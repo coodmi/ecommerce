@@ -43,8 +43,12 @@
                     Sign In
                 </button>
             </form>
-            <div class="mt-5 text-center">
-                <a href="/" class="text-sm text-gray-400 hover:text-gray-600 transition">
+            <div class="mt-5 text-center space-y-3">
+                <p class="text-sm text-gray-500">
+                    Don't have an account?
+                    <a href="{{ route('register') }}" class="text-primary font-semibold hover:underline">Create one</a>
+                </p>
+                <a href="/" class="block text-sm text-gray-400 hover:text-gray-600 transition">
                     <i class="fas fa-arrow-left mr-1 text-xs"></i> Back to website
                 </a>
             </div>

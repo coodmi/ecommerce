@@ -31,6 +31,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Registration successful! Welcome to Ecom Alpha.');
+        return redirect()->intended(route('dashboard'))->with('success', 'Welcome! Your account has been created.');
     }
 }

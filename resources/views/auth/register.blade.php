@@ -1,117 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Shankhobazar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .font-display { font-family: 'Playfair Display', serif; }
-    </style>
-</head>
-<body class="bg-linear-to-br from-primary via-primary/80 to-primary/60 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <div class="bg-white rounded-2xl shadow-2xl p-8">
-            <!-- Logo -->
-            <div class="text-center mb-8">
-                <div class="flex justify-center mb-6">
-                    <div class="h-24 transition-transform hover:scale-105">
-                        <img src="{{ asset('images/shankhobazar.png') }}" alt="Shankhobazar Logo" class="h-full w-auto object-contain">
-                    </div>
-                </div>
-                <h1 class="text-3xl font-bold text-gray-900 font-display">Create Account</h1>
-                <p class="text-gray-600 mt-2">Join Shankhobazar today</p>
+@extends('layouts.app')
+
+@section('title', 'Create Account')
+
+@section('content')
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 px-4 py-8">
+    <div class="w-full max-w-sm relative z-10">
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            @php
+                $loginBrand = \App\Models\Page::where('slug','header')->with('sections')->first();
+                $loginBrandContent = $loginBrand ? ($loginBrand->sections->where('key','brand')->first()?->content ?? []) : [];
+                $loginLogo = isset($loginBrandContent['logo']) ? asset('storage/' . $loginBrandContent['logo']) : asset('images/shankhobazar.png');
+            @endphp
+            <div class="flex justify-center mb-6">
+                <img src="{{ $loginLogo }}" alt="Logo" class="h-16 w-auto object-contain">
             </div>
 
-            <!-- Error Messages -->
+            <h2 class="text-xl font-bold text-gray-900 text-center mb-1">Create Account</h2>
+            <p class="text-xs text-gray-400 text-center mb-6">Join us today — it's free</p>
+
             @if($errors->any())
-                <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl mb-6">
-                    <ul class="list-disc list-inside space-y-1">
-                        @foreach($errors->all() as $error)
-                            <li class="text-sm">{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-xs">
+                <ul class="space-y-1">
+                    @foreach($errors->all() as $error)
+                        <li class="flex items-center gap-1.5"><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
 
-            <!-- Registration Form -->
-            <form method="POST" action="{{ route('register.post') }}" class="space-y-6">
+            <form method="POST" action="{{ route('register.post') }}" class="space-y-4">
                 @csrf
 
-                <!-- Name Field -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-user text-purple-600 mr-2"></i>Full Name
-                    </label>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           value="{{ old('name') }}"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                           placeholder="Enter your full name"
-                           required>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Your full name"
+                           class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition" required>
                 </div>
 
-                <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-envelope text-purple-600 mr-2"></i>Email Address
-                    </label>
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           value="{{ old('email') }}"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                           placeholder="Enter your email"
-                           required>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com"
+                           class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition" required>
                 </div>
 
-                <!-- Password Field -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock text-purple-600 mr-2"></i>Password
-                    </label>
-                    <input type="password"
-                           id="password"
-                           name="password"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                           placeholder="Enter your password (min. 8 characters)"
-                           required>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" name="password" placeholder="Min. 8 characters"
+                           class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition" required>
                 </div>
 
-                <!-- Confirm Password Field -->
                 <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock text-purple-600 mr-2"></i>Confirm Password
-                    </label>
-                    <input type="password"
-                           id="password_confirmation"
-                           name="password_confirmation"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                           placeholder="Confirm your password"
-                           required>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <input type="password" name="password_confirmation" placeholder="Repeat password"
+                           class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition" required>
                 </div>
 
-                <!-- Register Button -->
                 <button type="submit"
-                        class="w-full py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all transform hover:-translate-y-0.5">
-                    <i class="fas fa-user-plus mr-2"></i>Create Account
+                        class="w-full bg-primary hover:bg-primary/90 text-white py-2.5 rounded-xl font-semibold text-sm transition shadow-sm">
+                    <i class="fas fa-user-plus mr-1.5"></i> Create Account
                 </button>
             </form>
 
-            <!-- Login Link -->
-            <p class="text-center text-gray-600 mt-6">
-                Already have an account?
-                <a href="{{ route('login') }}" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors">
-                    Login here
+            <div class="mt-5 text-center space-y-3">
+                <p class="text-sm text-gray-500">
+                    Already have an account?
+                    <a href="{{ route('login') }}" class="text-primary font-semibold hover:underline">Sign in</a>
+                </p>
+                <a href="/" class="block text-sm text-gray-400 hover:text-gray-600 transition">
+                    <i class="fas fa-arrow-left mr-1 text-xs"></i> Back to website
                 </a>
-            </p>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</section>
+@endsection
