@@ -70,16 +70,16 @@
 
             <!-- Main Title -->
             <div class="space-y-4">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-display leading-tight">
+                <h1 class="text-2xl md:text-3xl font-bold text-white font-display leading-tight">
                     {{ $heroContent['title'] ?? 'About Our Company' }}
                 </h1>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-yellow-300 font-display leading-tight">
+                <h2 class="text-xl md:text-2xl font-bold text-yellow-300 font-display leading-tight">
                     {{ $heroContent['subtitle'] ?? 'Building Excellence Since Day One' }}
                 </h2>
             </div>
 
             <div class="max-w-4xl mx-auto">
-                <p class="text-lg md:text-xl text-purple-100 leading-relaxed px-4">
+                <p class="text-sm md:text-base text-purple-100 leading-relaxed px-4">
                     {{ $heroContent['description'] ?? 'We are dedicated to providing the best products and services to our customers. Our journey started with a simple vision: to make quality accessible to everyone.' }}
                 </p>
             </div>
@@ -131,11 +131,11 @@
                 <div class="inline-block bg-linear-to-r from-primary to-primary/80 text-white px-4 py-1 rounded-full font-bold text-sm">
                     OUR STORY
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-display">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 font-display">
                     {{ $storyContent['title'] ?? 'Building the Future of' }}
                     <span class="text-primary">{{ $storyContent['subtitle'] ?? 'E-Commerce' }}</span>
                 </h2>
-                <p class="text-gray-600 leading-relaxed text-lg">
+                <p class="text-gray-600 leading-relaxed text-sm">
                     {{ $storyContent['content'] ?? 'Founded in 2010, Ecom Alpha started with a simple mission: to make online shopping accessible, enjoyable, and trustworthy for everyone. What began as a small startup has grown into a global marketplace serving millions of customers worldwide.' }}
                 </p>
                 <div class="flex flex-wrap gap-4 pt-4">
@@ -177,7 +177,7 @@
             <div class="inline-block bg-linear-to-r from-primary to-primary/80 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
                 <i class="fas fa-heart mr-2"></i>OUR VALUES
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-display mb-4">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 font-display mb-3">
                 {{ $valuesContent['title'] ?? 'What Drives Us Forward' }}
             </h2>
             <p class="text-gray-600 max-w-2xl mx-auto">
@@ -218,7 +218,7 @@
                 <div class="bg-linear-to-br from-{{ $color }}-100 to-{{ $color }}-200 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i class="fas {{ $value['icon'] ?? 'fa-heart' }} text-3xl text-{{ $color }}-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">{{ $value['title'] }}</h3>
+                <h3 class="text-base font-bold text-gray-900 mb-2">{{ $value['title'] }}</h3>
                 <p class="text-gray-600 leading-relaxed">{{ $value['description'] }}</p>
             </div>
             @endforeach
@@ -233,7 +233,7 @@
             <div class="inline-block bg-linear-to-r from-primary to-primary/80 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
                 <i class="fas fa-star mr-2"></i>WHY CHOOSE US
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-display mb-4">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 font-display mb-3">
                 {{ $whyChooseUsContent['title'] ?? 'The Ecom Alpha Advantage' }}
             </h2>
             @if(!empty($whyChooseUsContent['subtitle']))
@@ -269,7 +269,7 @@
                 <div class="bg-linear-to-r from-primary to-primary/80 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fas {{ $reason['icon'] ?? 'fa-check' }} text-3xl text-white"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ $reason['title'] }}</h3>
+                <h3 class="text-base font-bold text-gray-900 mb-2">{{ $reason['title'] }}</h3>
                 <p class="text-gray-600 mb-6">{{ $reason['description'] }}</p>
             </div>
             @endforeach
@@ -287,10 +287,10 @@
 
     <div class="container mx-auto px-4 relative z-10">
         <div class="max-w-4xl mx-auto text-center space-y-8">
-            <h2 class="text-3xl md:text-5xl font-bold text-white font-display">
+            <h2 class="text-xl md:text-2xl font-bold text-white font-display">
                 {{ $ctaContent['title'] ?? 'Ready to Start Your Shopping Journey?' }}
             </h2>
-            <p class="text-xl text-purple-100">
+            <p class="text-sm text-purple-100">
                 {{ $ctaContent['description'] ?? 'Join millions of satisfied customers and discover amazing products at unbeatable prices' }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">

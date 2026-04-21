@@ -23,10 +23,10 @@
                 <div class="inline-block bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium">
                     {{ $sections['hero']['badge_text'] ?? '🎉 New Collection 2026' }}
                 </div>
-                <h1 class="text-4xl md:text-5xl font-display font-bold leading-tight">
+                <h1 class="text-2xl md:text-3xl font-display font-bold leading-tight">
                     {{ $sections['hero']['title_prefix'] ?? 'Discover Your' }} <span class="block text-yellow-300">{{ $sections['hero']['title_suffix'] ?? 'Style Today' }}</span>
                 </h1>
-                <p class="text-lg text-gray-300 leading-relaxed">
+                <p class="text-sm text-gray-300 leading-relaxed">
                     {{ $sections['hero']['description'] ?? 'Shop the latest trends with unbeatable prices. Quality products, fast delivery, and exceptional service guaranteed.' }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -127,7 +127,7 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">Shop by Category</h2>
+            <h2 class="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">Shop by Category</h2>
             <p class="text-gray-600">Explore our wide range of products</p>
         </div>
 
@@ -314,7 +314,7 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">Popular Products</h2>
+            <h2 class="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">Popular Products</h2>
             <p class="text-gray-600">Handpicked items just for you</p>
         </div>
 
@@ -394,7 +394,7 @@
                     <div class="flex items-center gap-2">
                         <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold uppercase">⚡ Limited Time</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-bold leading-tight">
+                    <h2 class="text-xl md:text-2xl font-bold leading-tight">
                         Flash Sale <span class="text-yellow-300">Up to 70% OFF</span>
                     </h2>
                     <p class="text-sm text-gray-100 max-w-md">
@@ -436,7 +436,7 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <div class="text-center mb-10">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">Shop by Brand</h2>
+            <h2 class="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">Shop by Brand</h2>
             <p class="text-gray-500">Discover products from your favorite brands</p>
         </div>
 
@@ -551,7 +551,7 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">Featured Products</h2>
+            <h2 class="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">Featured Products</h2>
             <p class="text-gray-600">Discover our handpicked selection of premium products</p>
         </div>
 
@@ -615,7 +615,7 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3">What Our Customers Say</h2>
+            <h2 class="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">What Our Customers Say</h2>
             <p class="text-gray-600">Real feedback from our valued customers</p>
         </div>
 

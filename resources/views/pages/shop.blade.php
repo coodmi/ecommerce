@@ -14,8 +14,8 @@
             <i class="fas fa-chevron-right text-xs"></i>
             <span class="text-gray-200">Shop</span>
         </nav>
-        <h1 class="text-4xl md:text-5xl font-display font-bold">Our Shop</h1>
-        <p class="text-gray-100 mt-2">Discover amazing products at unbeatable prices</p>
+        <h1 class="text-2xl md:text-3xl font-bold font-display">Our Shop</h1>
+        <p class="text-gray-100 mt-1 text-sm">Discover amazing products at unbeatable prices</p>
     </div>
 </section>
 

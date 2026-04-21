@@ -73,16 +73,16 @@
 
             <!-- Main Title -->
             <div class="space-y-4">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white font-display leading-tight">
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-white font-display leading-tight">
                     {{ $heroContent['title_prefix'] ?? "Let's Start a" }}
                 </h1>
-                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-yellow-300 font-display leading-tight">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-300 font-display leading-tight">
                     {{ $heroContent['title_suffix'] ?? 'Conversation' }}
                 </h2>
             </div>
 
             <div class="max-w-3xl mx-auto px-4">
-                <p class="text-base md:text-lg text-purple-100 leading-relaxed">
+                <p class="text-sm text-purple-100 leading-relaxed">
                     {{ $heroContent['description'] ?? "We're here to help! Whether you have questions, feedback, or need support, our team is ready to assist you 24/7." }}
                 </p>
             </div>
@@ -106,7 +106,7 @@
                 <div class="slide-in-left">
                     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 h-full flex flex-col">
                         <div class="mb-6">
-                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display mb-2">
+                            <h2 class="text-xl md:text-base font-bold text-gray-900 font-display mb-2">
                                 {{ $formAreaContent['title'] ?? 'Drop Us a Message' }}
                             </h2>
                         </div>
@@ -187,7 +187,7 @@
                             <div class="bg-linear-to-r from-primary to-primary/80 w-10 h-10 rounded-xl flex items-center justify-center">
                                 <i class="fas fa-question-circle text-lg text-white"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900">{{ $sidebarContent['faq_title'] ?? 'Quick Answers' }}</h3>
+                            <h3 class="text-base font-bold text-gray-900">{{ $sidebarContent['faq_title'] ?? 'Quick Answers' }}</h3>
                         </div>
                         <p class="text-gray-600 mb-4 text-sm">
                             {{ $sidebarContent['faq_desc'] ?? 'Looking for quick answers? Check out our FAQ section for instant help.' }}
@@ -203,7 +203,7 @@
                             <div class="bg-linear-to-br from-blue-100 to-blue-200 w-10 h-10 rounded-xl flex items-center justify-center">
                                 <i class="fas fa-clock text-lg text-blue-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900">{{ $sidebarContent['hours_title'] ?? 'Office Hours' }}</h3>
+                            <h3 class="text-base font-bold text-gray-900">{{ $sidebarContent['hours_title'] ?? 'Office Hours' }}</h3>
                         </div>
                         <div class="space-y-3">
                             @php
@@ -267,7 +267,7 @@
             <div class="inline-block bg-linear-to-r from-primary to-primary/80 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
                 <i class="fas fa-map-marked-alt mr-2"></i>{{ $mapContent['badge'] ?? 'FIND US' }}
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-display mb-4">
+            <h2 class="text-xl md:text-base font-bold text-gray-900 font-display mb-3">
                 {{ $mapContent['title'] ?? 'Visit Our Office' }}
             </h2>
             <p class="text-gray-600 max-w-2xl mx-auto">
@@ -307,7 +307,7 @@
                 <div class="aspect-video flex items-center justify-center p-8">
                     <div class="text-center">
                         <i class="fas fa-map-marked-alt text-8xl text-primary mb-6"></i>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Interactive Map</h3>
+                        <h3 class="text-base font-bold text-gray-900 mb-4">Interactive Map</h3>
                         <p class="text-gray-700 mb-6 max-w-md mx-auto">
                             {{ $mapContent['address'] ?? '123 Commerce Street, Gulshan, Dhaka 1212, Bangladesh' }}
                         </p>
@@ -337,10 +337,10 @@
 
     <div class="container mx-auto px-4 relative z-10">
         <div class="max-w-4xl mx-auto text-center space-y-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-white font-display">
+            <h2 class="text-xl md:text-2xl font-bold text-white font-display">
                 {{ $ctaContent['title'] ?? 'Still Have Questions?' }}
             </h2>
-            <p class="text-xl text-purple-100">
+            <p class="text-sm text-purple-100">
                 {{ $ctaContent['description'] ?? "Our support team is here to help you 24/7. Don't hesitate to reach out!" }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
