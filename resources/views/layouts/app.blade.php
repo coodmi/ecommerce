@@ -28,6 +28,7 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
+            font-size: 15px;
         }
         .font-display {
             font-family: 'Montserrat', sans-serif;
