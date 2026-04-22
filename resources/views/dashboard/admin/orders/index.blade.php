@@ -4,13 +4,12 @@
 
 @section('content')
 <div class="p-6" x-data="{}">
-    <!-- Page Header -->
-    <div class="flex items-center justify-between mb-6">
-        <div>
-            <h1 class="text-3xl font-display font-bold text-gray-900">Orders Management</h1>
-            <p class="text-gray-600 mt-1">Track and manage customer orders</p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+                <h1 class="dash-title text-gray-900">Orders Management</h1>
+                <p class="dash-subtitle mt-0.5">Track and manage customer orders</p>
+            </div>
         </div>
-    </div>
 
     {{-- Search & Filter --}}
     <form method="GET" action="{{ route('admin.orders.index') }}" class="flex flex-col sm:flex-row gap-3 mb-6">

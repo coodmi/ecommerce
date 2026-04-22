@@ -10,16 +10,16 @@
 @if($user->isAdmin())
     {{-- ── ADMIN DASHBOARD ── --}}
     <div class="p-6 space-y-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 font-display">Dashboard Overview</h1>
-                <p class="text-gray-500 mt-1">Welcome back, {{ $user->name }}!
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">Admin</span>
+                <h1 class="dash-title text-gray-900">Dashboard Overview</h1>
+                <p class="dash-subtitle mt-0.5">Welcome back, {{ $user->name }}!
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">Admin</span>
                 </p>
             </div>
-            <div class="mt-4 md:mt-0 flex gap-3">
-                <a href="{{ route('admin.products.create') }}" class="px-6 py-2.5 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition">
-                    <i class="fas fa-plus mr-2"></i>Add Product
+            <div>
+                <a href="{{ route('admin.products.create') }}" class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition">
+                    <i class="fas fa-plus mr-1.5 text-xs"></i>Add Product
                 </a>
             </div>
         </div>
@@ -31,15 +31,15 @@
             $totalCustomers = \App\Models\User::where('role','user')->count();
             $totalProducts  = \App\Models\Product::count();
         @endphp
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                         <i class="fas fa-dollar-sign text-white text-xl"></i>
                     </div>
                 </div>
-                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Revenue</h3>
-                <p class="text-3xl font-bold text-gray-900">${{ number_format($totalRevenue, 2) }}</p>
+                <h3 class="text-gray-500 text-xs font-medium mb-1">Total Revenue</h3>
+                <p class="dash-stat text-gray-900">${{ number_format($totalRevenue, 2) }}</p>
             </div>
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
@@ -47,8 +47,8 @@
                         <i class="fas fa-shopping-cart text-white text-xl"></i>
                     </div>
                 </div>
-                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Orders</h3>
-                <p class="text-3xl font-bold text-gray-900">{{ number_format($totalOrders) }}</p>
+                <h3 class="text-gray-500 text-xs font-medium mb-1">Total Orders</h3>
+                <p class="dash-stat text-gray-900">{{ number_format($totalOrders) }}</p>
             </div>
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
@@ -56,8 +56,8 @@
                         <i class="fas fa-users text-white text-xl"></i>
                     </div>
                 </div>
-                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Customers</h3>
-                <p class="text-3xl font-bold text-gray-900">{{ number_format($totalCustomers) }}</p>
+                <h3 class="text-gray-500 text-xs font-medium mb-1">Total Customers</h3>
+                <p class="dash-stat text-gray-900">{{ number_format($totalCustomers) }}</p>
             </div>
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
@@ -65,8 +65,8 @@
                         <i class="fas fa-box text-white text-xl"></i>
                     </div>
                 </div>
-                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Products</h3>
-                <p class="text-3xl font-bold text-gray-900">{{ number_format($totalProducts) }}</p>
+                <h3 class="text-gray-500 text-xs font-medium mb-1">Total Products</h3>
+                <p class="dash-stat text-gray-900">{{ number_format($totalProducts) }}</p>
             </div>
         </div>
 
@@ -129,8 +129,8 @@
                 </div>
             @endif
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Welcome back, {{ $user->name }}!</h1>
-                <p class="text-gray-500 text-sm">Here's a summary of your account activity.</p>
+                <h1 class="dash-title text-gray-900">Welcome back, {{ $user->name }}!</h1>
+                <p class="dash-subtitle">Here's a summary of your account activity.</p>
             </div>
         </div>
 

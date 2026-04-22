@@ -8,7 +8,7 @@
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-3xl font-display font-bold text-gray-900">Users</h1>
+            <h1 class="dash-title text-gray-900">Users</h1>
             <p class="text-sm text-gray-500 mt-0.5">Manage all registered users</p>
         </div>
         <div class="flex items-center gap-2 text-sm bg-white border border-gray-200 px-4 py-2.5 rounded-xl shadow-sm">

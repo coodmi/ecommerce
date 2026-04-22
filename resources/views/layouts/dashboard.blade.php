@@ -27,10 +27,33 @@
         [x-cloak] { display: none !important; }
         body {
             font-family: 'Inter', sans-serif;
+            font-size: 14px;
         }
         .font-display {
             font-family: 'Playfair Display', serif;
         }
+
+        /* ── Dashboard responsive typography ── */
+        .dash-title   { font-size: clamp(1.1rem, 3vw, 1.375rem); font-weight: 700; }
+        .dash-subtitle{ font-size: 0.8125rem; color: #6b7280; }
+        .dash-stat    { font-size: clamp(1.25rem, 4vw, 1.75rem); font-weight: 700; }
+        .dash-label   { font-size: 0.75rem; }
+
+        /* Tighten Tailwind text sizes inside dashboard */
+        .dashboard-content .text-3xl { font-size: clamp(1.1rem, 3vw, 1.375rem) !important; }
+        .dashboard-content .text-2xl { font-size: clamp(1rem, 2.5vw, 1.2rem)   !important; }
+        .dashboard-content .text-xl  { font-size: 1rem !important; }
+        .dashboard-content .text-lg  { font-size: 0.9375rem !important; }
+        .dashboard-content .text-base{ font-size: 0.875rem !important; }
+        .dashboard-content .text-sm  { font-size: 0.8125rem !important; }
+        .dashboard-content .text-xs  { font-size: 0.75rem !important; }
+
+        /* Responsive padding */
+        .dashboard-content .p-6 { padding: 1rem; }
+        @media (min-width: 640px) {
+            .dashboard-content .p-6 { padding: 1.5rem; }
+        }
+
         @keyframes slideIn {
             from { transform: translateX(-100%); }
             to { transform: translateX(0); }
@@ -38,43 +61,16 @@
         .sidebar-animate {
             animation: slideIn 0.3s ease-out;
         }
-        /* Cursor pointer for all buttons and interactive elements */
-        button,
-        a,
-        label[for],
-        select,
-        option,
-        [type="button"],
-        [type="submit"],
-        [type="reset"],
-        [role="button"],
-        .cursor-pointer {
-            cursor: pointer;
-        }
+        button, a, label[for], select, option,
+        [type="button"], [type="submit"], [type="reset"],
+        [role="button"], .cursor-pointer { cursor: pointer; }
 
-        /* Custom Scrollbar for premium look */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Hide scrollbar class */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -95,7 +91,7 @@
 
             <!-- Page Content -->
             <main class="flex-1 overflow-y-auto bg-gray-50 no-scrollbar">
-                <div class="min-h-[calc(100vh-64px)] flex flex-col">
+                <div class="min-h-[calc(100vh-64px)] flex flex-col dashboard-content">
                     <div class="flex-1">
                         @yield('content')
                     </div>
