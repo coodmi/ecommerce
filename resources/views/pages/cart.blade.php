@@ -75,41 +75,41 @@
 
         <!-- Summary -->
         <div class="lg:w-80 xl:w-96 flex-shrink-0">
-            <div class="bg-slate-900 rounded-2xl p-5 text-white lg:sticky lg:top-24">
-                <h2 class="text-sm font-bold uppercase tracking-wide mb-4 pb-3 border-b border-slate-700">Order Summary</h2>
+            <div class="bg-primary rounded-2xl p-5 text-white lg:sticky lg:top-24">
+                <h2 class="text-sm font-bold uppercase tracking-wide mb-4 pb-3 border-b border-white/20">Order Summary</h2>
 
                 <div class="space-y-2.5 mb-4">
                     <div class="flex justify-between text-sm">
-                        <span class="text-slate-400">Subtotal</span>
-                        <span class="font-semibold text-white" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
+                        <span class="text-white/70">Subtotal</span>
+                        <span class="font-semibold" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-slate-400">{{ $deliveryLabel }}</span>
+                        <span class="text-white/70">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
-                            <span class="font-semibold text-white" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
+                            <span class="font-semibold" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
                         @else
-                            <span class="font-semibold text-emerald-400" id="cart-shipping">FREE</span>
+                            <span class="font-semibold text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
                     </div>
                     @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
-                    <div class="text-xs text-slate-400 bg-slate-800 rounded-lg px-3 py-2">
-                        <i class="fas fa-tag text-primary mr-1"></i>
+                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
+                        <i class="fas fa-tag mr-1"></i>
                         Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
                     </div>
                     @endif
                 </div>
 
-                <div class="flex justify-between items-center py-3 border-t border-slate-700 mb-4">
-                    <span class="text-slate-300 text-sm font-medium">Total</span>
-                    <span class="text-xl font-bold text-white" id="cart-total">${{ number_format($total, 2) }}</span>
+                <div class="flex justify-between items-center py-3 border-t border-white/20 mb-4">
+                    <span class="text-white/80 text-sm font-medium">Total</span>
+                    <span class="text-xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
                 </div>
 
                 <a href="{{ route('checkout.index') }}"
-                   class="block w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-semibold text-sm text-center transition">
+                   class="block w-full bg-white text-primary hover:bg-white/90 py-3 rounded-xl font-bold text-sm text-center transition">
                     Checkout Now
                 </a>
 
-                <div class="mt-4 flex items-center justify-center gap-3 text-slate-600">
+                <div class="mt-4 flex items-center justify-center gap-3 text-white/40">
                     <i class="fab fa-cc-visa text-xl"></i>
                     <i class="fab fa-cc-mastercard text-xl"></i>
                     <i class="fab fa-cc-apple-pay text-xl"></i>
