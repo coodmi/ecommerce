@@ -17,9 +17,9 @@
 </section>
 
 <div class="container mx-auto px-4 pb-12" x-data="cartPage()">
-    <div class="flex flex-col lg:flex-row gap-6" x-show="itemCount > 0" x-cloak>
+    <div class="flex flex-col lg:flex-row gap-8 items-start" x-show="itemCount > 0" x-cloak>
         <!-- Cart Items -->
-        <div class="lg:w-2/3">
+        <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                 <h1 class="text-xl font-bold text-slate-900">Your Cart</h1>
                 <span class="text-slate-400 font-medium" x-text="itemCount + ' Items'"></span>
@@ -74,46 +74,46 @@
         </div>
 
         <!-- Summary -->
-        <div class="lg:w-80 xl:w-96 flex-shrink-0">
-            <div class="bg-primary rounded-2xl p-5 text-white lg:sticky lg:top-24">
-                <h2 class="text-sm font-bold uppercase tracking-wide mb-4 pb-3 border-b border-white/20">Order Summary</h2>
+        <div class="lg:w-[340px] flex-shrink-0">
+            <div class="bg-primary rounded-2xl p-6 text-white lg:sticky lg:top-24">
+                <h2 class="text-base font-bold uppercase tracking-wider mb-5 pb-4 border-b border-white/20">Order Summary</h2>
 
-                <div class="space-y-2.5 mb-4">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-white/70">Subtotal</span>
+                <div class="space-y-3 mb-5">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-white/75">Subtotal</span>
                         <span class="font-semibold" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-white/70">{{ $deliveryLabel }}</span>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-white/75">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
                             <span class="font-semibold" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
                         @else
-                            <span class="font-semibold text-yellow-300" id="cart-shipping">FREE</span>
+                            <span class="font-bold text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
                     </div>
                     @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
-                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
+                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2 mt-1">
                         <i class="fas fa-tag mr-1"></i>
                         Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
                     </div>
                     @endif
                 </div>
 
-                <div class="flex justify-between items-center py-3 border-t border-white/20 mb-4">
-                    <span class="text-white/80 text-sm font-medium">Total</span>
-                    <span class="text-xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
+                <div class="flex justify-between items-center py-4 border-t border-b border-white/20 mb-5">
+                    <span class="text-white/80 font-medium">Total</span>
+                    <span class="text-2xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
                 </div>
 
                 <a href="{{ route('checkout.index') }}"
-                   class="block w-full bg-white text-primary hover:bg-white/90 py-3 rounded-xl font-bold text-sm text-center transition">
+                   class="block w-full bg-white text-primary hover:bg-white/90 py-3.5 rounded-xl font-bold text-sm text-center transition shadow-sm">
                     Checkout Now
                 </a>
 
-                <div class="mt-4 flex items-center justify-center gap-3 text-white/40">
-                    <i class="fab fa-cc-visa text-xl"></i>
-                    <i class="fab fa-cc-mastercard text-xl"></i>
-                    <i class="fab fa-cc-apple-pay text-xl"></i>
-                    <i class="fas fa-shield-alt text-lg"></i>
+                <div class="mt-5 flex items-center justify-center gap-4 text-white/30">
+                    <i class="fab fa-cc-visa text-2xl"></i>
+                    <i class="fab fa-cc-mastercard text-2xl"></i>
+                    <i class="fab fa-cc-apple-pay text-2xl"></i>
+                    <i class="fas fa-shield-alt text-xl"></i>
                 </div>
             </div>
         </div>
