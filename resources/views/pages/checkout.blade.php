@@ -1,153 +1,169 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout - Ecom Alpha')
+@section('title', 'Checkout')
 
 @section('content')
+
 <!-- Breadcrumb -->
-<section class="bg-slate-50 border-b border-slate-200 py-6 mb-12">
+<div class="bg-gray-50 border-b border-gray-100 py-3">
     <div class="container mx-auto px-4">
-        <nav class="flex items-center space-x-2 text-sm font-medium">
-            <a href="/" class="text-slate-500 hover:text-primary transition">Home</a>
-            <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
-            <a href="{{ route('cart.index') }}" class="text-slate-500 hover:text-primary transition">Cart</a>
-            <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
-            <span class="text-slate-900">Checkout</span>
+        <nav class="flex items-center gap-2 text-xs text-gray-500">
+            <a href="/" class="hover:text-primary transition">Home</a>
+            <i class="fas fa-chevron-right text-[9px]"></i>
+            <a href="{{ route('cart.index') }}" class="hover:text-primary transition">Cart</a>
+            <i class="fas fa-chevron-right text-[9px]"></i>
+            <span class="text-gray-800 font-medium">Checkout</span>
         </nav>
     </div>
-</section>
+</div>
 
-<div class="container mx-auto px-4 pb-20" x-data="checkoutForm()">
-    <div class="flex flex-col lg:flex-row gap-12">
-        <!-- Checkout Form -->
-        <div class="lg:w-2/3">
-            <h1 class="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">Checkout</h1>
-            
-            <form @submit.prevent="submitOrder" class="space-y-8">
-                <div class="bg-white rounded-2xl p-5 sm:p-8 border border-slate-100 shadow-sm">
-                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wide mb-5 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center text-xs">01</span>
-                        Shipping Information
-                    </h2>
+<div class="container mx-auto px-4 py-8 pb-16" x-data="checkoutForm()">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <h1 class="text-xl font-bold text-gray-900 mb-6">Checkout</h1>
+
+    <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+        {{-- Left: Form --}}
+        <div class="flex-1 min-w-0 w-full space-y-5">
+
+            {{-- Shipping Info --}}
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="flex items-center gap-3 px-5 py-4 border-b border-gray-50">
+                    <div class="w-7 h-7 bg-primary text-white rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+                    <h2 class="text-sm font-bold text-gray-800">Shipping Information</h2>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         @foreach($fields as $field)
-                        <div class="space-y-2 {{ $field->type === 'textarea' ? 'md:col-span-2' : '' }}">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
-                                {{ $field->label }} @if($field->is_required)<span class="text-rose-500">*</span>@endif
+                        <div class="{{ $field->type === 'textarea' ? 'sm:col-span-2' : '' }}">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                                {{ $field->label }}@if($field->is_required)<span class="text-red-500 ml-0.5">*</span>@endif
                             </label>
-                            
                             @if($field->type === 'textarea')
                                 <textarea name="{{ $field->name }}" x-model="formData.{{ $field->name }}"
-                                          {{ $field->is_required ? 'required' : '' }}
-                                          class="w-full px-6 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold placeholder:text-slate-300"
-                                          placeholder="{{ $field->placeholder }}" rows="4"></textarea>
+                                          {{ $field->is_required ? 'required' : '' }} rows="3"
+                                          placeholder="{{ $field->placeholder }}"
+                                          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white transition resize-none"></textarea>
                             @elseif($field->type === 'select')
                                 <select name="{{ $field->name }}" x-model="formData.{{ $field->name }}"
                                         {{ $field->is_required ? 'required' : '' }}
-                                        class="w-full px-6 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold">
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-800 focus:outline-none focus:border-primary focus:bg-white transition">
                                     <option value="">Select {{ $field->label }}</option>
                                     @foreach($field->options as $option)
                                         <option value="{{ $option }}">{{ $option }}</option>
                                     @endforeach
                                 </select>
                             @else
-                                <input type="{{ $field->type }}" name="{{ $field->name }}" x-model="formData.{{ $field->name }}"
+                                <input type="{{ $field->type }}" name="{{ $field->name }}"
+                                       x-model="formData.{{ $field->name }}"
                                        {{ $field->is_required ? 'required' : '' }}
-                                       class="w-full px-6 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold placeholder:text-slate-300"
-                                       placeholder="{{ $field->placeholder }}">
+                                       placeholder="{{ $field->placeholder }}"
+                                       class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white transition">
                             @endif
                             <template x-if="errors.{{ $field->name }}">
-                                <p class="text-rose-500 text-[10px] font-bold uppercase tracking-wider mt-1" x-text="errors.{{ $field->name }}[0]"></p>
+                                <p class="text-red-500 text-xs mt-1" x-text="errors.{{ $field->name }}[0]"></p>
                             </template>
                         </div>
                         @endforeach
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-white rounded-2xl p-5 sm:p-8 border border-slate-100 shadow-sm">
-                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wide mb-5 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center text-xs">02</span>
-                        Payment Method
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <label class="relative flex items-center p-6 bg-slate-50 rounded-2xl border-2 border-primary cursor-pointer transition-all">
+            {{-- Payment Method --}}
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="flex items-center gap-3 px-5 py-4 border-b border-gray-50">
+                    <div class="w-7 h-7 bg-primary text-white rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+                    <h2 class="text-sm font-bold text-gray-800">Payment Method</h2>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-4 bg-primary/5 border-2 border-primary rounded-xl cursor-pointer">
                             <input type="radio" name="payment_method" value="cod" checked class="hidden">
-                            <i class="fas fa-truck text-primary text-2xl mr-4"></i>
-                            <div>
-                                <p class="font-black text-slate-900 uppercase tracking-widest text-sm">Cash on Delivery</p>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Pay when you receive</p>
+                            <div class="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-truck text-primary text-sm"></i>
                             </div>
-                            <i class="fas fa-check-circle text-primary ml-auto"></i>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold text-gray-800">Cash on Delivery</p>
+                                <p class="text-xs text-gray-400">Pay when you receive</p>
+                            </div>
+                            <i class="fas fa-check-circle text-primary"></i>
                         </label>
-                        
-                        <div class="relative flex items-center p-6 bg-slate-50 rounded-2xl border-2 border-slate-100 opacity-50 cursor-not-allowed">
-                            <i class="fas fa-credit-card text-slate-400 text-2xl mr-4"></i>
+                        <div class="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-100 rounded-xl opacity-50 cursor-not-allowed">
+                            <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-credit-card text-gray-400 text-sm"></i>
+                            </div>
                             <div>
-                                <p class="font-black text-slate-400 uppercase tracking-widest text-sm">Online Payment</p>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Coming Soon</p>
+                                <p class="text-sm font-semibold text-gray-400">Online Payment</p>
+                                <p class="text-xs text-gray-400">Coming Soon</p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <button type="submit" :disabled="isSubmitting"
-                        class="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 rounded-xl font-bold uppercase tracking-wide transition-all duration-300 shadow-lg relative overflow-hidden group">
-                    <span class="relative z-10" x-text="isSubmitting ? 'Processing...' : 'Place Order Now'"></span>
-                    <div class="absolute inset-0 bg-linear-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </button>
-            </form>
+            {{-- Place Order Button mobile --}}
+            <button type="button" @click="submitOrder()" :disabled="isSubmitting"
+                    class="lg:hidden w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-sm transition shadow-sm disabled:opacity-60">
+                <span x-text="isSubmitting ? 'Processing...' : 'Place Order Now'"></span>
+            </button>
         </div>
 
-        <!-- Summary -->
-        <div class="lg:w-1/3">
-            <div class="bg-slate-900 rounded-[3rem] p-10 text-white sticky top-24 shadow-2xl">
-                <h2 class="text-2xl font-black uppercase tracking-tight mb-8">Summary</h2>
-                
-                <div class="space-y-6 mb-8 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+        {{-- Right: Summary --}}
+        <div class="w-full lg:w-[360px] lg:flex-shrink-0">
+            <div class="bg-primary rounded-2xl p-6 text-white lg:sticky lg:top-24">
+                <h2 class="text-sm font-bold uppercase tracking-wider mb-5 pb-4 border-b border-white/20">Order Summary</h2>
+
+                {{-- Items --}}
+                <div class="space-y-3 mb-5 max-h-48 overflow-y-auto pr-1">
                     @foreach($cart as $item)
-                    <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-white/10 flex-shrink-0">
-                            <img src="{{ $item['image'] ? (str_starts_with($item['image'], 'http') ? $item['image'] : asset('storage/' . $item['image'])) : asset('images/placeholder-product.jpg') }}" 
-                                 class="w-full h-full object-cover opacity-80">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-lg overflow-hidden bg-white/10 flex-shrink-0">
+                            <img src="{{ $item['image'] ? (str_starts_with($item['image'], 'http') ? $item['image'] : asset('storage/' . $item['image'])) : asset('images/placeholder-product.jpg') }}"
+                                 class="w-full h-full object-cover">
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="font-bold text-xs uppercase tracking-widest truncate">{{ $item['name'] }}</p>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">{{ $item['quantity'] }} x ${{ number_format($item['price'], 2) }}</p>
+                            <p class="text-xs font-semibold truncate">{{ $item['name'] }}</p>
+                            <p class="text-xs text-white/60 mt-0.5">{{ $item['quantity'] }} × ${{ number_format($item['price'], 2) }}</p>
                         </div>
-                        <span class="font-black text-sm">${{ number_format($item['price'] * $item['quantity'], 2) }}</span>
+                        <span class="text-sm font-bold flex-shrink-0">${{ number_format($item['price'] * $item['quantity'], 2) }}</span>
                     </div>
                     @endforeach
                 </div>
 
-                <div class="space-y-3 mb-6 pt-6 border-t border-white/10">
-                    <div class="flex justify-between text-slate-400 text-sm">
-                        <span>Subtotal</span>
+                {{-- Totals --}}
+                <div class="space-y-2.5 pt-4 border-t border-white/20 mb-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-white/70">Subtotal</span>
                         <span class="font-semibold">${{ number_format($total, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-slate-400">{{ $deliveryLabel }}</span>
+                        <span class="text-white/70">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
-                            <span class="font-semibold text-white">${{ number_format($shipping, 2) }}</span>
+                            <span class="font-semibold">${{ number_format($shipping, 2) }}</span>
                         @else
-                            <span class="font-semibold text-emerald-400">FREE</span>
+                            <span class="font-bold text-yellow-300">FREE</span>
                         @endif
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center mb-6 pt-4 border-t border-white/10">
-                    <span class="text-slate-400 text-sm">Total</span>
+                <div class="flex justify-between items-center py-4 border-t border-b border-white/20 mb-5">
+                    <span class="text-white/80 text-sm font-medium">Total</span>
                     <span class="text-2xl font-bold">${{ number_format($grandTotal, 2) }}</span>
                 </div>
 
-                <div class="bg-white/5 rounded-2xl p-6 border border-white/5">
-                    <div class="flex items-center gap-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-                        <i class="fas fa-shield-halved text-primary text-lg"></i>
-                        Secure checkout & encrypted payment processing
-                    </div>
+                {{-- Place Order desktop --}}
+                <button type="button" @click="submitOrder()" :disabled="isSubmitting"
+                        class="hidden lg:block w-full bg-white text-primary hover:bg-white/90 py-3.5 rounded-xl font-bold text-sm text-center transition shadow-sm disabled:opacity-60">
+                    <span x-text="isSubmitting ? 'Processing...' : 'Place Order Now'"></span>
+                </button>
+
+                <div class="mt-4 flex items-center justify-center gap-2 text-white/30">
+                    <i class="fas fa-shield-alt text-sm"></i>
+                    <span class="text-xs">Secure & encrypted checkout</span>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -180,58 +196,29 @@ function checkoutForm() {
             .then(data => {
                 if (data.success) {
                     window.dispatchEvent(new CustomEvent('toast', {
-                        detail: { 
-                            type: 'success', 
-                            title: 'Order Placed!', 
-                            message: data.message 
-                        }
+                        detail: { type: 'success', title: 'Order Placed!', message: data.message }
                     }));
-                    setTimeout(() => {
-                        window.location.href = data.redirect;
-                    }, 2000);
+                    setTimeout(() => { window.location.href = data.redirect; }, 1500);
                 } else if (data.errors) {
                     this.errors = data.errors;
                     window.dispatchEvent(new CustomEvent('toast', {
-                        detail: { 
-                            type: 'error', 
-                            title: 'Validation Failed', 
-                            message: 'Please check the form for errors.' 
-                        }
+                        detail: { type: 'error', title: 'Check the form', message: 'Please fix the errors below.' }
                     }));
                 } else {
                     window.dispatchEvent(new CustomEvent('toast', {
-                        detail: { 
-                            type: 'error', 
-                            message: data.message || 'Something went wrong.' 
-                        }
+                        detail: { type: 'error', message: data.message || 'Something went wrong.' }
                     }));
                 }
             })
-            .catch(err => {
-                console.error(err);
+            .catch(() => {
+                window.dispatchEvent(new CustomEvent('toast', {
+                    detail: { type: 'error', message: 'Network error. Please try again.' }
+                }));
             })
-            .finally(() => {
-                this.isSubmitting = false;
-            });
+            .finally(() => { this.isSubmitting = false; });
         }
     }
 }
 </script>
-
-<style>
-.custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-</style>
 @endpush
 @endsection
