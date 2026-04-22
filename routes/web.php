@@ -121,6 +121,9 @@ Route::post('/logout', function (Illuminate\Http\Request $request) {
     return redirect('/');
 })->name('logout');
 
+// Invoice — accessible right after order (session-based) or by owner/admin
+Route::get('/orders/{order}/invoice', [App\Http\Controllers\CheckoutController::class, 'invoice'])->name('order.invoice');
+
 // Dashboard Routes (Protected)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -129,7 +132,6 @@ Route::middleware('auth')->group(function () {
 
     // User Orders
     Route::get('/my-orders', [App\Http\Controllers\User\OrderController::class, 'index'])->name('user.orders');
-    Route::get('/orders/{order}/invoice', [App\Http\Controllers\CheckoutController::class, 'invoice'])->name('order.invoice');
     
     // User Reviews
     Route::get('/my-reviews', [App\Http\Controllers\ReviewController::class, 'index'])->name('user.reviews');

@@ -75,6 +75,7 @@ class CheckoutController extends Controller
             }
 
             session()->forget('cart');
+            session(['last_order_id' => $order->id]);
             DB::commit();
 
             return response()->json([
@@ -91,8 +92,12 @@ class CheckoutController extends Controller
 
     public function invoice(Order $order)
     {
-        // Only the owner or admin can view the invoice
-        if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+        // Allow owner, admin, or if order was just placed (stored in session)
+        $justPlaced = session('last_order_id') == $order->id;
+        $isOwner    = auth()->check() && $order->user_id === auth()->id();
+        $isAdmin    = auth()->check() && auth()->user()->isAdmin();
+
+        if (!$justPlaced && !$isOwner && !$isAdmin) {
             abort(403);
         }
 

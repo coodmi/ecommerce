@@ -160,10 +160,14 @@
         </div>
 
         {{-- Actions --}}
-        <div class="flex flex-col sm:flex-row gap-3 mt-6 mb-16">
-            <button onclick="window.print()"
+        <div class="flex flex-col sm:flex-row gap-3 mt-6 mb-16 no-print">
+            <button onclick="downloadInvoice()"
                     class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-semibold transition shadow-sm">
-                <i class="fas fa-print"></i> Print Invoice
+                <i class="fas fa-download"></i> Download Invoice
+            </button>
+            <button onclick="window.print()"
+                    class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition shadow-sm">
+                <i class="fas fa-print"></i> Print
             </button>
             <a href="{{ route('user.orders') }}"
                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition">
@@ -182,7 +186,18 @@
     body * { visibility: hidden; }
     #invoice-content, #invoice-content * { visibility: visible; }
     #invoice-content { position: absolute; left: 0; top: 0; width: 100%; }
-    .bg-primary { background-color: #9333ea !important; -webkit-print-color-adjust: exact; }
+    .no-print { display: none !important; }
+    .bg-primary { background-color: #9333ea !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
+@push('scripts')
+<script>
+function downloadInvoice() {
+    const original = document.title;
+    document.title = 'Invoice-{{ str_pad($order->id, 6, "0", STR_PAD_LEFT) }}';
+    window.print();
+    document.title = original;
+}
+</script>
+@endpush
 @endsection

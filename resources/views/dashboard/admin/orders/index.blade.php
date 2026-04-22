@@ -72,8 +72,12 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex items-center justify-end space-x-2">
+                                <a href="{{ route('order.invoice', $order) }}" 
+                                   class="w-9 h-9 flex items-center justify-center bg-green-50 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition-all" title="Invoice">
+                                    <i class="fas fa-file-invoice text-sm"></i>
+                                </a>
                                 <a href="{{ route('admin.orders.show', $order) }}" 
-                                   class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all">
+                                   class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all" title="View">
                                     <i class="fas fa-eye text-sm"></i>
                                 </a>
                                 <button @click="$dispatch('confirm-modal', {
