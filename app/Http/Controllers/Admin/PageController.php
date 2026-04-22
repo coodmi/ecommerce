@@ -211,6 +211,20 @@ class PageController extends Controller
                 $content['items'] = array_values($items);
             }
             
+            // Consolidate slider images (slider_image_1..4 -> slider_images array)
+            $sliderImages = [];
+            foreach ($content as $fieldName => $fieldValue) {
+                if (preg_match('/^slider_image_(\d+)$/', $fieldName, $matches)) {
+                    if (!empty($fieldValue)) {
+                        $sliderImages[] = $fieldValue;
+                    }
+                    unset($content[$fieldName]);
+                }
+            }
+            if (!empty($sliderImages)) {
+                $content['slider_images'] = $sliderImages;
+            }
+
             // Merge with existing content to preserve fields not in current form (like background gradients)
             $newContent = array_merge($currentContent, $content);
             

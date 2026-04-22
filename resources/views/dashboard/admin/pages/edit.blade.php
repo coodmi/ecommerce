@@ -144,6 +144,24 @@
                     </div>
                 </div>
 
+                <!-- Slider Background Images -->
+                <div class="mt-6 pt-6 border-t border-slate-100">
+                    <h3 class="text-sm font-semibold text-slate-700 mb-1">Slider Background Images</h3>
+                    <p class="text-xs text-slate-400 mb-4">Enter image URLs for the hero background slider (one per field). Use full URLs or upload to storage and paste the path.</p>
+                    <div class="space-y-3">
+                        @for($si = 1; $si <= 4; $si++)
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-bold text-slate-400 w-6 text-center">{{ $si }}</span>
+                            <input type="text"
+                                   name="section_hero_slider_image_{{ $si }}"
+                                   value="{{ $heroContent['slider_images'][$si-1] ?? '' }}"
+                                   placeholder="https://... or leave blank to skip"
+                                   class="flex-1 px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                        </div>
+                        @endfor
+                    </div>
+                </div>
+
 
             </div>
 
