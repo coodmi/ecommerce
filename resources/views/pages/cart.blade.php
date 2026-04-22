@@ -19,7 +19,7 @@
 <div class="container mx-auto px-4 pb-12" x-data="cartPage()">
     <div class="flex flex-col lg:flex-row gap-8 items-start" x-show="itemCount > 0" x-cloak>
         <!-- Cart Items -->
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 w-full">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                 <h1 class="text-xl font-bold text-slate-900">Your Cart</h1>
                 <span class="text-slate-400 font-medium" x-text="itemCount + ' Items'"></span>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Summary -->
-        <div class="lg:w-[380px] flex-shrink-0">
+        <div class="w-full lg:w-[380px] lg:flex-shrink-0">
             <div class="bg-primary rounded-2xl p-7 text-white lg:sticky lg:top-24">
                 <h2 class="text-sm font-bold uppercase tracking-widest mb-5 pb-4 border-b border-white/20">Order Summary</h2>
 
@@ -90,8 +90,7 @@
                         @else
                             <span class="font-bold text-sm text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
-                    </div>
-                    @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
+                    </div>                    @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
                     <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
                         <i class="fas fa-tag mr-1"></i>
                         Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
