@@ -120,20 +120,24 @@
                     @endforeach
                 </div>
 
-                <div class="space-y-4 mb-8 pt-8 border-t border-white/10">
-                    <div class="flex justify-between text-slate-400">
-                        <span class="font-bold uppercase tracking-widest text-[10px]">Subtotal</span>
-                        <span class="font-black text-sm">${{ number_format($total, 2) }}</span>
+                <div class="space-y-3 mb-6 pt-6 border-t border-white/10">
+                    <div class="flex justify-between text-slate-400 text-sm">
+                        <span>Subtotal</span>
+                        <span class="font-semibold">${{ number_format($total, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-slate-400 text-[10px]">
-                        <span class="font-bold uppercase tracking-widest">Shipping</span>
-                        <span class="font-black text-emerald-400 uppercase">Free</span>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">{{ $deliveryLabel }}</span>
+                        @if($shipping > 0)
+                            <span class="font-semibold text-white">${{ number_format($shipping, 2) }}</span>
+                        @else
+                            <span class="font-semibold text-emerald-400">FREE</span>
+                        @endif
                     </div>
                 </div>
 
-                <div class="flex justify-between items-end mb-10 pt-10 border-t border-white/10">
-                    <span class="text-slate-400 font-bold uppercase tracking-[0.2em] text-xs">Total</span>
-                    <span class="text-4xl font-black">${{ number_format($total, 2) }}</span>
+                <div class="flex justify-between items-center mb-6 pt-4 border-t border-white/10">
+                    <span class="text-slate-400 text-sm">Total</span>
+                    <span class="text-2xl font-bold">${{ number_format($grandTotal, 2) }}</span>
                 </div>
 
                 <div class="bg-white/5 rounded-2xl p-6 border border-white/5">

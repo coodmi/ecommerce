@@ -10,21 +10,35 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $primaryColor = Setting::get('primary_color', '#9333ea');
+        $primaryColor   = Setting::get('primary_color', '#9333ea');
         $secondaryColor = Setting::get('secondary_color', '#FFDF20');
-        return view('dashboard.admin.settings.index', compact('primaryColor', 'secondaryColor'));
+
+        $deliveryCharge        = Setting::get('delivery_charge', '0');
+        $deliveryFreeThreshold = Setting::get('delivery_free_threshold', '0');
+        $deliveryLabel         = Setting::get('delivery_label', 'Delivery Charge');
+
+        return view('dashboard.admin.settings.index', compact(
+            'primaryColor', 'secondaryColor',
+            'deliveryCharge', 'deliveryFreeThreshold', 'deliveryLabel'
+        ));
     }
 
     public function update(Request $request)
     {
         $request->validate([
-            'primary_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
-            'secondary_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
+            'primary_color'             => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
+            'secondary_color'           => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
+            'delivery_charge'           => ['nullable', 'numeric', 'min:0'],
+            'delivery_free_threshold'   => ['nullable', 'numeric', 'min:0'],
+            'delivery_label'            => ['nullable', 'string', 'max:50'],
         ]);
 
-        Setting::set('primary_color', $request->primary_color);
-        Setting::set('secondary_color', $request->secondary_color);
+        Setting::set('primary_color',           $request->primary_color);
+        Setting::set('secondary_color',         $request->secondary_color);
+        Setting::set('delivery_charge',         $request->input('delivery_charge', 0));
+        Setting::set('delivery_free_threshold', $request->input('delivery_free_threshold', 0));
+        Setting::set('delivery_label',          $request->input('delivery_label', 'Delivery Charge'));
 
-        return back()->with('success', 'Site settings updated successfully!');
+        return back()->with('success', 'Settings updated successfully!');
     }
 }

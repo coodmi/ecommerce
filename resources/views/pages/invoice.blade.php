@@ -142,7 +142,7 @@
                         </div>
                         <div class="flex justify-between text-gray-500">
                             <span>Shipping</span>
-                            <span class="text-green-600 font-medium">FREE</span>
+                            <span class="text-green-600 font-medium">Included</span>
                         </div>
                         <div class="flex justify-between font-bold text-gray-900 text-base border-t border-gray-100 pt-2">
                             <span>Total</span>

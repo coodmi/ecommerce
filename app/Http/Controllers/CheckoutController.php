@@ -24,7 +24,16 @@ class CheckoutController extends Controller
 
         $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
 
-        return view('pages.checkout', compact('cart', 'total', 'fields'));
+        $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+        $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+        $deliveryLabel         = \App\Models\Setting::get('delivery_label', 'Delivery Charge');
+        $shipping = 0;
+        if ($deliveryCharge > 0) {
+            $shipping = ($deliveryFreeThreshold > 0 && $total >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+        }
+        $grandTotal = $total + $shipping;
+
+        return view('pages.checkout', compact('cart', 'total', 'fields', 'shipping', 'deliveryLabel', 'grandTotal'));
     }
 
     public function store(Request $request)
@@ -48,10 +57,18 @@ class CheckoutController extends Controller
         try {
             DB::beginTransaction();
 
-            $total = 0;
+            $subtotal = 0;
             foreach ($cart as $details) {
-                $total += $details['price'] * $details['quantity'];
+                $subtotal += $details['price'] * $details['quantity'];
             }
+
+            $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+            $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+            $shipping = 0;
+            if ($deliveryCharge > 0) {
+                $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+            }
+            $total = $subtotal + $shipping;
 
             $order = Order::create([
                 'user_id'          => auth()->id(),

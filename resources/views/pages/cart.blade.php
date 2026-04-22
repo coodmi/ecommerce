@@ -77,32 +77,38 @@
         <div class="lg:w-1/3">
             <div class="bg-slate-900 rounded-2xl p-6 text-white sticky top-24">
                 <h2 class="text-base font-bold uppercase tracking-tight mb-5">Order Summary</h2>
-                
-                <div class="space-y-4 mb-8">
-                    <div class="flex justify-between text-slate-400">
-                        <span class="font-medium">Subtotal</span>
-                        <span class="font-bold whitespace-nowrap">$<span x-text="total"></span></span>
+
+                <div class="space-y-3 mb-5" id="cart-summary">
+                    <div class="flex justify-between text-slate-400 text-sm">
+                        <span>Subtotal</span>
+                        <span class="font-semibold" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-slate-400">
-                        <span class="font-medium">Shipping</span>
-                        <span class="font-bold text-emerald-400">FREE</span>
+                    <div class="flex justify-between text-sm" id="shipping-row">
+                        <span class="text-slate-400">{{ $deliveryLabel }}</span>
+                        @if($shipping > 0)
+                            <span class="font-semibold text-white" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
+                        @else
+                            <span class="font-semibold text-emerald-400" id="cart-shipping">FREE</span>
+                        @endif
                     </div>
-                    <div class="flex justify-between text-slate-400 border-t border-slate-800 pt-4 mt-4">
-                        <span class="font-medium">Estimated Tax</span>
-                        <span class="font-bold whitespace-nowrap">$0.00</span>
+                    @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
+                    <div class="text-xs text-slate-500 bg-slate-800 rounded-lg px-3 py-2">
+                        <i class="fas fa-info-circle text-primary mr-1"></i>
+                        Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
                     </div>
+                    @endif
                 </div>
 
-                <div class="flex justify-between items-end mb-6 pb-6 border-b border-white/10">
-                    <span class="text-slate-400 font-medium text-sm">Total Price</span>
-                    <span class="text-2xl font-bold">$<span x-text="total"></span></span>
+                <div class="flex justify-between items-center mb-5 pt-4 border-t border-slate-700">
+                    <span class="text-slate-400 text-sm">Total</span>
+                    <span class="text-xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
                 </div>
 
-                <a href="{{ route('checkout.index') }}" class="w-full bg-primary hover:bg-primary/90 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-primary/20 flex items-center justify-center">
+                <a href="{{ route('checkout.index') }}" class="w-full bg-primary hover:bg-primary/90 text-white py-3.5 rounded-xl font-bold uppercase tracking-wide transition flex items-center justify-center">
                     Checkout Now
                 </a>
 
-                <div class="mt-8 flex items-center justify-center gap-4 text-slate-500">
+                <div class="mt-5 flex items-center justify-center gap-4 text-slate-500">
                     <i class="fab fa-cc-visa text-2xl"></i>
                     <i class="fab fa-cc-mastercard text-2xl"></i>
                     <i class="fab fa-cc-apple-pay text-2xl"></i>
@@ -154,6 +160,18 @@ function cartPage() {
                     priceEl.innerText = data.item_total;
                     this.total = data.total;
                     this.itemCount = data.cart_count;
+                    document.getElementById('cart-subtotal').textContent = '$' + data.subtotal;
+                    document.getElementById('cart-total').textContent = '$' + data.total;
+                    const shippingEl = document.getElementById('cart-shipping');
+                    if (shippingEl) {
+                        if (parseFloat(data.shipping) > 0) {
+                            shippingEl.textContent = '$' + data.shipping;
+                            shippingEl.className = 'font-semibold text-white';
+                        } else {
+                            shippingEl.textContent = 'FREE';
+                            shippingEl.className = 'font-semibold text-emerald-400';
+                        }
+                    }
                 }
             });
         },

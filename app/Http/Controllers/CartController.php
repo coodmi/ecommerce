@@ -12,13 +12,24 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []);
-        
-        $total = 0;
+
+        $subtotal = 0;
         foreach($cart as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
+            $subtotal += $details['price'] * $details['quantity'];
         }
 
-        return view('pages.cart', compact('cart', 'total'));
+        $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+        $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+        $deliveryLabel         = \App\Models\Setting::get('delivery_label', 'Delivery Charge');
+
+        $shipping = 0;
+        if ($deliveryCharge > 0) {
+            $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+        }
+
+        $total = $subtotal + $shipping;
+
+        return view('pages.cart', compact('cart', 'subtotal', 'total', 'shipping', 'deliveryCharge', 'deliveryFreeThreshold', 'deliveryLabel'));
     }
 
     public function add(Request $request, $id)
@@ -86,6 +97,22 @@ class CartController extends Controller
         }
     }
 
+    private function calcTotals(array $cart): array
+    {
+        $subtotal = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cart));
+        $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+        $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+        $shipping = 0;
+        if ($deliveryCharge > 0) {
+            $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+        }
+        return [
+            'subtotal'  => number_format($subtotal, 2),
+            'shipping'  => number_format($shipping, 2),
+            'total'     => number_format($subtotal + $shipping, 2),
+        ];
+    }
+
     public function update(Request $request)
     {
         if($request->id && $request->quantity){
@@ -93,15 +120,14 @@ class CartController extends Controller
             if (isset($cart[$request->id])) {
                 $cart[$request->id]["quantity"] = $request->quantity;
                 session()->put('cart', $cart);
-                
-                $total = 0;
-                foreach($cart as $item) {
-                    $total += $item['price'] * $item['quantity'];
-                }
+
+                $totals = $this->calcTotals($cart);
 
                 return response()->json([
-                    'success' => true,
-                    'total' => number_format($total, 2),
+                    'success'    => true,
+                    'subtotal'   => $totals['subtotal'],
+                    'shipping'   => $totals['shipping'],
+                    'total'      => $totals['total'],
                     'item_total' => number_format($cart[$request->id]['price'] * $cart[$request->id]['quantity'], 2),
                     'cart_count' => count($cart)
                 ]);
@@ -118,15 +144,14 @@ class CartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            
-            $total = 0;
-            foreach($cart as $item) {
-                $total += $item['price'] * $item['quantity'];
-            }
+
+            $totals = $this->calcTotals($cart);
 
             return response()->json([
-                'success' => true,
-                'total' => number_format($total, 2),
+                'success'    => true,
+                'subtotal'   => $totals['subtotal'],
+                'shipping'   => $totals['shipping'],
+                'total'      => $totals['total'],
                 'cart_count' => count($cart)
             ]);
         }
