@@ -3,7 +3,7 @@
 @section('title', 'Hero Section')
 
 @section('content')
-<div class="p-6 max-w-4xl mx-auto">
+<div class="p-6">
 
     <div class="mb-6">
         <h1 class="text-lg font-bold text-gray-900">Hero Section</h1>
