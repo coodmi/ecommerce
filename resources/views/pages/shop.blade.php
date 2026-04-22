@@ -30,7 +30,7 @@
 
                     <!-- Search -->
                     <div class="mb-8">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-search text-primary mr-2"></i> Search Products
                         </h3>
                         <div class="relative">
@@ -49,7 +49,7 @@
 
                     <!-- Categories -->
                     <div class="mb-8 pb-8 border-b border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-th-large text-primary mr-2"></i> Categories
                         </h3>
                         <ul class="space-y-3">
@@ -85,7 +85,7 @@
 
                     <!-- Price Range -->
                     <div class="mb-8 pb-8 border-b border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-dollar-sign text-primary mr-2"></i> Price Range
                         </h3>
                         <div class="space-y-4">
@@ -111,7 +111,7 @@
 
                     <!-- Brands -->
                     <div class="mb-8 pb-8 border-b border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-tag text-primary mr-2"></i> Brands
                         </h3>
                         <ul class="space-y-3">
@@ -137,7 +137,7 @@
 
                     <!-- Rating -->
                     <div class="mb-8 pb-8 border-b border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-star text-primary mr-2"></i> Rating
                         </h3>
                         <ul class="space-y-3">
@@ -163,7 +163,7 @@
 
                     <!-- Color Filter -->
                     <div class="mb-8 pb-8 border-b border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-palette text-primary mr-2"></i> Colors
                         </h3>
                         <div class="flex flex-wrap gap-2">
@@ -184,7 +184,7 @@
 
                     <!-- Size Filter -->
                     <div class="mb-8">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4 flex items-center">
+                        <h3 class="font-semibold text-sm text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-ruler-combined text-primary mr-2"></i> Sizes
                         </h3>
                         <div class="flex flex-wrap gap-2">

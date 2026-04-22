@@ -21,7 +21,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden" id="invoice-content">
 
             {{-- Header --}}
-            <div class="relative bg-primary px-8 py-8 flex items-center justify-between overflow-hidden">
+            <div class="relative bg-primary px-4 sm:px-8 py-6 sm:py-8 flex items-center justify-between overflow-hidden">
                 {{-- Decorative white shapes --}}
                 <div class="absolute -top-8 -left-8 w-40 h-40 bg-white/10 rounded-full"></div>
                 <div class="absolute -bottom-10 left-24 w-28 h-28 bg-white/10 rounded-full"></div>
@@ -44,12 +44,12 @@
                 </div>
 
                 <div class="relative z-10 text-right">
-                    <p class="text-white text-3xl font-black tracking-widest">INVOICE</p>
+                    <p class="text-white text-xl font-bold tracking-widest">INVOICE</p>
                     <p class="text-white text-sm font-semibold mt-1">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</p>
                 </div>
             </div>
 
-            <div class="px-8 py-6 space-y-6">
+            <div class="px-4 sm:px-8 py-6 space-y-6">
 
                 {{-- Meta row --}}
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
@@ -89,8 +89,8 @@
                 {{-- Items Table --}}
                 <div>
                     <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-3">Order Items</p>
-                    <div class="border border-gray-100 rounded-xl overflow-hidden">
-                        <table class="w-full text-sm">
+                    <div class="overflow-x-auto border border-gray-100 rounded-xl">
+                        <table class="w-full text-sm min-w-[400px]">
                             <thead class="bg-gray-50 border-b border-gray-100">
                                 <tr>
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Product</th>

@@ -12,7 +12,7 @@
                 <i class="fas fa-arrow-left text-xl"></i>
             </a>
             <div>
-                <h1 class="text-3xl font-display font-bold text-gray-900">Create Product</h1>
+                <h1 class="dash-title text-gray-900">Create Product</h1>
                 <p class="text-gray-600 mt-1">Add a new product to your inventory</p>
             </div>
         </div>
@@ -137,7 +137,7 @@
                         <p class="mt-1 text-sm text-gray-500">You can select multiple images. First image will be the primary image.</p>
 
                         <!-- Image Previews -->
-                        <div x-show="imagePreviews.length > 0" class="mt-4 grid grid-cols-4 gap-4">
+                        <div x-show="imagePreviews.length > 0" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                             <template x-for="(preview, index) in imagePreviews" :key="index">
                                 <div class="relative group">
                                     <img :src="preview" class="w-full h-32 object-cover rounded-lg border-2 border-gray-300">

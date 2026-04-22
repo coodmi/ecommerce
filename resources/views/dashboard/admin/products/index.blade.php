@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-display font-bold text-gray-900">Products Management</h1>
+        <h1 class="dash-title text-gray-900">Products Management</h1>
             <p class="text-gray-600 mt-1">Manage your product inventory</p>
         </div>
         <a href="{{ route('admin.products.create') }}"

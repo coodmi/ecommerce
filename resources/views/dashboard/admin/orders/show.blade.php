@@ -10,7 +10,7 @@
             <a href="{{ route('admin.orders.index') }}" class="text-sm font-bold text-indigo-600 hover:text-indigo-700 mb-2 inline-block">
                 <i class="fas fa-arrow-left mr-1"></i> Back to Orders
             </a>
-            <h1 class="text-3xl font-display font-bold text-gray-900">Order #EA-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</h1>
+            <h1 class="text-xl font-bold text-gray-900">Order #EA-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</h1>
             <p class="text-gray-600 mt-1">Placed on {{ $order->created_at->format('F d, Y \a\t h:i A') }}</p>
         </div>
 
@@ -56,16 +56,16 @@
         <!-- Order Items -->
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 overflow-hidden">
-                <div class="p-8 border-b border-gray-50 flex items-center justify-between">
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-widest">Order Items</h2>
+                <div class="p-4 sm:p-6 border-b border-gray-50 flex items-center justify-between">
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Order Items</h2>
                     <span class="px-4 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-black uppercase tracking-wider">
                         {{ $order->items->count() }} Products
                     </span>
                 </div>
                 <div class="divide-y divide-gray-50">
                     @foreach($order->items as $item)
-                    <div class="p-8 flex items-center gap-6">
-                        <div class="w-20 h-20 rounded-2xl overflow-hidden bg-slate-50 flex-shrink-0 border border-slate-100">
+                    <div class="p-4 sm:p-6 flex items-center gap-4">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-slate-50 flex-shrink-0 border border-slate-100">
                             <img src="{{ $item->product->primaryImage ? (str_starts_with($item->product->primaryImage->image_path, 'http') ? $item->product->primaryImage->image_path : asset('storage/' . $item->product->primaryImage->image_path)) : asset('images/placeholder-product.jpg') }}"
                                  class="w-full h-full object-cover">
                         </div>
@@ -88,23 +88,22 @@
                     </div>
                     @endforeach
                 </div>
-                <!-- Summary -->
-                <div class="p-8 bg-slate-50 border-t border-gray-100">
-                    <div class="flex justify-between items-center text-lg">
-                        <span class="font-black text-slate-900 uppercase tracking-widest">Total Amount Paid</span>
-                        <span class="text-3xl font-black text-slate-900">${{ number_format($order->total_amount, 2) }}</span>
+                <div class="p-4 sm:p-6 bg-slate-50 border-t border-gray-100">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-900 text-sm uppercase tracking-wide">Total Amount Paid</span>
+                        <span class="text-xl font-bold text-slate-900">${{ number_format($order->total_amount, 2) }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Dynamic Checkout Details -->
-            <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-8">
-                <h2 class="text-xl font-black text-slate-900 uppercase tracking-widest mb-8">Customer Submission</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-xl">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Customer Submission</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     @foreach($order->checkout_details as $label => $value)
                     <div class="space-y-1">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ str_replace('_', ' ', $label) }}</p>
-                        <p class="text-slate-900 font-bold text-lg">{{ $value ?: '—' }}</p>
+                        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{{ str_replace('_', ' ', $label) }}</p>
+                        <p class="text-slate-900 font-semibold text-sm">{{ $value ?: '—' }}</p>
                     </div>
                     @endforeach
                 </div>

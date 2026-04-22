@@ -20,16 +20,16 @@
     <div class="flex flex-col lg:flex-row gap-12" x-show="itemCount > 0" x-cloak>
         <!-- Cart Items -->
         <div class="lg:w-2/3">
-            <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
-                <h1 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Your Cart</h1>
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                <h1 class="text-xl font-bold text-slate-900">Your Cart</h1>
                 <span class="text-slate-400 font-medium" x-text="itemCount + ' Items'"></span>
             </div>
 
             <div class="space-y-6">
                 @foreach($cart as $id => $details)
-                <div class="flex items-center gap-6 p-6 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow cart-item-{{ $id }}">
+                <div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow cart-item-{{ $id }}">
                     <!-- Image -->
-                    <div class="w-32 h-32 rounded-2xl overflow-hidden bg-slate-50 flex-shrink-0">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-slate-50 flex-shrink-0">
                         <img src="{{ $details['image'] ? (str_starts_with($details['image'], 'http') ? $details['image'] : asset('storage/' . $details['image'])) : asset('images/placeholder-product.jpg') }}" 
                              alt="{{ $details['name'] }}" 
                              class="w-full h-full object-cover">
@@ -37,7 +37,7 @@
 
                     <!-- Info -->
                     <div class="flex-1">
-                        <h3 class="font-black text-slate-900 uppercase tracking-widest text-sm mb-1">{{ $details['name'] }}</h3>
+                        <h3 class="font-semibold text-slate-900 text-sm mb-1">{{ $details['name'] }}</h3>
                         <div class="flex flex-wrap gap-2 mb-4">
                             @if(isset($details['color']))
                             <span class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded uppercase">Color: {{ $details['color'] }}</span>
@@ -75,8 +75,8 @@
 
         <!-- Summary -->
         <div class="lg:w-1/3">
-            <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white sticky top-24">
-                <h2 class="text-2xl font-black uppercase tracking-tight mb-8">Order Summary</h2>
+            <div class="bg-slate-900 rounded-2xl p-6 text-white sticky top-24">
+                <h2 class="text-base font-bold uppercase tracking-tight mb-5">Order Summary</h2>
                 
                 <div class="space-y-4 mb-8">
                     <div class="flex justify-between text-slate-400">
@@ -93,9 +93,9 @@
                     </div>
                 </div>
 
-                <div class="flex justify-between items-end mb-10 pb-10 border-b border-white/10">
-                    <span class="text-slate-400 font-medium">Total Price</span>
-                    <span class="text-4xl font-black">$<span x-text="total"></span></span>
+                <div class="flex justify-between items-end mb-6 pb-6 border-b border-white/10">
+                    <span class="text-slate-400 font-medium text-sm">Total Price</span>
+                    <span class="text-2xl font-bold">$<span x-text="total"></span></span>
                 </div>
 
                 <a href="{{ route('checkout.index') }}" class="w-full bg-primary hover:bg-primary/90 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-primary/20 flex items-center justify-center">

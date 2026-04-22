@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900 font-display">Profile Settings</h1>
+            <h1 class="dash-title text-gray-900">Profile Settings</h1>
             <p class="text-gray-600 mt-1">Manage your account settings and profile information.</p>
         </div>
     </div>

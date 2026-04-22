@@ -15,24 +15,23 @@
         return '$' + parseFloat(price).toFixed(2);
     }
 }">
-    <!-- Page Header -->
-    <div class="mb-8">
-        <h1 class="text-3xl font-display font-bold text-gray-900">My Orders</h1>
-        <p class="text-gray-600 mt-1">Track and view your order history</p>
+    <div class="mb-5">
+        <h1 class="text-xl font-bold text-gray-900">My Orders</h1>
+        <p class="text-gray-500 text-sm mt-0.5">Track and view your order history</p>
     </div>
 
     <!-- Orders List -->
     <div class="space-y-6">
         @forelse($orders as $order)
-        <div class="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="p-8">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div class="p-4 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
                             <i class="fas fa-box text-2xl text-primary"></i>
                         </div>
                         <div>
-                            <h3 class="text-lg font-black text-slate-900 uppercase tracking-widest">
+                            <h3 class="text-sm font-bold text-slate-900">
                                 Order #EA-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                             </h3>
                             <p class="text-sm text-slate-500 font-medium">
@@ -40,8 +39,8 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="px-3 py-1.5 rounded-lg text-xs font-semibold capitalize
                             {{ $order->status === 'completed' ? 'bg-green-50 text-green-600' : '' }}
                             {{ $order->status === 'pending' ? 'bg-amber-50 text-amber-600' : '' }}
                             {{ $order->status === 'cancelled' ? 'bg-red-50 text-red-600' : '' }}
@@ -49,21 +48,21 @@
                             {{ $order->status }}
                         </span>
                         <a href="{{ route('order.invoice', $order->id) }}"
-                           class="px-5 py-3 bg-primary/10 text-primary rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-primary/20 transition-colors">
+                           class="px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors">
                             <i class="fas fa-file-invoice mr-1"></i> Invoice
                         </a>
                         <button @click="activeOrder = {{ $order->toJson() }}"
-                                class="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-colors cursor-pointer">
-                            View Details
+                                class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors cursor-pointer">
+                            Details
                         </button>
                     </div>
                 </div>
 
-                <div class="border-t border-slate-50 pt-6">
-                    <div class="flex items-center gap-4 overflow-x-auto pb-2 custom-scrollbar">
+                <div class="border-t border-slate-50 pt-4">
+                    <div class="flex items-center gap-3 overflow-x-auto pb-2">
                         @foreach($order->items as $item)
-                        <div class="relative group flex-shrink-0">
-                            <div class="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100">
+                        <div class="relative flex-shrink-0">
+                            <div class="w-14 h-14 rounded-lg overflow-hidden bg-slate-50 border border-slate-100">
                                 <img src="{{ $item->product->primaryImage ? (str_starts_with($item->product->primaryImage->image_path, 'http') ? $item->product->primaryImage->image_path : asset('storage/' . $item->product->primaryImage->image_path)) : asset('images/placeholder-product.jpg') }}"
                                      class="w-full h-full object-cover">
                             </div>
@@ -78,9 +77,9 @@
                         </div>
                         @endif
                     </div>
-                    <div class="flex justify-between items-center mt-6">
-                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Amount</p>
-                        <p class="text-2xl font-black text-slate-900">${{ number_format($order->total_amount, 2) }}</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <p class="text-xs text-slate-400 font-semibold">Total Amount</p>
+                        <p class="text-lg font-bold text-slate-900">${{ number_format($order->total_amount, 2) }}</p>
                     </div>
                 </div>
             </div>

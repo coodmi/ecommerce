@@ -13,7 +13,7 @@
             <i class="fas fa-chevron-right text-xs"></i>
             <span class="text-gray-200">My Wishlist</span>
         </nav>
-        <h1 class="text-4xl md:text-5xl font-display font-bold">My Wishlist</h1>
+        <h1 class="text-2xl md:text-3xl font-bold font-display">My Wishlist</h1>
         <p class="text-gray-100 mt-2">Products you've saved for later</p>
     </div>
 </section>

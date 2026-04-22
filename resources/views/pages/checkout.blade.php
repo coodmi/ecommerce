@@ -23,9 +23,9 @@
             <h1 class="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">Checkout</h1>
             
             <form @submit.prevent="submitOrder" class="space-y-8">
-                <div class="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm">
-                    <h2 class="text-2xl font-black text-slate-900 uppercase tracking-widest mb-8 flex items-center gap-4">
-                        <span class="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center text-sm">01</span>
+                <div class="bg-white rounded-2xl p-5 sm:p-8 border border-slate-100 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wide mb-5 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center text-xs">01</span>
                         Shipping Information
                     </h2>
 
@@ -64,9 +64,9 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm">
-                    <h2 class="text-2xl font-black text-slate-900 uppercase tracking-widest mb-8 flex items-center gap-4">
-                        <span class="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center text-sm">02</span>
+                <div class="bg-white rounded-2xl p-5 sm:p-8 border border-slate-100 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wide mb-5 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center text-xs">02</span>
                         Payment Method
                     </h2>
                     
@@ -92,7 +92,7 @@
                 </div>
 
                 <button type="submit" :disabled="isSubmitting"
-                        class="w-full bg-slate-900 hover:bg-slate-800 text-white py-6 rounded-[2rem] font-black uppercase tracking-[0.3em] transition-all duration-500 transform hover:scale-[1.02] shadow-2xl relative overflow-hidden group">
+                        class="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 rounded-xl font-bold uppercase tracking-wide transition-all duration-300 shadow-lg relative overflow-hidden group">
                     <span class="relative z-10" x-text="isSubmitting ? 'Processing...' : 'Place Order Now'"></span>
                     <div class="absolute inset-0 bg-linear-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </button>
