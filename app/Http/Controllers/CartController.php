@@ -64,13 +64,14 @@ class CartController extends Controller
                 // For now, let's keep it simple as the landing page mostly uses base_price.
                 
                 $cart[$cartKey] = [
-                    "product_id" => $product->id,
-                    "name" => $product->name,
-                    "quantity" => $quantity,
-                    "price" => $price,
-                    "image" => $image ? $image->image_path : '',
-                    "color" => $colorName,
-                    "size" => $sizeName
+                    "product_id"      => $product->id,
+                    "name"            => $product->name,
+                    "quantity"        => $quantity,
+                    "price"           => $price,
+                    "image"           => $image ? $image->image_path : '',
+                    "color"           => $colorName,
+                    "size"            => $sizeName,
+                    "delivery_charge" => $product->delivery_charge,
                 ];
             }
 
@@ -100,16 +101,30 @@ class CartController extends Controller
     private function calcTotals(array $cart): array
     {
         $subtotal = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cart));
-        $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
-        $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+        $globalCharge     = (float) \App\Models\Setting::get('delivery_charge', 0);
+        $freeThreshold    = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+
+        // Use per-product charge if set, else global
         $shipping = 0;
-        if ($deliveryCharge > 0) {
-            $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+        if ($globalCharge > 0 || !empty(array_filter(array_column($cart, 'delivery_charge')))) {
+            if ($freeThreshold > 0 && $subtotal >= $freeThreshold) {
+                $shipping = 0;
+            } else {
+                // Max delivery charge across cart items (or global if none set per product)
+                $charges = [];
+                foreach ($cart as $item) {
+                    $charges[] = isset($item['delivery_charge']) && $item['delivery_charge'] !== null
+                        ? (float) $item['delivery_charge']
+                        : $globalCharge;
+                }
+                $shipping = !empty($charges) ? max($charges) : $globalCharge;
+            }
         }
+
         return [
-            'subtotal'  => number_format($subtotal, 2),
-            'shipping'  => number_format($shipping, 2),
-            'total'     => number_format($subtotal + $shipping, 2),
+            'subtotal' => number_format($subtotal, 2),
+            'shipping' => number_format($shipping, 2),
+            'total'    => number_format($subtotal + $shipping, 2),
         ];
     }
 

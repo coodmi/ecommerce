@@ -151,6 +151,10 @@ Route::middleware('auth')->group(function () {
         // Hero Section
         Route::get('/hero', [App\Http\Controllers\Admin\HeroController::class, 'edit'])->name('hero.edit');
         Route::put('/hero', [App\Http\Controllers\Admin\HeroController::class, 'update'])->name('hero.update');
+        // Delivery Charges
+        Route::get('/delivery-charges', [App\Http\Controllers\Admin\DeliveryChargeController::class, 'index'])->name('delivery.index');
+        Route::put('/delivery-charges/bulk', [App\Http\Controllers\Admin\DeliveryChargeController::class, 'bulkUpdate'])->name('delivery.bulk');
+        Route::put('/delivery-charges/{product}', [App\Http\Controllers\Admin\DeliveryChargeController::class, 'updateProduct'])->name('delivery.update');
         // Seller Requests
         Route::get('/seller-requests', [App\Http\Controllers\SellerRequestController::class, 'index'])->name('seller-requests');
         Route::get('/seller-requests/{id}', [App\Http\Controllers\SellerRequestController::class, 'show'])->name('seller-requests.show');

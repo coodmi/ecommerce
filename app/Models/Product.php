@@ -15,6 +15,7 @@ class Product extends Model
         'slug',
         'description',
         'base_price',
+        'delivery_charge',
         'category_id',
         'is_active',
         'stock_quantity',
@@ -25,9 +26,10 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
-        'base_price' => 'decimal:2',
-        'is_deal' => 'boolean',
+        'is_active'       => 'boolean',
+        'base_price'      => 'decimal:2',
+        'delivery_charge' => 'decimal:2',
+        'is_deal'         => 'boolean',
     ];
 
     // Automatically generate slug from name

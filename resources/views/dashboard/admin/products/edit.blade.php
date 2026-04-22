@@ -117,6 +117,24 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
+                        <!-- Delivery Charge -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Delivery Charge ($)
+                                <span class="text-gray-400 font-normal text-xs ml-1">— leave blank to use global default</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                                <input type="number"
+                                       name="delivery_charge"
+                                       value="{{ old('delivery_charge', $product->delivery_charge !== null ? number_format($product->delivery_charge, 2, '.', '') : '') }}"
+                                       min="0" step="0.01"
+                                       class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary transition"
+                                       placeholder="e.g. 5.00">
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1">Global default: ${{ number_format(\App\Models\Setting::get('delivery_charge', 0), 2) }}</p>
+                        </div>
                     </div>
                 </div>
 
