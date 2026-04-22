@@ -142,6 +142,9 @@ Route::middleware('auth')->group(function () {
 
     // Admin Only Routes
     Route::middleware(\App\Http\Middleware\RoleMiddleware::class.':admin')->prefix('admin')->name('admin.')->group(function () {
+        // Hero Section
+        Route::get('/hero', [App\Http\Controllers\Admin\HeroController::class, 'edit'])->name('hero.edit');
+        Route::put('/hero', [App\Http\Controllers\Admin\HeroController::class, 'update'])->name('hero.update');
         // Seller Requests
         Route::get('/seller-requests', [App\Http\Controllers\SellerRequestController::class, 'index'])->name('seller-requests');
         Route::get('/seller-requests/{id}', [App\Http\Controllers\SellerRequestController::class, 'show'])->name('seller-requests.show');

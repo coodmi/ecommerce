@@ -29,6 +29,12 @@
                 <span class="font-medium">Dashboard</span>
             </a>
 
+            <!-- Hero Section -->
+            <a href="{{ route('admin.hero.edit') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->is('admin/hero*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
+                <i class="fas fa-sliders text-lg {{ request()->is('admin/hero*') ? 'text-white' : 'text-yellow-400' }} group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Hero Section</span>
+            </a>
+
             <!-- Users Management -->
             <a href="{{ route('admin.users.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->is('admin/users*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
                 <i class="fas fa-users text-lg {{ request()->is('admin/users*') ? 'text-white' : 'text-blue-400' }} group-hover:scale-110 transition-transform"></i>
