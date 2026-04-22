@@ -101,7 +101,11 @@ Route::post('/login', function (Illuminate\Http\Request $request) {
 
     if (Auth::attempt($credentials, $request->filled('remember'))) {
         $request->session()->regenerate();
-        return redirect()->intended(route('checkout.index'));
+        $user = Auth::user();
+        if ($user->role === 'admin' || $user->role === 'seller') {
+            return redirect()->intended(route('dashboard'));
+        }
+        return redirect()->intended('/');
     }
 
     return back()->with('error', 'Invalid credentials. Please try again.');
