@@ -23,10 +23,10 @@
                 <div class="inline-block bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium">
                     {{ $sections['hero']['badge_text'] ?? '🎉 New Collection 2026' }}
                 </div>
-                <h1 class="text-2xl md:text-3xl font-display font-bold leading-tight">
+                <h1 class="hero-heading text-3xl md:text-5xl font-display font-bold leading-tight">
                     {{ $sections['hero']['title_prefix'] ?? 'Discover Your' }} <span class="block text-yellow-300">{{ $sections['hero']['title_suffix'] ?? 'Style Today' }}</span>
                 </h1>
-                <p class="text-sm text-gray-300 leading-relaxed">
+                <p class="text-sm md:text-base text-gray-300 leading-relaxed">
                     {{ $sections['hero']['description'] ?? 'Shop the latest trends with unbeatable prices. Quality products, fast delivery, and exceptional service guaranteed.' }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
