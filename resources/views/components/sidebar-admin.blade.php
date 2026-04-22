@@ -1,5 +1,5 @@
 <!-- Admin Sidebar -->
-<aside id="sidebar" class="sidebar-animate fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white transform transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 shadow-2xl">
+<aside id="sidebar" class="sidebar-animate fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white transform -translate-x-full transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 shadow-2xl">
     <div class="flex flex-col h-full">
         <!-- Logo -->
         <div class="flex items-center justify-between px-6 py-6 border-b border-slate-700/50 bg-slate-900/50 backdrop-blur">
