@@ -21,10 +21,10 @@
 
     <h1 class="text-xl font-bold text-gray-900 mb-6">Checkout</h1>
 
-    <div class="flex flex-col lg:flex-row gap-8 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-        {{-- Left: Form --}}
-        <div class="flex-1 min-w-0 w-full space-y-5">
+        {{-- Left: Form (takes 2 cols) --}}
+        <div class="lg:col-span-2 space-y-5">
 
             {{-- Shipping Info --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -109,7 +109,7 @@
         </div>
 
         {{-- Right: Summary --}}
-        <div class="w-full lg:w-[360px] lg:flex-shrink-0">
+        <div class="lg:col-span-1">
             <div class="bg-primary rounded-2xl p-6 text-white lg:sticky lg:top-24">
                 <h2 class="text-sm font-bold uppercase tracking-wider mb-5 pb-4 border-b border-white/20">Order Summary</h2>
 
