@@ -4,20 +4,20 @@
 
 @section('content')
 <!-- Breadcrumb -->
-<section class="bg-slate-50 border-b border-slate-200 py-6 mb-12">
+<section class="bg-slate-50 border-b border-slate-200 py-3 mb-6">
     <div class="container mx-auto px-4">
-        <nav class="flex items-center space-x-2 text-sm font-medium">
-            <a href="/" class="text-slate-500 hover:text-primary transition">Home</a>
-            <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
-            <a href="{{ route('shop') }}" class="text-slate-500 hover:text-primary transition">Shop</a>
-            <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
-            <span class="text-slate-900">Your Cart</span>
+        <nav class="flex items-center space-x-2 text-xs font-medium text-slate-500">
+            <a href="/" class="hover:text-primary transition">Home</a>
+            <i class="fas fa-chevron-right text-[9px]"></i>
+            <a href="{{ route('shop') }}" class="hover:text-primary transition">Shop</a>
+            <i class="fas fa-chevron-right text-[9px]"></i>
+            <span class="text-slate-800">Cart</span>
         </nav>
     </div>
 </section>
 
-<div class="container mx-auto px-4 pb-20" x-data="cartPage()">
-    <div class="flex flex-col lg:flex-row gap-12" x-show="itemCount > 0" x-cloak>
+<div class="container mx-auto px-4 pb-12" x-data="cartPage()">
+    <div class="flex flex-col lg:flex-row gap-6" x-show="itemCount > 0" x-cloak>
         <!-- Cart Items -->
         <div class="lg:w-2/3">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
@@ -74,16 +74,16 @@
         </div>
 
         <!-- Summary -->
-        <div class="lg:w-1/3">
-            <div class="bg-slate-900 rounded-2xl p-6 text-white sticky top-24">
-                <h2 class="text-base font-bold uppercase tracking-tight mb-5">Order Summary</h2>
+        <div class="lg:w-80 xl:w-96 flex-shrink-0">
+            <div class="bg-slate-900 rounded-2xl p-5 text-white lg:sticky lg:top-24">
+                <h2 class="text-sm font-bold uppercase tracking-wide mb-4 pb-3 border-b border-slate-700">Order Summary</h2>
 
-                <div class="space-y-3 mb-5" id="cart-summary">
-                    <div class="flex justify-between text-slate-400 text-sm">
-                        <span>Subtotal</span>
-                        <span class="font-semibold" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
+                <div class="space-y-2.5 mb-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">Subtotal</span>
+                        <span class="font-semibold text-white" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-sm" id="shipping-row">
+                    <div class="flex justify-between text-sm">
                         <span class="text-slate-400">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
                             <span class="font-semibold text-white" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
@@ -92,27 +92,28 @@
                         @endif
                     </div>
                     @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
-                    <div class="text-xs text-slate-500 bg-slate-800 rounded-lg px-3 py-2">
-                        <i class="fas fa-info-circle text-primary mr-1"></i>
+                    <div class="text-xs text-slate-400 bg-slate-800 rounded-lg px-3 py-2">
+                        <i class="fas fa-tag text-primary mr-1"></i>
                         Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
                     </div>
                     @endif
                 </div>
 
-                <div class="flex justify-between items-center mb-5 pt-4 border-t border-slate-700">
-                    <span class="text-slate-400 text-sm">Total</span>
-                    <span class="text-xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
+                <div class="flex justify-between items-center py-3 border-t border-slate-700 mb-4">
+                    <span class="text-slate-300 text-sm font-medium">Total</span>
+                    <span class="text-xl font-bold text-white" id="cart-total">${{ number_format($total, 2) }}</span>
                 </div>
 
-                <a href="{{ route('checkout.index') }}" class="w-full bg-primary hover:bg-primary/90 text-white py-3.5 rounded-xl font-bold uppercase tracking-wide transition flex items-center justify-center">
+                <a href="{{ route('checkout.index') }}"
+                   class="block w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-semibold text-sm text-center transition">
                     Checkout Now
                 </a>
 
-                <div class="mt-5 flex items-center justify-center gap-4 text-slate-500">
-                    <i class="fab fa-cc-visa text-2xl"></i>
-                    <i class="fab fa-cc-mastercard text-2xl"></i>
-                    <i class="fab fa-cc-apple-pay text-2xl"></i>
-                    <i class="fas fa-shield-alt text-xl"></i>
+                <div class="mt-4 flex items-center justify-center gap-3 text-slate-600">
+                    <i class="fab fa-cc-visa text-xl"></i>
+                    <i class="fab fa-cc-mastercard text-xl"></i>
+                    <i class="fab fa-cc-apple-pay text-xl"></i>
+                    <i class="fas fa-shield-alt text-lg"></i>
                 </div>
             </div>
         </div>
