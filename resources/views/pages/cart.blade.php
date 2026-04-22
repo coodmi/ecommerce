@@ -74,38 +74,38 @@
         </div>
 
         <!-- Summary -->
-        <div class="lg:w-[340px] flex-shrink-0">
-            <div class="bg-primary rounded-2xl p-6 text-white lg:sticky lg:top-24">
-                <h2 class="text-base font-bold uppercase tracking-wider mb-5 pb-4 border-b border-white/20">Order Summary</h2>
+        <div class="lg:w-[380px] flex-shrink-0">
+            <div class="bg-primary rounded-2xl p-7 text-white lg:sticky lg:top-24">
+                <h2 class="text-sm font-bold uppercase tracking-widest mb-5 pb-4 border-b border-white/20">Order Summary</h2>
 
-                <div class="space-y-3 mb-5">
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-white/75">Subtotal</span>
-                        <span class="font-semibold" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
+                <div class="space-y-3 mb-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/75 text-sm">Subtotal</span>
+                        <span class="font-semibold text-sm" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
                     </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-white/75">{{ $deliveryLabel }}</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/75 text-sm">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
-                            <span class="font-semibold" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
+                            <span class="font-semibold text-sm" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
                         @else
-                            <span class="font-bold text-yellow-300" id="cart-shipping">FREE</span>
+                            <span class="font-bold text-sm text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
                     </div>
                     @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
-                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2 mt-1">
+                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
                         <i class="fas fa-tag mr-1"></i>
                         Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
                     </div>
                     @endif
                 </div>
 
-                <div class="flex justify-between items-center py-4 border-t border-b border-white/20 mb-5">
-                    <span class="text-white/80 font-medium">Total</span>
-                    <span class="text-2xl font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
+                <div class="flex justify-between items-center py-4 border-t border-b border-white/20 my-4">
+                    <span class="text-white/80 text-sm font-medium">Total</span>
+                    <span class="cart-total-amount font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
                 </div>
 
                 <a href="{{ route('checkout.index') }}"
-                   class="block w-full bg-white text-primary hover:bg-white/90 py-3.5 rounded-xl font-bold text-sm text-center transition shadow-sm">
+                   class="block w-full bg-white text-primary hover:bg-gray-100 py-3.5 rounded-xl font-bold text-sm text-center transition shadow-sm">
                     Checkout Now
                 </a>
 
