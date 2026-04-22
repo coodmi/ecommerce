@@ -232,12 +232,12 @@ class PageController extends Controller
             $section->save();
         }
 
+        // Clear header/footer cache when pages are saved
+        \Illuminate\Support\Facades\Cache::forget('global_header_config');
+        \Illuminate\Support\Facades\Cache::forget('global_footer_config');
+
         return redirect()->route('admin.pages.index')->with('success', 'Page content updated successfully');
     }
-
-    /**
-     * Decode JSON field if it's a valid JSON string
-     */
     private function decodeJsonField($value)
     {
         // If it's already an array, return as is

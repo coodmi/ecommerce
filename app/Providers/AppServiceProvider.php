@@ -19,13 +19,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share header and footer data globally for components like sidebar, header, footer
+        // Share header/footer config globally — cached for 10 minutes to avoid repeated DB hits
         view()->composer('*', function ($view) {
-            $headerPage = \App\Models\Page::where('slug', 'header')->with('sections')->first();
-            $headerConfig = $headerPage ? $headerPage->sections->pluck('content', 'key') : collect();
-            
-            $footerPage = \App\Models\Page::where('slug', 'footer')->with('sections')->first();
-            $footerConfig = $footerPage ? $footerPage->sections->pluck('content', 'key') : collect();
+            static $headerConfig = null;
+            static $footerConfig = null;
+
+            if ($headerConfig === null) {
+                $headerConfig = cache()->remember('global_header_config', 600, function () {
+                    $page = \App\Models\Page::where('slug', 'header')->with('sections')->first();
+                    return $page ? $page->sections->pluck('content', 'key') : collect();
+                });
+            }
+
+            if ($footerConfig === null) {
+                $footerConfig = cache()->remember('global_footer_config', 600, function () {
+                    $page = \App\Models\Page::where('slug', 'footer')->with('sections')->first();
+                    return $page ? $page->sections->pluck('content', 'key') : collect();
+                });
+            }
 
             $view->with([
                 'globalHeaderConfig' => $headerConfig,

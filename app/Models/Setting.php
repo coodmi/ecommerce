@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
@@ -11,28 +12,17 @@ class Setting extends Model
 
     protected $fillable = ['key', 'value'];
 
-    /**
-     * Get a setting value by key.
-     *
-     * @param string $key
-     * @param mixed $default
-     * @return mixed
-     */
     public static function get($key, $default = null)
     {
-        $setting = self::where('key', $key)->first();
-        return $setting ? $setting->value : $default;
+        return Cache::remember("setting_{$key}", 600, function () use ($key, $default) {
+            $setting = self::where('key', $key)->first();
+            return $setting ? $setting->value : $default;
+        });
     }
 
-    /**
-     * Set a setting value by key.
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return bool
-     */
     public static function set($key, $value)
     {
+        Cache::forget("setting_{$key}");
         return self::updateOrCreate(['key' => $key], ['value' => $value]);
     }
 }
