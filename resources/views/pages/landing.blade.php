@@ -63,18 +63,19 @@
 
     <script>
         function bgSlider() {
+            @php
+                $sliderImgs = !empty($sections['hero']['slider_images'])
+                    ? $sections['hero']['slider_images']
+                    : [
+                        'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&h=900&fit=crop',
+                        'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&h=900&fit=crop',
+                        'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=900&fit=crop',
+                        'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&h=900&fit=crop',
+                      ];
+            @endphp
             return {
                 bgCurrent: 0,
-                bgImages: @json(
-                    !empty($sections['hero']['slider_images'])
-                        ? $sections['hero']['slider_images']
-                        : [
-                            'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&h=900&fit=crop',
-                            'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&h=900&fit=crop',
-                            'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=900&fit=crop',
-                            'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&h=900&fit=crop'
-                          ]
-                ),
+                bgImages: {!! json_encode($sliderImgs) !!},
                 timer: null,
                 init() { this.startAuto(); },
                 startAuto() {
