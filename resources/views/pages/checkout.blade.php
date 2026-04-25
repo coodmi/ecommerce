@@ -32,41 +32,45 @@
                     <h2 class="text-sm font-bold text-gray-900">Contact Information</h2>
                 </div>
                 <div class="p-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        @php
-                            $contactFields = collect($fields)->filter(fn($f) => in_array($f->name, ['full_name', 'phone', 'email']))->values();
-                        @endphp
-                        @foreach($contactFields as $field)
-                        <div class="{{ $field->name === 'email' ? 'sm:col-span-2' : '' }}">
+                    <div class="space-y-4">
+                        {{-- Full Name (Full Width) --}}
+                        <div>
                             <label class="block text-xs font-semibold text-gray-700 mb-2">
-                                {{ $field->label }}@if($field->is_required)<span class="text-red-500">*</span>@endif
+                                Full Name <span class="text-red-500">*</span>
                             </label>
-                            @if($field->type === 'textarea')
-                                <textarea name="{{ $field->name }}" x-model="formData.{{ $field->name }}"
-                                          {{ $field->is_required ? 'required' : '' }} rows="3"
-                                          placeholder="{{ $field->placeholder }}"
-                                          class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
-                            @elseif($field->type === 'select')
-                                <select name="{{ $field->name }}" x-model="formData.{{ $field->name }}"
-                                        {{ $field->is_required ? 'required' : '' }}
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
-                                    <option value="">Select {{ $field->label }}</option>
-                                    @foreach($field->options as $option)
-                                        <option value="{{ $option }}">{{ $option }}</option>
-                                    @endforeach
-                                </select>
-                            @else
-                                <input type="{{ $field->type }}" name="{{ $field->name }}"
-                                       x-model="formData.{{ $field->name }}"
-                                       {{ $field->is_required ? 'required' : '' }}
-                                       placeholder="{{ $field->placeholder }}"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
-                            @endif
-                            <template x-if="errors.{{ $field->name }}">
-                                <p class="text-red-500 text-xs mt-1" x-text="errors.{{ $field->name }}[0]"></p>
+                            <input type="text" name="full_name" x-model="formData.full_name" required
+                                   placeholder="Enter your full name"
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                            <template x-if="errors.full_name">
+                                <p class="text-red-500 text-xs mt-1" x-text="errors.full_name[0]"></p>
                             </template>
                         </div>
-                        @endforeach
+
+                        {{-- Phone and Email (Side by Side) --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 mb-2">
+                                    Phone Number <span class="text-red-500">*</span>
+                                </label>
+                                <input type="tel" name="phone" x-model="formData.phone" required
+                                       placeholder="e.g. 01712345678"
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                                <template x-if="errors.phone">
+                                    <p class="text-red-500 text-xs mt-1" x-text="errors.phone[0]"></p>
+                                </template>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 mb-2">
+                                    Email (Optional)
+                                </label>
+                                <input type="email" name="email" x-model="formData.email"
+                                       placeholder="your.email@example.com"
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                                <template x-if="errors.email">
+                                    <p class="text-red-500 text-xs mt-1" x-text="errors.email[0]"></p>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
