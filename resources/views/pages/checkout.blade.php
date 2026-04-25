@@ -90,7 +90,7 @@
                                 <input type="radio" name="delivery_zone" value="{{ $zone->id }}" x-model="formData.delivery_zone" @change="updateShipping()" class="hidden peer" required>
                                 <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
                                     <div class="flex items-start gap-3">
-                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0">
                                             <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
                                         </div>
                                         <div class="flex-1">
@@ -111,11 +111,11 @@
                         </template>
                     </div>
 
-                    {{-- Address Fields --}}
+                    {{-- Full Address --}}
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-2">Full Address <span class="text-red-500">*</span></label>
-                        <textarea name="full_address" x-model="formData.full_address" required rows="3"
-                                  placeholder="Enter your complete delivery address"
+                        <textarea name="full_address" x-model="formData.full_address" required rows="4"
+                                  placeholder="Your Full Address"
                                   class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
                         <template x-if="errors.full_address">
                             <p class="text-red-500 text-xs mt-1" x-text="errors.full_address[0]"></p>
