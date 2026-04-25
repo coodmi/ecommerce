@@ -79,31 +79,18 @@
                 <div class="p-6 space-y-5">
                     {{-- Delivery Zone Selection --}}
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-3">Delivery Zone <span class="text-red-500">*</span></label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Delivery Zone <span class="text-red-500">*</span></label>
+                        <select name="delivery_zone" x-model="formData.delivery_zone" @change="updateShipping()" required
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                            <option value="">Select a delivery zone</option>
                             @foreach($deliveryZones as $zone)
-                            <label class="relative cursor-pointer group">
-                                <input type="radio" name="delivery_zone" value="{{ $zone->id }}" x-model="formData.delivery_zone" class="hidden peer" required>
-                                <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
-                                    <div class="flex items-start gap-3">
-                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <i class="fas {{ $zone->icon }} text-primary text-sm"></i>
-                                                <p class="font-semibold text-gray-900 text-sm">{{ $zone->name }}</p>
-                                            </div>
-                                            <p class="text-xs text-gray-500">{{ $zone->delivery_time }}</p>
-                                        </div>
-                                        <span class="text-primary font-bold text-sm">৳{{ number_format($zone->charge, 0) }}</span>
-                                    </div>
-                                </div>
-                            </label>
+                                <option value="{{ $zone->id }}" data-charge="{{ $zone->charge }}">
+                                    {{ $zone->name }} - {{ $zone->delivery_time }} (৳{{ number_format($zone->charge, 0) }})
+                                </option>
                             @endforeach
-                        </div>
+                        </select>
                         <template x-if="errors.delivery_zone">
-                            <p class="text-red-500 text-xs mt-2" x-text="errors.delivery_zone[0]"></p>
+                            <p class="text-red-500 text-xs mt-1" x-text="errors.delivery_zone[0]"></p>
                         </template>
                     </div>
 
@@ -215,18 +202,14 @@
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Shipping</span>
-                            @if($shipping > 0)
-                                <span class="font-semibold text-gray-900">৳{{ number_format($shipping, 0) }}</span>
-                            @else
-                                <span class="font-bold text-green-600">FREE</span>
-                            @endif
+                            <span class="font-semibold text-gray-900" x-text="'৳' + formatNumber(shippingCost)"></span>
                         </div>
                     </div>
 
                     {{-- Grand Total --}}
                     <div class="flex justify-between items-center py-4 border-t border-b border-gray-100">
                         <span class="text-gray-700 font-medium">Total</span>
-                        <span class="text-2xl font-bold text-gray-900">৳{{ number_format($grandTotal, 0) }}</span>
+                        <span class="text-2xl font-bold text-gray-900" x-text="'৳' + formatNumber(grandTotal)"></span>
                     </div>
 
                     {{-- Place Order Button --}}
@@ -250,11 +233,14 @@
 <script>
 function checkoutForm() {
     return {
+        subtotal: {{ $total }},
+        shippingCost: 0,
+        deliveryZones: {!! json_encode($deliveryZones->mapWithKeys(fn($z) => [$z->id => $z->charge])->toArray()) !!},
         formData: {
             full_name: '',
             phone: '',
             email: '',
-            delivery_zone: 'inside_dhaka',
+            delivery_zone: '',
             full_address: '',
             payment_method: 'cod',
             order_notes: '',
@@ -264,6 +250,19 @@ function checkoutForm() {
         },
         errors: {},
         isSubmitting: false,
+
+        get grandTotal() {
+            return this.subtotal + this.shippingCost;
+        },
+
+        formatNumber(num) {
+            return new Intl.NumberFormat('en-US').format(Math.round(num));
+        },
+
+        updateShipping() {
+            const zoneId = this.formData.delivery_zone;
+            this.shippingCost = this.deliveryZones[zoneId] || 0;
+        },
 
         submitOrder() {
             this.isSubmitting = true;
@@ -276,7 +275,11 @@ function checkoutForm() {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(this.formData)
+                body: JSON.stringify({
+                    ...this.formData,
+                    shipping_cost: this.shippingCost,
+                    total_amount: this.grandTotal
+                })
             })
             .then(res => res.json())
             .then(data => {
