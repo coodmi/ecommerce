@@ -38,6 +38,10 @@
                     <i class="fas fa-tags text-lg"></i>
                     <span class="font-medium">Categories</span>
                 </a>
+                <a href="{{ route('admin.delivery-zones.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.delivery-zones.*') ? 'bg-white/20' : 'hover:bg-white/20' }} transition-colors">
+                    <i class="fas fa-truck text-lg"></i>
+                    <span class="font-medium">Delivery Zones</span>
+                </a>
                 <a href="{{ route('admin.reviews.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.reviews.index') ? 'bg-white/20' : 'hover:bg-white/20' }} transition-colors">
                     <i class="fas fa-comment-dots text-lg"></i>
                     <span class="font-medium">Reviews</span>
