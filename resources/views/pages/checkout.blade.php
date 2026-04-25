@@ -79,18 +79,31 @@
                 <div class="p-6 space-y-5">
                     {{-- Delivery Zone Selection --}}
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-2">Delivery Zone <span class="text-red-500">*</span></label>
-                        <select name="delivery_zone" x-model="formData.delivery_zone" @change="updateShipping()" required
-                                class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
-                            <option value="">Select a delivery zone</option>
+                        <label class="block text-xs font-semibold text-gray-700 mb-3">Delivery Zone <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             @foreach($deliveryZones as $zone)
-                                <option value="{{ $zone->id }}" data-charge="{{ $zone->charge }}">
-                                    {{ $zone->name }} - {{ $zone->delivery_time }} (৳{{ number_format($zone->charge, 0) }})
-                                </option>
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="delivery_zone" value="{{ $zone->id }}" x-model="formData.delivery_zone" @change="updateShipping()" class="hidden peer" required>
+                                <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <i class="fas {{ $zone->icon }} text-primary text-sm"></i>
+                                                <p class="font-semibold text-gray-900 text-sm">{{ $zone->name }}</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">{{ $zone->delivery_time }}</p>
+                                        </div>
+                                        <span class="text-primary font-bold text-sm">৳{{ number_format($zone->charge, 0) }}</span>
+                                    </div>
+                                </div>
+                            </label>
                             @endforeach
-                        </select>
+                        </div>
                         <template x-if="errors.delivery_zone">
-                            <p class="text-red-500 text-xs mt-1" x-text="errors.delivery_zone[0]"></p>
+                            <p class="text-red-500 text-xs mt-2" x-text="errors.delivery_zone[0]"></p>
                         </template>
                     </div>
 
