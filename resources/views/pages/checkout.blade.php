@@ -81,8 +81,9 @@
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-3">Delivery Zone <span class="text-red-500">*</span></label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            @foreach($deliveryZones as $zone)
                             <label class="relative cursor-pointer group">
-                                <input type="radio" name="delivery_zone" value="inside_dhaka" x-model="formData.delivery_zone" class="hidden peer" required>
+                                <input type="radio" name="delivery_zone" value="{{ $zone->id }}" x-model="formData.delivery_zone" class="hidden peer" required>
                                 <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
                                     <div class="flex items-start gap-3">
                                         <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -90,33 +91,16 @@
                                         </div>
                                         <div class="flex-1">
                                             <div class="flex items-center gap-2 mb-1">
-                                                <i class="fas fa-map-marker-alt text-primary text-sm"></i>
-                                                <p class="font-semibold text-gray-900 text-sm">Inside Dhaka</p>
+                                                <i class="fas {{ $zone->icon }} text-primary text-sm"></i>
+                                                <p class="font-semibold text-gray-900 text-sm">{{ $zone->name }}</p>
                                             </div>
-                                            <p class="text-xs text-gray-500">Delivery within 1-2 days</p>
+                                            <p class="text-xs text-gray-500">{{ $zone->delivery_time }}</p>
                                         </div>
-                                        <span class="text-primary font-bold text-sm">৳80</span>
+                                        <span class="text-primary font-bold text-sm">৳{{ number_format($zone->charge, 0) }}</span>
                                     </div>
                                 </div>
                             </label>
-                            <label class="relative cursor-pointer group">
-                                <input type="radio" name="delivery_zone" value="outside_dhaka" x-model="formData.delivery_zone" class="hidden peer" required>
-                                <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
-                                    <div class="flex items-start gap-3">
-                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <i class="fas fa-truck text-primary text-sm"></i>
-                                                <p class="font-semibold text-gray-900 text-sm">Outside Dhaka</p>
-                                            </div>
-                                            <p class="text-xs text-gray-500">Delivery within 3-5 days</p>
-                                        </div>
-                                        <span class="text-primary font-bold text-sm">৳140</span>
-                                    </div>
-                                </div>
-                            </label>
+                            @endforeach
                         </div>
                         <template x-if="errors.delivery_zone">
                             <p class="text-red-500 text-xs mt-2" x-text="errors.delivery_zone[0]"></p>

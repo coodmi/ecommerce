@@ -23,6 +23,7 @@ class CheckoutController extends Controller
         }
 
         $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
+        $deliveryZones = \App\Models\DeliveryZone::active();
 
         $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
         $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
@@ -33,7 +34,7 @@ class CheckoutController extends Controller
         }
         $grandTotal = $total + $shipping;
 
-        return view('pages.checkout', compact('cart', 'total', 'fields', 'shipping', 'deliveryLabel', 'grandTotal'));
+        return view('pages.checkout', compact('cart', 'total', 'fields', 'deliveryZones', 'shipping', 'deliveryLabel', 'grandTotal'));
     }
 
     public function store(Request $request)

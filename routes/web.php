@@ -180,6 +180,9 @@ Route::middleware('auth')->group(function () {
         // Checkout Fields Management
         Route::resource('checkout-fields', App\Http\Controllers\Admin\CheckoutFieldController::class);
 
+        // Delivery Zones Management
+        Route::resource('delivery-zones', App\Http\Controllers\Admin\DeliveryZoneController::class);
+
         // Orders Management
         Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             ProductSeeder::class,
             CheckoutFieldSeeder::class,
+            DeliveryZoneSeeder::class,
             PageSeeder::class,
             HomePageSeeder::class,
             FooterSeeder::class,
