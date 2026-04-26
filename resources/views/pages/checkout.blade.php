@@ -185,7 +185,7 @@
 
             {{-- Place Order Button mobile --}}
             <button type="button" @click="submitOrder()" :disabled="isSubmitting"
-                    class="lg:hidden w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-bold text-sm transition shadow-sm disabled:opacity-60">
+                    class="lg:hidden w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-lg font-bold text-sm transition shadow-sm disabled:opacity-60">
                 <span x-text="isSubmitting ? 'Processing...' : 'Place Order'"></span>
             </button>
         </div>
@@ -246,7 +246,7 @@
 
                     {{-- Place Order Button --}}
                     <button type="button" @click="submitOrder()" :disabled="isSubmitting"
-                            class="w-full bg-green-600 hover:bg-green-700 text-white py-3.5 rounded-lg font-bold text-sm transition shadow-sm disabled:opacity-60">
+                            class="w-full bg-primary hover:bg-primary/90 text-white py-3.5 rounded-lg font-bold text-sm transition shadow-sm disabled:opacity-60">
                         <span x-text="isSubmitting ? 'Processing...' : 'Place Order'"></span>
                     </button>
 
@@ -288,7 +288,7 @@ function checkoutForm() {
         },
 
         formatNumber(num) {
-            return new Intl.NumberFormat('en-US').format(Math.round(num));
+            return Math.round(num).toLocaleString('en-BD');
         },
 
         updateShipping() {
