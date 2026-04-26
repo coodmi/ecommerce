@@ -16,6 +16,7 @@ class Product extends Model
         'description',
         'base_price',
         'delivery_charge',
+        'zone_charges',
         'category_id',
         'is_active',
         'stock_quantity',
@@ -29,6 +30,7 @@ class Product extends Model
         'is_active'       => 'boolean',
         'base_price'      => 'decimal:2',
         'delivery_charge' => 'decimal:2',
+        'zone_charges'    => 'array',
         'is_deal'         => 'boolean',
     ];
 

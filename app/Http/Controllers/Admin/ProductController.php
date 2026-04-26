@@ -45,7 +45,8 @@ class ProductController extends Controller
     {
         $categories = Category::where('is_active', true)->get();
         $brands = \App\Models\Brand::where('is_active', true)->get();
-        return view('dashboard.admin.products.create', compact('categories', 'brands'));
+        $deliveryZones = \App\Models\DeliveryZone::where('is_active', true)->orderBy('sort_order')->get();
+        return view('dashboard.admin.products.create', compact('categories', 'brands', 'deliveryZones'));
     }
 
     /**
@@ -90,6 +91,7 @@ class ProductController extends Controller
                 'description' => $validated['description'] ?? null,
                 'base_price' => $validated['base_price'],
                 'delivery_charge' => $request->input('delivery_charge') !== '' ? $request->input('delivery_charge') : null,
+                'zone_charges' => $request->input('zone_charges') ? array_filter($request->input('zone_charges'), fn($v) => $v !== '' && $v !== null) : null,
                 'category_id' => $validated['category_id'],
                 'brand_id' => $validated['brand_id'] ?? null,
                 'stock_quantity' => $validated['stock_quantity'],
@@ -194,8 +196,9 @@ class ProductController extends Controller
     {
         $categories = Category::where('is_active', true)->get();
         $brands = \App\Models\Brand::where('is_active', true)->get();
+        $deliveryZones = \App\Models\DeliveryZone::where('is_active', true)->orderBy('sort_order')->get();
         $product->load(['images', 'colors', 'sizes', 'variants.color', 'variants.size']);
-        return view('dashboard.admin.products.edit', compact('product', 'categories', 'brands'));
+        return view('dashboard.admin.products.edit', compact('product', 'categories', 'brands', 'deliveryZones'));
     }
 
     /**
@@ -241,6 +244,7 @@ class ProductController extends Controller
                 'description' => $validated['description'] ?? null,
                 'base_price' => $validated['base_price'],
                 'delivery_charge' => $request->input('delivery_charge') !== '' ? $request->input('delivery_charge') : null,
+                'zone_charges' => $request->input('zone_charges') ? array_filter($request->input('zone_charges'), fn($v) => $v !== '' && $v !== null) : null,
                 'category_id' => $validated['category_id'],
                 'brand_id' => $validated['brand_id'] ?? null,
                 'stock_quantity' => $validated['stock_quantity'],
