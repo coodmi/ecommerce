@@ -86,21 +86,36 @@
                         <label class="block text-xs font-semibold text-gray-700 mb-3">Delivery Zone <span class="text-red-500">*</span></label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             @foreach($deliveryZones as $zone)
-                            <label class="relative cursor-pointer group">
-                                <input type="radio" name="delivery_zone" value="{{ $zone->id }}" x-model="formData.delivery_zone" @change="updateShipping()" class="hidden peer" required>
-                                <div class="p-4 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 transition hover:border-gray-300">
-                                    <div class="flex items-start gap-3">
-                                        <div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center flex-shrink-0 mt-0">
-                                            <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
+                            <label class="relative cursor-pointer"
+                                   @click="formData.delivery_zone = '{{ $zone->id }}'; updateShipping()">
+                                <input type="radio" name="delivery_zone" value="{{ $zone->id }}"
+                                       x-model="formData.delivery_zone" class="hidden" required>
+                                <div :class="formData.delivery_zone == '{{ $zone->id }}'
+                                        ? 'border-green-500 bg-green-50'
+                                        : 'border-gray-200 bg-white hover:border-gray-300'"
+                                     class="p-4 border-2 rounded-xl transition-all duration-150">
+                                    <div class="flex items-center gap-3">
+                                        {{-- Radio circle --}}
+                                        <div :class="formData.delivery_zone == '{{ $zone->id }}'
+                                                ? 'bg-green-500 border-green-500'
+                                                : 'border-gray-300'"
+                                             class="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all">
+                                            <i class="fas fa-check text-white text-xs"
+                                               x-show="formData.delivery_zone == '{{ $zone->id }}'"></i>
                                         </div>
+                                        {{-- Icon --}}
+                                        <i class="fas {{ $zone->icon }} text-lg"
+                                           :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-green-500' : 'text-gray-400'"></i>
+                                        {{-- Text --}}
                                         <div class="flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <i class="fas {{ $zone->icon }} text-primary text-sm"></i>
-                                                <p class="font-semibold text-gray-900 text-sm">{{ $zone->name }}</p>
-                                            </div>
+                                            <p class="font-bold text-gray-900 text-sm">{{ $zone->name }}</p>
                                             <p class="text-xs text-gray-500">{{ $zone->delivery_time }}</p>
                                         </div>
-                                        <span class="text-primary font-bold text-sm">৳{{ number_format($zone->charge, 0) }}</span>
+                                        {{-- Price --}}
+                                        <span class="font-bold text-sm"
+                                              :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-green-600' : 'text-gray-700'">
+                                            ৳{{ number_format($zone->charge, 0) }}
+                                        </span>
                                     </div>
                                 </div>
                             </label>
