@@ -91,13 +91,13 @@
                                 <input type="radio" name="delivery_zone" value="{{ $zone->id }}"
                                        x-model="formData.delivery_zone" class="hidden" required>
                                 <div :class="formData.delivery_zone == '{{ $zone->id }}'
-                                        ? 'border-green-500 bg-green-50'
+                                        ? 'border-primary bg-primary/5'
                                         : 'border-gray-200 bg-white hover:border-gray-300'"
                                      class="p-4 border-2 rounded-xl transition-all duration-150">
                                     <div class="flex items-center gap-3">
                                         {{-- Radio circle --}}
                                         <div :class="formData.delivery_zone == '{{ $zone->id }}'
-                                                ? 'bg-green-500 border-green-500'
+                                                ? 'bg-primary border-primary'
                                                 : 'border-gray-300'"
                                              class="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all">
                                             <i class="fas fa-check text-white text-xs"
@@ -105,7 +105,7 @@
                                         </div>
                                         {{-- Icon --}}
                                         <i class="fas {{ $zone->icon }} text-lg"
-                                           :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-green-500' : 'text-gray-400'"></i>
+                                           :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-primary' : 'text-gray-400'"></i>
                                         {{-- Text --}}
                                         <div class="flex-1">
                                             <p class="font-bold text-gray-900 text-sm">{{ $zone->name }}</p>
@@ -113,7 +113,7 @@
                                         </div>
                                         {{-- Price --}}
                                         <span class="font-bold text-sm"
-                                              :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-green-600' : 'text-gray-700'">
+                                              :class="formData.delivery_zone == '{{ $zone->id }}' ? 'text-primary' : 'text-gray-700'">
                                             ৳{{ number_format($zone->charge, 0) }}
                                         </span>
                                     </div>
