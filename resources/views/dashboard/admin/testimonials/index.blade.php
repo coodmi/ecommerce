@@ -142,12 +142,18 @@
                                     </label>
                                 </div>
                             </div>
-                            <div>
+                            <div x-data="{ preview: null }">
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">Avatar <span class="text-gray-400 font-normal">(optional)</span></label>
                                 <label class="flex items-center gap-3 px-3 py-2.5 border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary transition">
-                                    <i class="fas fa-image text-gray-400 text-sm"></i>
-                                    <span class="text-xs text-gray-400">Click to upload image</span>
-                                    <input type="file" name="avatar" accept="image/*" class="hidden">
+                                    <template x-if="preview">
+                                        <img :src="preview" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
+                                    </template>
+                                    <template x-if="!preview">
+                                        <i class="fas fa-image text-gray-400 text-sm flex-shrink-0"></i>
+                                    </template>
+                                    <span class="text-xs text-gray-400" x-text="preview ? 'Image selected — click to change' : 'Click to upload image'"></span>
+                                    <input type="file" name="avatar" accept="image/*" class="hidden"
+                                           @change="preview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null">
                                 </label>
                             </div>
                             <div class="flex gap-3 pt-1">
@@ -205,17 +211,22 @@
                                     </label>
                                 </div>
                             </div>
-                            <div>
+                            <div x-data="{ preview: null }">
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">Avatar <span class="text-gray-400 font-normal">(leave blank to keep)</span></label>
-                                <div class="flex items-center gap-3 mb-2" x-show="editData.avatar">
-                                    <img :src="'/storage/' + editData.avatar"
-                                         class="w-10 h-10 rounded-full object-cover border border-gray-100">
-                                    <span class="text-xs text-gray-400">Current avatar</span>
-                                </div>
                                 <label class="flex items-center gap-3 px-3 py-2.5 border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary transition">
-                                    <i class="fas fa-image text-gray-400 text-sm"></i>
-                                    <span class="text-xs text-gray-400">Click to upload new image</span>
-                                    <input type="file" name="avatar" accept="image/*" class="hidden">
+                                    <template x-if="preview">
+                                        <img :src="preview" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
+                                    </template>
+                                    <template x-if="!preview && editData.avatar">
+                                        <img :src="'/storage/' + editData.avatar" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
+                                    </template>
+                                    <template x-if="!preview && !editData.avatar">
+                                        <i class="fas fa-image text-gray-400 text-sm flex-shrink-0"></i>
+                                    </template>
+                                    <span class="text-xs text-gray-400"
+                                          x-text="preview ? 'New image selected — click to change' : (editData.avatar ? 'Current avatar — click to change' : 'Click to upload new image')"></span>
+                                    <input type="file" name="avatar" accept="image/*" class="hidden"
+                                           @change="preview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null">
                                 </label>
                             </div>
                             <div class="flex gap-3 pt-1">
