@@ -24,20 +24,20 @@
         $activeTab = $status ?: 'all';
     @endphp
 
-    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-6">
-        <div class="flex overflow-x-auto no-scrollbar border-b border-gray-200">
-            @foreach($tabs as $key => $label)
-            @php $count = $counts[$key] ?? 0; @endphp
-            <a href="{{ route('user.orders', ['status' => $key === 'all' ? null : $key]) }}"
-               class="flex-shrink-0 px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors
-                      {{ $activeTab === $key
-                          ? 'bg-white text-gray-900 font-semibold border-b-2 border-gray-900 -mb-px'
-                          : 'text-gray-500 hover:text-gray-700' }}">
-                {{ $label }} ({{ $count }})
-            </a>
-            @endforeach
-        </div>
+    <div class="flex overflow-x-auto no-scrollbar bg-white rounded-xl border border-gray-200 mb-4">
+        @foreach($tabs as $key => $label)
+        @php $count = $counts[$key] ?? 0; @endphp
+        <a href="{{ route('user.orders', ['status' => $key === 'all' ? null : $key]) }}"
+           class="flex-shrink-0 px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors
+                  {{ $activeTab === $key
+                      ? 'bg-white text-gray-900 font-semibold border-b-2 border-gray-900'
+                      : 'text-gray-500 hover:text-gray-700' }}">
+            {{ $label }} ({{ $count }})
+        </a>
+        @endforeach
+    </div>
 
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
         {{-- Table --}}
         <div class="p-5">
             <div class="mb-3">
