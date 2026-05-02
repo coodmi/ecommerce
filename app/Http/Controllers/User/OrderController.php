@@ -8,14 +8,29 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where('user_id', auth()->id())
-            ->with(['items.product', 'items.product.primaryImage'])
-            ->latest()
-            ->paginate(10);
-            
-        return view('dashboard.user.orders.index', compact('orders'));
+        $userId = auth()->id();
+        $status = $request->get('status');
+
+        $statuses = ['processing', 'shipped', 'delivered', 'cancelled', 'on_hold'];
+
+        $counts = ['all' => Order::where('user_id', $userId)->count()];
+        foreach ($statuses as $s) {
+            $counts[$s] = Order::where('user_id', $userId)->where('status', $s)->count();
+        }
+
+        $query = Order::where('user_id', $userId)
+            ->with(['items.product.primaryImage'])
+            ->latest();
+
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        $orders = $query->paginate(10)->withQueryString();
+
+        return view('dashboard.user.orders.index', compact('orders', 'counts', 'status'));
     }
 
     public function show(Order $order)
