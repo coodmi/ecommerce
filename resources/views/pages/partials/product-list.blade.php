@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
     @foreach($products as $product)
     <div class="group relative bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 flex flex-col h-full">
 
@@ -46,8 +46,8 @@
         </div>
 
         <!-- Content Area -->
-        <div class="p-6 flex flex-col flex-1 relative z-[2]">
-            <h3 class="text-lg font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-1">
+        <div class="p-3 sm:p-6 flex flex-col flex-1 relative z-[2]">
+            <h3 class="text-sm sm:text-lg font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
                 {{ $product->name }}
             </h3>
 
@@ -71,8 +71,8 @@
             <!-- Price and Stock -->
             <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
                 <div class="flex flex-col">
-                    <span class="text-sm text-slate-400 font-medium lowercase tracking-wider">price start from</span>
-                    <span class="text-2xl font-black text-slate-900">${{ number_format($product->base_price, 2) }}</span>
+                    <span class="text-xs text-slate-400 font-medium lowercase tracking-wider hidden sm:block">price start from</span>
+                    <span class="text-lg sm:text-2xl font-black text-slate-900">${{ number_format($product->base_price, 2) }}</span>
                 </div>
                 @if($product->stock_quantity > 0)
                 <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full uppercase tracking-widest">In Stock</span>
