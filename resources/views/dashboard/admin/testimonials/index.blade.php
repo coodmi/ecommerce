@@ -83,17 +83,14 @@
 
     {{-- ── MODAL ── --}}
     <div x-show="editId !== null" x-cloak
-         class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-sm"
-         style="display:none;"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         @click.self="editId = null">
+         class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+         style="display:none;">
 
-        <div class="bg-white w-full sm:w-[520px] sm:max-w-[520px] sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-hidden flex-shrink-0"
+        {{-- Centering wrapper --}}
+        <div class="absolute inset-0 flex items-center justify-center p-4" @click="editId = null">
+
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+             @click.stop>
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="translate-y-4 sm:scale-95 opacity-0"
              x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100">
@@ -276,8 +273,9 @@
                 </template>
 
             </div>{{-- end scrollable --}}
-        </div>
-    </div>
+        </div>{{-- end modal panel --}}
+        </div>{{-- end centering wrapper --}}
+    </div>{{-- end modal backdrop --}}
 
 </div>
 @endsection
