@@ -57,8 +57,18 @@
                     @endforeach
                 </div>
                 @endif
+
+            <!-- Description — shown below thumbnails -->
+            @if($product->description)
+            <div class="mt-5 pt-5 border-t border-gray-100">
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {!! nl2br(e($product->description)) !!}
+                </p>
             </div>
-        </div>
+            @endif
+
+            </div>{{-- end sticky --}}
+        </div>{{-- end image column --}}
 
         <!-- Product Info -->
         <div class="lg:w-[55%]">
@@ -104,13 +114,6 @@
                 @endif
                 <span class="text-xs text-gray-400">tax included</span>
             </div>
-
-            <!-- Description -->
-            @if($product->description)
-            <p class="text-sm text-gray-600 leading-relaxed mb-6 border-t border-gray-100 pt-5">
-                {!! nl2br(e($product->description)) !!}
-            </p>
-            @endif
 
             <!-- Options -->
             <div class="space-y-5 mb-6">
