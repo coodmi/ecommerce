@@ -31,14 +31,14 @@
         <div class="w-full lg:w-[45%]">
             <div class="lg:sticky lg:top-24">
 
-                {{-- Mobile: thumbnails on left, main image on right --}}
+                {{-- Thumbnails left + main image right (mobile & desktop) --}}
                 @if($product->images->count() > 1)
-                <div class="flex gap-2 lg:block">
-                    <!-- Vertical thumbnails (mobile left column) -->
-                    <div class="flex flex-col gap-2 lg:hidden flex-shrink-0">
+                <div class="flex gap-2">
+                    <!-- Vertical thumbnails (left column) -->
+                    <div class="flex flex-col gap-2 flex-shrink-0 w-14 lg:w-16">
                         @foreach($product->images as $image)
                         <button @click="activeImage = '{{ $image->url }}'"
-                                class="w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0"
+                                class="w-14 h-14 lg:w-16 lg:h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0"
                                 :class="activeImage === '{{ $image->url }}' ? 'border-primary' : 'border-gray-200 hover:border-gray-300'">
                             <img src="{{ $image->url }}" class="w-full h-full object-cover" alt="">
                         </button>
@@ -59,17 +59,6 @@
                         <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">SALE</div>
                         @endif
                     </div>
-                </div>
-
-                <!-- Horizontal thumbnails (desktop below image) -->
-                <div class="hidden lg:flex mt-3 gap-2 flex-wrap">
-                    @foreach($product->images as $image)
-                    <button @click="activeImage = '{{ $image->url }}'"
-                            class="w-16 h-16 rounded-xl overflow-hidden border-2 transition-all"
-                            :class="activeImage === '{{ $image->url }}' ? 'border-primary' : 'border-gray-200 hover:border-gray-300'">
-                        <img src="{{ $image->url }}" class="w-full h-full object-cover" alt="">
-                    </button>
-                    @endforeach
                 </div>
 
                 @else
