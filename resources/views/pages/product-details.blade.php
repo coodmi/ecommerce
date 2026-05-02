@@ -144,15 +144,14 @@
                 <!-- Sizes -->
                 @if($product->sizes->count() > 0)
                 <div>
-                    <div class="flex items-center justify-between mb-2.5">
+                    <div class="mb-2.5">
                         <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Size</span>
-                        <span class="text-xs text-primary font-medium" x-text="selectedSizeName"></span>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         @foreach($product->sizes as $size)
                         <button @click="selectSize({{ $size->id }}, '{{ $size->size_name }}')"
                                 class="px-4 py-2 border rounded-lg text-xs font-semibold transition-all"
-                                :class="selectedSize === {{ $size->id }} ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'">
+                                :class="selectedSize === {{ $size->id }} ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-200 hover:border-primary/40'">
                             {{ $size->size_name }}
                         </button>
                         @endforeach
