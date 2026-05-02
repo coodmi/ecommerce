@@ -10,12 +10,15 @@
                 $primaryImage = $product->primaryImage ?? $product->images->first();
                 $imageUrl = $primaryImage ? $primaryImage->url : asset('images/placeholder-product.jpg');
             @endphp
-            <img src="{{ $imageUrl }}" 
-                 alt="{{ $product->name }}" 
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <a href="{{ route('product.details', $product->slug) }}" class="block w-full h-full relative z-[2]">
+                <img src="{{ $imageUrl }}" 
+                     alt="{{ $product->name }}" 
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </a>
             
+            </a>
             <!-- Category Badge -->
-            <div class="absolute top-4 left-4 z-[2]">
+            <div class="absolute top-4 left-4 z-[3]">
                 <span class="px-4 py-2 bg-white/90 backdrop-blur-md text-slate-900 text-xs font-bold rounded-full shadow-sm">
                     {{ $product->category->name }}
                 </span>
