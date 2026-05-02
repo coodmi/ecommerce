@@ -184,8 +184,8 @@
                 <button @click="addToCart()"
                         :disabled="isAddingToCart"
                         class="flex-1 bg-primary text-white py-3 px-6 rounded-xl font-semibold text-sm hover:bg-primary/90 transition flex items-center justify-center gap-2 disabled:opacity-60">
-                    <i class="fas" :class="isAddingToCart ? 'fa-spinner fa-spin' : 'fa-shopping-cart'"></i>
-                    <span x-text="isAddingToCart ? 'Adding...' : 'Add to Cart'"></span>
+                    <i class="fas" :class="isAddingToCart ? 'fa-spinner fa-spin' : 'fa-bolt'"></i>
+                    <span x-text="isAddingToCart ? 'Processing...' : 'Buy Now'"></span>
                 </button>
                 <button @click="addToWishlist()"
                         class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center text-gray-500 hover:text-red-500 hover:border-red-200 transition">
@@ -196,8 +196,8 @@
             <!-- Trust Badges -->
             <div class="grid grid-cols-2 gap-3 pt-5 border-t border-gray-100">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-truck text-xs text-gray-500"></i>
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-truck text-xs text-white"></i>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-gray-800">Free Delivery</p>
@@ -205,8 +205,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-undo text-xs text-gray-500"></i>
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-undo text-xs text-white"></i>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-gray-800">Easy Returns</p>
@@ -214,8 +214,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-shield-alt text-xs text-gray-500"></i>
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-shield-alt text-xs text-white"></i>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-gray-800">Secure Payment</p>
@@ -223,8 +223,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-headset text-xs text-gray-500"></i>
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-headset text-xs text-white"></i>
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-gray-800">24/7 Support</p>
