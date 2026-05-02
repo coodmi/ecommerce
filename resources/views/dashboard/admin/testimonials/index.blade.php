@@ -93,7 +93,7 @@
          x-transition:leave-end="opacity-0"
          @click.self="editId = null">
 
-        <div class="bg-white w-full sm:max-w-lg sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-hidden"
+        <div class="bg-white w-full sm:w-[520px] sm:max-w-[520px] sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-hidden flex-shrink-0"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="translate-y-4 sm:scale-95 opacity-0"
              x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100">
