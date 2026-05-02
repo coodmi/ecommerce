@@ -172,6 +172,12 @@
                 <span class="font-medium">Reviews</span>
             </a>
 
+            <!-- Testimonials -->
+            <a href="{{ route('admin.testimonials.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.testimonials.*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
+                <i class="fas fa-quote-left text-lg {{ request()->routeIs('admin.testimonials.*') ? 'text-white' : 'text-purple-400' }} group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Testimonials</span>
+            </a>
+
             <!-- Settings -->
             <a href="{{ route('admin.settings.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.settings.*') ? 'bg-[#1B262D] border-l-4 border-primary shadow-lg shadow-black/20' : 'hover:bg-slate-700/50' }} transition-all group cursor-pointer">
                 <i class="fas fa-cog text-lg {{ request()->routeIs('admin.settings.*') ? 'text-white' : 'text-gray-400' }} group-hover:scale-110 transition-transform"></i>
