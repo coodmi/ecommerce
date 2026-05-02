@@ -40,7 +40,7 @@
                             </label>
                             <input type="text" name="full_name" x-model="formData.full_name" required
                                    placeholder="Enter your full name"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                                   class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
                             <template x-if="errors.full_name">
                                 <p class="text-red-500 text-xs mt-1" x-text="errors.full_name[0]"></p>
                             </template>
@@ -54,7 +54,7 @@
                                 </label>
                                 <input type="tel" name="phone" x-model="formData.phone" required
                                        placeholder="e.g. 01712345678"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                                       class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
                                 <template x-if="errors.phone">
                                     <p class="text-red-500 text-xs mt-1" x-text="errors.phone[0]"></p>
                                 </template>
@@ -65,7 +65,7 @@
                                 </label>
                                 <input type="email" name="email" x-model="formData.email"
                                        placeholder="your.email@example.com"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
+                                       class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
                                 <template x-if="errors.email">
                                     <p class="text-red-500 text-xs mt-1" x-text="errors.email[0]"></p>
                                 </template>
@@ -131,7 +131,7 @@
                         <label class="block text-xs font-semibold text-gray-700 mb-2">Full Address <span class="text-red-500">*</span></label>
                         <textarea name="full_address" x-model="formData.full_address" required rows="4"
                                   placeholder="Your Full Address"
-                                  class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
+                                  class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
                         <template x-if="errors.full_address">
                             <p class="text-red-500 text-xs mt-1" x-text="errors.full_address[0]"></p>
                         </template>
@@ -167,7 +167,7 @@
                 <div class="p-6">
                     <textarea name="order_notes" x-model="formData.order_notes" rows="3"
                               placeholder="Any special instructions for your order..."
-                              class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
+                              class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
                 </div>
             </div>
 
@@ -179,7 +179,7 @@
                 <div class="p-6">
                     <textarea name="order_notes" x-model="formData.order_notes" rows="3"
                               placeholder="Any special instructions for your order..."
-                              class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
+                              class="w-full px-4 py-3 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none"></textarea>
                 </div>
             </div>
 
@@ -219,7 +219,7 @@
                     <div class="pt-3 border-t border-gray-100">
                         <div class="flex gap-2">
                             <input type="text" placeholder="Enter promo code" 
-                                   class="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary transition">
+                                   class="flex-1 px-3 py-2.5 border-2 border-gray-400 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary transition">
                             <button type="button" class="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition">
                                 Apply
                             </button>
