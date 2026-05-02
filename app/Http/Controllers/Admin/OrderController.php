@@ -39,7 +39,13 @@ class OrderController extends Controller
 
         $orders = $query->paginate(15)->withQueryString();
 
-        return view('dashboard.admin.orders.index', compact('orders'));
+        $statuses = ['processing', 'shipped', 'delivered', 'cancelled', 'on_hold'];
+        $counts = ['all' => Order::count()];
+        foreach ($statuses as $s) {
+            $counts[$s] = Order::where('status', $s)->count();
+        }
+
+        return view('dashboard.admin.orders.index', compact('orders', 'counts'));
     }
 
     public function show(Order $order)
