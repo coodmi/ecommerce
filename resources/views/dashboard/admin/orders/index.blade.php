@@ -129,9 +129,17 @@
                             <span class="font-semibold text-gray-900">৳{{ number_format($order->total_amount, 0) }}</span>
                         </td>
                         <td class="px-5 py-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold capitalize {{ $badgeClass }}">
-                                {{ ucfirst(str_replace('_', ' ', $order->status)) }}
-                            </span>
+                            <form action="{{ route('admin.orders.update-status', $order) }}" method="POST">
+                                @csrf @method('PUT')
+                                <select name="status" onchange="this.form.submit()"
+                                        class="px-2 py-1 rounded-full text-xs font-semibold border-0 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer {{ $badgeClass }}">
+                                    @foreach(['pending','processing','shipped','delivered','completed','cancelled','on_hold'] as $s)
+                                    <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>
+                                        {{ ucfirst(str_replace('_', ' ', $s)) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </form>
                         </td>
                         <td class="px-5 py-4 text-right">
                             <div class="flex items-center justify-end gap-2">
