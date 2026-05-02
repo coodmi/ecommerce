@@ -175,9 +175,10 @@
                 const nextBtn = document.getElementById('cat-next');
                 if (!track || !cats.length) return;
 
-                // Build tripled list for seamless infinite loop
-                const tripled = [...cats, ...cats, ...cats];
-                tripled.forEach(cat => {
+                // Only triple for infinite loop if enough items; otherwise just show once
+                const needsLoop = cats.length >= 3;
+                const items = needsLoop ? [...cats, ...cats, ...cats] : cats;
+                items.forEach(cat => {
                     const el = document.createElement('div');
                     el.className = 'cat-card';
                     el.innerHTML = `
@@ -193,7 +194,7 @@
                     track.appendChild(el);
                 });
 
-                let offset = cats.length; // start at middle copy
+                let offset = needsLoop ? cats.length : 0; // start at middle copy only if looping
                 let cardW  = 0;
                 let animating = false;
 
@@ -220,7 +221,8 @@
                     offset++;
                     moveTo(offset, true);
                     setTimeout(() => {
-                        if (offset >= cats.length * 2) { offset = cats.length; moveTo(offset, false); }
+                        if (needsLoop && offset >= cats.length * 2) { offset = cats.length; moveTo(offset, false); }
+                        if (!needsLoop && offset >= cats.length) { offset = cats.length - 1; moveTo(offset, false); }
                         animating = false;
                     }, 520);
                 });
@@ -231,11 +233,11 @@
                     offset--;
                     moveTo(offset, true);
                     setTimeout(() => {
-                        if (offset < cats.length) { offset = cats.length * 2 - 1; moveTo(offset, false); }
+                        if (needsLoop && offset < cats.length) { offset = cats.length * 2 - 1; moveTo(offset, false); }
+                        if (!needsLoop && offset < 0) { offset = 0; moveTo(offset, false); }
                         animating = false;
                     }, 520);
                 });
-
                 // Mouse drag support
                 let isDragging = false, dragStartX = 0, dragStartOffset = 0, didDrag = false;
 
@@ -263,8 +265,12 @@
                     const diff = dragStartX - e.clientX;
                     const steps = Math.round(diff / cardW);
                     offset = dragStartOffset + steps;
-                    if (offset >= cats.length * 2) offset = cats.length;
-                    if (offset < cats.length) offset = cats.length * 2 - 1;
+                    if (needsLoop) {
+                        if (offset >= cats.length * 2) offset = cats.length;
+                        if (offset < cats.length) offset = cats.length * 2 - 1;
+                    } else {
+                        offset = Math.max(0, Math.min(offset, cats.length - 1));
+                    }
                     moveTo(offset, true);
                     setTimeout(() => { animating = false; }, 520);
                 });
@@ -297,8 +303,12 @@
                     const diff = touchStartX - e.changedTouches[0].clientX;
                     const steps = Math.round(diff / cardW);
                     offset = touchStartOffset + steps;
-                    if (offset >= cats.length * 2) offset = cats.length;
-                    if (offset < cats.length) offset = cats.length * 2 - 1;
+                    if (needsLoop) {
+                        if (offset >= cats.length * 2) offset = cats.length;
+                        if (offset < cats.length) offset = cats.length * 2 - 1;
+                    } else {
+                        offset = Math.max(0, Math.min(offset, cats.length - 1));
+                    }
                     moveTo(offset, true);
                 });
 
