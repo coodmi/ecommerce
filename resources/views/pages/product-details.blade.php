@@ -6,7 +6,7 @@
 
 <!-- Breadcrumb -->
 <div class="bg-gray-50 border-b border-gray-100 py-3">
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-3 sm:px-4">
         <nav class="flex items-center gap-2 text-xs text-gray-500">
             <a href="/" class="hover:text-primary transition">Home</a>
             <i class="fas fa-chevron-right text-[9px]"></i>
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-8 md:py-12" x-data="productDetails({
+<div class="container mx-auto px-3 sm:px-4 py-5 md:py-12" x-data="productDetails({
     basePrice: {{ $product->base_price }},
     variants: {{ $product->variants->toJson() }},
     colors: {{ $product->colors->toJson() }},
@@ -25,13 +25,56 @@
 })">
 
     <!-- Product Main -->
-    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-12">
 
         <!-- Image Gallery -->
-        <div class="lg:w-[45%]">
-            <div class="sticky top-24">
-                <!-- Main Image -->
-                <div class="relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 aspect-square">
+        <div class="w-full lg:w-[45%]">
+            <div class="lg:sticky lg:top-24">
+
+                {{-- Mobile: thumbnails on left, main image on right --}}
+                @if($product->images->count() > 1)
+                <div class="flex gap-2 lg:block">
+                    <!-- Vertical thumbnails (mobile left column) -->
+                    <div class="flex flex-col gap-2 lg:hidden flex-shrink-0">
+                        @foreach($product->images as $image)
+                        <button @click="activeImage = '{{ $image->url }}'"
+                                class="w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0"
+                                :class="activeImage === '{{ $image->url }}' ? 'border-primary' : 'border-gray-200 hover:border-gray-300'">
+                            <img src="{{ $image->url }}" class="w-full h-full object-cover" alt="">
+                        </button>
+                        @endforeach
+                    </div>
+
+                    <!-- Main Image -->
+                    <div class="relative rounded-xl overflow-hidden bg-gray-50 border border-gray-100 flex-1 aspect-square lg:rounded-2xl">
+                        <img :src="activeImage"
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                             alt="{{ $product->name }}">
+                        @if($product->stock_quantity <= 0)
+                        <div class="absolute inset-0 bg-white/70 flex items-center justify-center">
+                            <span class="bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-full">Out of Stock</span>
+                        </div>
+                        @endif
+                        @if($product->discount_price)
+                        <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">SALE</div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Horizontal thumbnails (desktop below image) -->
+                <div class="hidden lg:flex mt-3 gap-2 flex-wrap">
+                    @foreach($product->images as $image)
+                    <button @click="activeImage = '{{ $image->url }}'"
+                            class="w-16 h-16 rounded-xl overflow-hidden border-2 transition-all"
+                            :class="activeImage === '{{ $image->url }}' ? 'border-primary' : 'border-gray-200 hover:border-gray-300'">
+                        <img src="{{ $image->url }}" class="w-full h-full object-cover" alt="">
+                    </button>
+                    @endforeach
+                </div>
+
+                @else
+                {{-- Single image, no thumbnails --}}
+                <div class="relative rounded-xl lg:rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 aspect-square">
                     <img :src="activeImage"
                          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                          alt="{{ $product->name }}">
@@ -43,18 +86,6 @@
                     @if($product->discount_price)
                     <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">SALE</div>
                     @endif
-                </div>
-
-                <!-- Thumbnails -->
-                @if($product->images->count() > 1)
-                <div class="mt-3 flex gap-2 flex-wrap">
-                    @foreach($product->images as $image)
-                    <button @click="activeImage = '{{ $image->url }}'"
-                            class="w-16 h-16 rounded-xl overflow-hidden border-2 transition-all"
-                            :class="activeImage === '{{ $image->url }}' ? 'border-primary' : 'border-gray-200 hover:border-gray-300'">
-                        <img src="{{ $image->url }}" class="w-full h-full object-cover" alt="">
-                    </button>
-                    @endforeach
                 </div>
                 @endif
 
@@ -71,7 +102,7 @@
         </div>{{-- end image column --}}
 
         <!-- Product Info -->
-        <div class="lg:w-[55%]">
+        <div class="w-full lg:w-[55%]">
 
             <!-- Category & Stock -->
             <div class="flex items-center gap-3 mb-3">
@@ -185,12 +216,12 @@
             <div class="flex gap-3 mb-6">
                 <button @click="addToCart()"
                         :disabled="isAddingToCart"
-                        class="flex-1 bg-primary text-white py-3 px-6 rounded-xl font-semibold text-sm hover:bg-primary/90 transition flex items-center justify-center gap-2 disabled:opacity-60">
+                        class="flex-1 bg-primary text-white py-3.5 px-6 rounded-xl font-semibold text-sm hover:bg-primary/90 transition flex items-center justify-center gap-2 disabled:opacity-60">
                     <i class="fas" :class="isAddingToCart ? 'fa-spinner fa-spin' : 'fa-bolt'"></i>
                     <span x-text="isAddingToCart ? 'Processing...' : 'Buy Now'"></span>
                 </button>
                 <button @click="addToWishlist()"
-                        class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center text-gray-500 hover:text-red-500 hover:border-red-200 transition">
+                        class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center text-gray-500 hover:text-red-500 hover:border-red-200 transition flex-shrink-0">
                     <i class="fas fa-heart text-sm"></i>
                 </button>
             </div>
