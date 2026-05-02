@@ -58,9 +58,9 @@
                 </div>
                 @endif
 
-            <!-- Description — shown below thumbnails -->
+            <!-- Description — desktop only (below thumbnails) -->
             @if($product->description)
-            <div class="mt-5 pt-5 border-t border-gray-100">
+            <div class="hidden lg:block mt-5 pt-5 border-t border-gray-100">
                 <p class="text-sm text-gray-600 leading-relaxed">
                     {!! nl2br(e($product->description)) !!}
                 </p>
@@ -194,6 +194,15 @@
                     <i class="fas fa-heart text-sm"></i>
                 </button>
             </div>
+
+            <!-- Description — mobile only (after Buy Now) -->
+            @if($product->description)
+            <div class="lg:hidden mb-6 pt-5 border-t border-gray-100">
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {!! nl2br(e($product->description)) !!}
+                </p>
+            </div>
+            @endif
 
             <!-- Trust Badges -->
             <div class="grid grid-cols-2 gap-3 pt-5 border-t border-gray-100">
