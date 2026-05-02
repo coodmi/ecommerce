@@ -161,25 +161,45 @@
                 </div>
                 @endif
 
-                <!-- Sizes -->
+                <!-- Size + Quantity side by side -->
                 @if($product->sizes->count() > 0)
-                <div>
-                    <div class="mb-2.5">
-                        <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Size</span>
+                <div class="flex gap-4 items-start">
+                    <!-- Sizes -->
+                    <div class="flex-1">
+                        <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2.5 block">Size</span>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($product->sizes as $size)
+                            <button @click="selectSize({{ $size->id }}, '{{ $size->size_name }}')"
+                                    class="px-4 py-2 border rounded-lg text-xs font-semibold transition-all"
+                                    :class="selectedSize === {{ $size->id }} ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-200 hover:border-primary/40'">
+                                {{ $size->size_name }}
+                            </button>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($product->sizes as $size)
-                        <button @click="selectSize({{ $size->id }}, '{{ $size->size_name }}')"
-                                class="px-4 py-2 border rounded-lg text-xs font-semibold transition-all"
-                                :class="selectedSize === {{ $size->id }} ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-200 hover:border-primary/40'">
-                            {{ $size->size_name }}
-                        </button>
-                        @endforeach
+
+                    <!-- Quantity -->
+                    <div class="flex-shrink-0">
+                        <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2.5 block">Quantity</span>
+                        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button @click="quantity > 1 ? quantity-- : null"
+                                    class="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="w-10 text-center text-sm font-semibold text-gray-900" x-text="quantity">1</span>
+                            <button @click="quantity++"
+                                    class="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                        @if($product->stock_quantity > 0 && $product->stock_quantity <= 10)
+                        <span class="text-xs text-orange-500 font-medium mt-1.5 block">Only {{ $product->stock_quantity }} left</span>
+                        @endif
                     </div>
                 </div>
-                @endif
 
-                <!-- Quantity -->
+                @else
+                <!-- Quantity only (no sizes) -->
                 <div>
                     <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2.5 block">Quantity</span>
                     <div class="flex items-center gap-4">
@@ -199,6 +219,8 @@
                         @endif
                     </div>
                 </div>
+                @endif
+
             </div>
 
             <!-- Action Buttons -->
