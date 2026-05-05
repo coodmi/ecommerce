@@ -3,7 +3,7 @@
 @section('title', 'Create Account')
 
 @section('content')
-<section class="min-h-[calc(100svh-80px)] flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 px-4 py-6">
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/80 px-4 py-8">
     <div class="w-full max-w-sm relative z-10">
         <div class="bg-white rounded-2xl shadow-xl p-8">
             @php
