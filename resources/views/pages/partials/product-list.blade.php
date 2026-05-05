@@ -9,58 +9,61 @@
     <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
 
         <!-- ===== IMAGE AREA ===== -->
-        <a href="{{ route('product.details', $product->slug) }}" class="block relative overflow-hidden aspect-[4/5]">
+        <div class="relative overflow-hidden aspect-[4/5]">
 
-            <img src="{{ $imageUrl }}" alt="{{ $product->name }}"
-                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <a href="{{ route('product.details', $product->slug) }}" class="block w-full h-full">
+                <img src="{{ $imageUrl }}" alt="{{ $product->name }}"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            </a>
 
-            <!-- Category Badge -->
-            <div class="absolute top-3 left-3 z-10">
+            <!-- Category Badge top-left -->
+            <div class="absolute top-3 left-3 z-10 pointer-events-none">
                 <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-gray-800 text-[11px] font-bold rounded-full shadow-sm">
                     {{ $product->category->name ?? '' }}
                 </span>
             </div>
 
-            <!-- Sale Badge -->
+            <!-- Sale Badge top-right -->
             @if($product->discount_price)
-            <div class="absolute top-3 right-3 z-10">
+            <div class="absolute top-3 right-3 z-10 pointer-events-none">
                 <span class="px-2 py-1 bg-red-500 text-white text-[10px] font-bold rounded-full">SALE</span>
             </div>
             @endif
 
             <!-- Out of Stock Overlay -->
             @if($product->stock_quantity <= 0)
-            <div class="absolute inset-0 bg-white/60 flex items-center justify-center z-10">
+            <div class="absolute inset-0 bg-white/60 flex items-center justify-center z-10 pointer-events-none">
                 <span class="bg-red-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">Out of Stock</span>
             </div>
             @endif
 
-            <!-- Action Icons — slide up from bottom of image on hover -->
-            <div class="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-3 py-3
-                        translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100
-                        transition-all duration-300 bg-gradient-to-t from-black/50 to-transparent">
+            <!-- Action Icons — vertical stack on RIGHT side, visible on hover -->
+            <div class="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2
+                        translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100
+                        transition-all duration-300">
                 <!-- View -->
-                <span class="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-all text-gray-700">
-                    <i class="fas fa-eye text-sm"></i>
-                </span>
+                <a href="{{ route('product.details', $product->slug) }}"
+                   class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md text-gray-700 hover:bg-primary hover:text-white transition-all">
+                    <i class="fas fa-eye text-xs"></i>
+                </a>
                 <!-- Wishlist -->
-                <button type="button" onclick="event.preventDefault(); toggleWishlist({{ $product->id }})"
-                        class="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-rose-500 hover:text-white transition-all text-gray-700">
-                    <i class="fas fa-heart text-sm"></i>
+                <button type="button" onclick="toggleWishlist({{ $product->id }})"
+                        class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md text-gray-700 hover:bg-rose-500 hover:text-white transition-all">
+                    <i class="fas fa-heart text-xs"></i>
                 </button>
-                <!-- Quick Add to Cart -->
+                <!-- Quick Cart -->
                 @if($product->stock_quantity > 0)
                 <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
                     @csrf
                     <button type="submit"
-                            class="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-all text-gray-700">
-                        <i class="fas fa-shopping-cart text-sm"></i>
+                            class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md text-gray-700 hover:bg-primary hover:text-white transition-all">
+                        <i class="fas fa-shopping-cart text-xs"></i>
                     </button>
                 </form>
                 @endif
             </div>
 
-        </a>
+        </div>
 
         <!-- ===== CONTENT AREA ===== -->
         <div class="p-3 sm:p-4 flex flex-col flex-1">
