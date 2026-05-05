@@ -65,81 +65,112 @@
         $waPhone   = \App\Models\Setting::get('whatsapp_number', '');
         $callPhone = \App\Models\Setting::get('call_number', '');
     @endphp
-    <div x-data="{ open: false }" style="position:fixed;bottom:90px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:12px;">
+
+    <style>
+        .fab-wrap { position:fixed; bottom:90px; right:20px; z-index:9999; display:flex; flex-direction:column; align-items:center; gap:12px; }
+        .fab-btn {
+            width:56px; height:56px; border-radius:50%; border:none; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            text-decoration:none; transition:transform 0.25s ease, box-shadow 0.25s ease;
+            position:relative; flex-shrink:0;
+        }
+        .fab-btn:hover { transform:scale(1.12); }
+        .fab-call  { background:linear-gradient(135deg,#3b82f6,#1d4ed8); box-shadow:0 6px 20px rgba(59,130,246,0.45); }
+        .fab-wa    { background:linear-gradient(135deg,#25D366,#128C7E); box-shadow:0 6px 20px rgba(37,211,102,0.45); }
+        .fab-toggle {
+            width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            background:linear-gradient(135deg,#25D366,#128C7E);
+            box-shadow:0 6px 20px rgba(37,211,102,0.45);
+            transition:transform 0.35s cubic-bezier(0.68,-0.55,0.265,1.55), background 0.3s, box-shadow 0.3s;
+            outline:none; flex-shrink:0;
+        }
+        .fab-toggle.is-open {
+            background:linear-gradient(135deg,#ef4444,#dc2626);
+            box-shadow:0 6px 20px rgba(239,68,68,0.45);
+            transform:rotate(135deg);
+        }
+        .fab-sub {
+            display:flex; align-items:center; justify-content:center;
+            overflow:hidden; max-height:0; opacity:0; pointer-events:none;
+            transition:max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+            transform:translateY(8px);
+        }
+        .fab-sub.is-open {
+            max-height:60px; opacity:1; pointer-events:auto; transform:translateY(0);
+        }
+        .fab-online-dot {
+            position:absolute; top:3px; right:3px;
+            width:13px; height:13px; background:#10b981;
+            border-radius:50%; border:2px solid white;
+        }
+        @keyframes fab-pulse {
+            0%,100% { box-shadow:0 6px 20px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.4); }
+            50%      { box-shadow:0 6px 20px rgba(37,211,102,0.45), 0 0 0 10px rgba(37,211,102,0); }
+        }
+        .fab-toggle:not(.is-open) { animation:fab-pulse 2.5s infinite; }
+    </style>
+
+    <div class="fab-wrap" id="fabWrap">
 
         <!-- Call Button -->
         @if($callPhone)
-        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $callPhone) }}"
-           x-show="open"
-           x-transition:enter="transition ease-out duration-300 transform"
-           x-transition:enter-start="opacity-0 scale-50 translate-y-4"
-           x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-           x-transition:leave="transition ease-in duration-200 transform"
-           x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-           x-transition:leave-end="opacity-0 scale-50 translate-y-4"
-           style="display:none;width:56px;height:56px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;border-radius:50%;box-shadow:0 8px 24px rgba(59,130,246,0.4);align-items:center;justify-content:center;text-decoration:none;transition:all 0.3s ease;"
-           onmouseover="this.style.transform='scale(1.1) rotate(5deg)';this.style.boxShadow='0 12px 32px rgba(59,130,246,0.5)';"
-           onmouseout="this.style.transform='scale(1) rotate(0deg)';this.style.boxShadow='0 8px 24px rgba(59,130,246,0.4)';">
-            <!-- Modern Phone Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px;">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-        </a>
+        <div class="fab-sub" id="fabCall">
+            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $callPhone) }}" class="fab-btn fab-call" aria-label="Call us">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 11.8 19.79 19.79 0 0 1 1.06 3.18 2 2 0 0 1 3.04 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+            </a>
+        </div>
         @endif
 
         <!-- WhatsApp Button -->
         @if($waPhone)
-        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waPhone) }}" target="_blank" rel="noopener"
-           x-show="open"
-           x-transition:enter="transition ease-out duration-300 transform delay-75"
-           x-transition:enter-start="opacity-0 scale-50 translate-y-4"
-           x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-           x-transition:leave="transition ease-in duration-200 transform"
-           x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-           x-transition:leave-end="opacity-0 scale-50 translate-y-4"
-           style="display:none;width:56px;height:56px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;border-radius:50%;box-shadow:0 8px 24px rgba(37,211,102,0.4);align-items:center;justify-content:center;text-decoration:none;position:relative;transition:all 0.3s ease;"
-           onmouseover="this.style.transform='scale(1.1) rotate(-5deg)';this.style.boxShadow='0 12px 32px rgba(37,211,102,0.5)';"
-           onmouseout="this.style.transform='scale(1) rotate(0deg)';this.style.boxShadow='0 8px 24px rgba(37,211,102,0.4)';">
-            <!-- Modern WhatsApp Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:28px;height:28px;">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 01-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
-            </svg>
-            <!-- Online Status Indicator -->
-            <span style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#10b981;border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(16,185,129,0.4);"></span>
-        </a>
+        <div class="fab-sub" id="fabWa">
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waPhone) }}" target="_blank" rel="noopener" class="fab-btn fab-wa" aria-label="WhatsApp us">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24zm-1.52 5.66c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
+                </svg>
+                <span class="fab-online-dot"></span>
+            </a>
+        </div>
         @endif
 
         <!-- Toggle Button -->
-        <button @click="open = !open"
-                :style="open ? 'background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 8px 28px rgba(239,68,68,0.45);transform:rotate(90deg);' : 'background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 8px 28px rgba(37,211,102,0.45);transform:rotate(0deg);'"
-                style="width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);outline:none;position:relative;overflow:hidden;"
-                onmouseover="if(!this.getAttribute('x-bind:style').includes('ef4444')) this.style.transform='scale(1.1)'"
-                onmouseout="if(!this.getAttribute('x-bind:style').includes('ef4444')) this.style.transform='scale(1)'">
-            
-            <!-- Ripple Effect Background -->
-            <span style="position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,0.1);animation:pulse 2s infinite;"></span>
-            
-            <!-- WhatsApp icon when closed -->
-            <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:30px;height:30px;position:relative;z-index:1;">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 01-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
+        <button class="fab-toggle" id="fabToggle" aria-label="Contact options" aria-expanded="false">
+            <!-- Chat / WhatsApp icon (closed state) -->
+            <svg id="fabIconOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24zm-1.52 5.66c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
             </svg>
-            
-            <!-- Modern X icon when open -->
-            <svg x-show="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px;display:none;position:relative;z-index:1;">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+            <!-- X icon (open state) -->
+            <svg id="fabIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" style="display:none;">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
         </button>
 
     </div>
 
-    <!-- Add pulse animation -->
-    <style>
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.05); opacity: 0.1; }
-        }
-    </style>
+    <script>
+        (function () {
+            var btn     = document.getElementById('fabToggle');
+            var iconO   = document.getElementById('fabIconOpen');
+            var iconC   = document.getElementById('fabIconClose');
+            var subCall = document.getElementById('fabCall');
+            var subWa   = document.getElementById('fabWa');
+            var isOpen  = false;
+
+            btn.addEventListener('click', function () {
+                isOpen = !isOpen;
+                btn.classList.toggle('is-open', isOpen);
+                btn.setAttribute('aria-expanded', isOpen);
+                iconO.style.display = isOpen ? 'none'  : '';
+                iconC.style.display = isOpen ? ''      : 'none';
+                if (subCall) subCall.classList.toggle('is-open', isOpen);
+                if (subWa)   subWa.classList.toggle('is-open', isOpen);
+            });
+        })();
+    </script>
 
     <button id="scrollToTop" class="fixed bottom-8 right-6 bg-gradient-to-r from-primary to-primary/80 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible hover:scale-110 z-50">
         <i class="fas fa-arrow-up"></i>
