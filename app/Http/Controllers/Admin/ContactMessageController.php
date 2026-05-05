@@ -38,6 +38,6 @@ class ContactMessageController extends Controller
     public function destroy(ContactMessage $contactMessage)
     {
         $contactMessage->delete();
-        return back()->with('success', 'Message deleted.');
+        return redirect()->route('admin.contact-messages.index')->with('success', 'Message deleted.');
     }
 }
