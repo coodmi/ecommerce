@@ -133,17 +133,38 @@
                         </div>
                     </div>
 
-                    <div class="max-w-md">
-                        <label class="block text-sm font-bold text-slate-700 mb-2">WhatsApp Number</label>
-                        <p class="text-xs text-slate-500 mb-4">Enter with country code (e.g., 8801234567890)</p>
-                        <input type="text" 
-                               name="whatsapp_number" 
-                               value="{{ $whatsappNumber }}" 
-                               placeholder="8801234567890"
-                               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
-                        <p class="text-xs text-slate-400 mt-2">
+                    <div class="max-w-md space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">WhatsApp Number</label>
+                            <p class="text-xs text-slate-500 mb-2">Enter with country code (e.g., 8801234567890)</p>
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 bg-[#25D366] rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fab fa-whatsapp text-white text-lg"></i>
+                                </span>
+                                <input type="text"
+                                       name="whatsapp_number"
+                                       value="{{ $whatsappNumber }}"
+                                       placeholder="8801234567890"
+                                       class="flex-1 px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Call Number</label>
+                            <p class="text-xs text-slate-500 mb-2">Phone number for the call button</p>
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-white text-lg"></i>
+                                </span>
+                                <input type="text"
+                                       name="call_number"
+                                       value="{{ $callNumber }}"
+                                       placeholder="+8801234567890"
+                                       class="flex-1 px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400">
                             <i class="fas fa-info-circle mr-1"></i>
-                            This number will be used for the WhatsApp floating button on all pages
+                            Buttons only appear when numbers are saved
                         </p>
                     </div>
                 </div>
