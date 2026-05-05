@@ -82,7 +82,7 @@
             </div>
 
             <!-- Colors & Sizes Preview -->
-            <div class="mt-4 flex items-center gap-4">
+            <div class="mt-3 flex items-center gap-4">
                 @if($product->colors->count() > 0)
                 <div class="flex -space-x-2">
                     @foreach($product->colors->take(3) as $color)
@@ -103,6 +103,21 @@
                 </div>
                 @endif
             </div>
+
+            <!-- Add to Cart Button -->
+            @if($product->stock_quantity > 0)
+            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="relative z-[4] mt-3" onclick="event.stopPropagation()">
+                @csrf
+                <button type="submit"
+                        class="w-full py-2.5 bg-primary text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all">
+                    <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
+                </button>
+            </form>
+            @else
+            <div class="mt-3 w-full py-2.5 bg-gray-100 text-gray-400 text-xs font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
+                <i class="fas fa-ban text-xs"></i> Out of Stock
+            </div>
+            @endif
         </div>
     </div>
     @endforeach
