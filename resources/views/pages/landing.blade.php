@@ -365,18 +365,18 @@
                             </div>
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
-                        <div class="flex items-center justify-between gap-2">
-                            <div>
-                                <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
-                            </div>
-                            <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
-                                @csrf
-                                <button type="submit" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition flex items-center gap-1 text-xs font-semibold px-3">
-                                    <i class="fas fa-shopping-cart text-sm"></i>
-                                    <span class="hidden sm:inline">Add</span>
-                                </button>
-                            </form>
+                        <div class="mb-2">
+                            <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
+                            @if($product->discount_price)
+                            <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                            @endif
                         </div>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
+                            @csrf
+                            <button type="submit" class="w-full py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>
@@ -606,18 +606,18 @@
                             </div>
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
-                        <div class="flex items-center justify-between gap-2">
-                            <div>
-                                <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
-                            </div>
-                            <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
-                                @csrf
-                                <button type="submit" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition flex items-center gap-1 text-xs font-semibold px-3">
-                                    <i class="fas fa-shopping-cart text-sm"></i>
-                                    <span class="hidden sm:inline">Add</span>
-                                </button>
-                            </form>
+                        <div class="mb-2">
+                            <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
+                            @if($product->discount_price)
+                            <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                            @endif
                         </div>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
+                            @csrf
+                            <button type="submit" class="w-full py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-cart text-xs"></i> Add to Cart
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>
