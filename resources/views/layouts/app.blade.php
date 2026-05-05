@@ -65,21 +65,24 @@
         $waPhone   = \App\Models\Setting::get('whatsapp_number', '');
         $callPhone = \App\Models\Setting::get('call_number', '');
     @endphp
-    <div x-data="{ open: false }" style="position:fixed;bottom:90px;right:18px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:10px;">
+    <div x-data="{ open: false }" style="position:fixed;bottom:90px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:12px;">
 
         <!-- Call Button -->
         @if($callPhone)
         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $callPhone) }}"
            x-show="open"
-           x-transition:enter="transition ease-out duration-200"
-           x-transition:enter-start="opacity-0 scale-75 translate-y-2"
+           x-transition:enter="transition ease-out duration-300 transform"
+           x-transition:enter-start="opacity-0 scale-50 translate-y-4"
            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave="transition ease-in duration-200 transform"
            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-           x-transition:leave-end="opacity-0 scale-75 translate-y-2"
-           style="display:none;width:52px;height:52px;background:#2563eb;color:white;border-radius:50%;box-shadow:0 4px 20px rgba(37,99,235,0.5);align-items:center;justify-content:center;text-decoration:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:24px;height:24px;">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+           x-transition:leave-end="opacity-0 scale-50 translate-y-4"
+           style="display:none;width:56px;height:56px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;border-radius:50%;box-shadow:0 8px 24px rgba(59,130,246,0.4);align-items:center;justify-content:center;text-decoration:none;transition:all 0.3s ease;"
+           onmouseover="this.style.transform='scale(1.1) rotate(5deg)';this.style.boxShadow='0 12px 32px rgba(59,130,246,0.5)';"
+           onmouseout="this.style.transform='scale(1) rotate(0deg)';this.style.boxShadow='0 8px 24px rgba(59,130,246,0.4)';">
+            <!-- Modern Phone Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px;">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
         </a>
         @endif
@@ -88,35 +91,55 @@
         @if($waPhone)
         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $waPhone) }}" target="_blank" rel="noopener"
            x-show="open"
-           x-transition:enter="transition ease-out duration-200 delay-75"
-           x-transition:enter-start="opacity-0 scale-75 translate-y-2"
+           x-transition:enter="transition ease-out duration-300 transform delay-75"
+           x-transition:enter-start="opacity-0 scale-50 translate-y-4"
            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave="transition ease-in duration-200 transform"
            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-           x-transition:leave-end="opacity-0 scale-75 translate-y-2"
-           style="display:none;width:52px;height:52px;background:#25D366;color:white;border-radius:50%;box-shadow:0 4px 20px rgba(37,211,102,0.5);align-items:center;justify-content:center;text-decoration:none;position:relative;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:26px;height:26px;">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+           x-transition:leave-end="opacity-0 scale-50 translate-y-4"
+           style="display:none;width:56px;height:56px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;border-radius:50%;box-shadow:0 8px 24px rgba(37,211,102,0.4);align-items:center;justify-content:center;text-decoration:none;position:relative;transition:all 0.3s ease;"
+           onmouseover="this.style.transform='scale(1.1) rotate(-5deg)';this.style.boxShadow='0 12px 32px rgba(37,211,102,0.5)';"
+           onmouseout="this.style.transform='scale(1) rotate(0deg)';this.style.boxShadow='0 8px 24px rgba(37,211,102,0.4)';">
+            <!-- Modern WhatsApp Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:28px;height:28px;">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 01-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
             </svg>
-            <span style="position:absolute;top:1px;right:1px;width:13px;height:13px;background:#4ade80;border-radius:50%;border:2px solid white;"></span>
+            <!-- Online Status Indicator -->
+            <span style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#10b981;border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(16,185,129,0.4);"></span>
         </a>
         @endif
 
-        <!-- Toggle Button — always a perfect circle -->
+        <!-- Toggle Button -->
         <button @click="open = !open"
-                :style="open ? 'background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 4px 20px rgba(239,68,68,0.5);' : 'background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 4px 20px rgba(37,211,102,0.5);'"
-                style="width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;outline:none;">
+                :style="open ? 'background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 8px 28px rgba(239,68,68,0.45);transform:rotate(90deg);' : 'background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 8px 28px rgba(37,211,102,0.45);transform:rotate(0deg);'"
+                style="width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);outline:none;position:relative;overflow:hidden;"
+                onmouseover="if(!this.getAttribute('x-bind:style').includes('ef4444')) this.style.transform='scale(1.1)'"
+                onmouseout="if(!this.getAttribute('x-bind:style').includes('ef4444')) this.style.transform='scale(1)'">
+            
+            <!-- Ripple Effect Background -->
+            <span style="position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,0.1);animation:pulse 2s infinite;"></span>
+            
             <!-- WhatsApp icon when closed -->
-            <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:28px;height:28px;">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:30px;height:30px;position:relative;z-index:1;">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 01-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
             </svg>
-            <!-- X icon when open -->
-            <svg x-show="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:24px;height:24px;display:none;">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            
+            <!-- Modern X icon when open -->
+            <svg x-show="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px;display:none;position:relative;z-index:1;">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
 
     </div>
+
+    <!-- Add pulse animation -->
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.05); opacity: 0.1; }
+        }
+    </style>
 
     <button id="scrollToTop" class="fixed bottom-8 right-6 bg-gradient-to-r from-primary to-primary/80 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible hover:scale-110 z-50">
         <i class="fas fa-arrow-up"></i>
