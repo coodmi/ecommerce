@@ -93,6 +93,14 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
+// Forgot / Reset Password Routes (guests only)
+Route::middleware('guest')->group(function () {
+    Route::get('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'showForgotForm'])->name('password.forgot');
+    Route::post('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'sendResetLink'])->name('password.forgot.send');
+    Route::get('/reset-password/{token}', [App\Http\Controllers\ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'resetPassword'])->name('password.reset.update');
+});
+
 Route::post('/login', function (Illuminate\Http\Request $request) {
     $credentials = $request->validate([
         'email' => 'required|email',
@@ -138,6 +146,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/change-password', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile.change-password');
 
     // Seller Request Routes
     Route::post('/seller-request', [App\Http\Controllers\SellerRequestController::class, 'store'])->name('seller.request');

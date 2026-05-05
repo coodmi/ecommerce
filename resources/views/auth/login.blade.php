@@ -37,9 +37,12 @@
                            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition" required>
                     @error('password')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-500">
-                    <input type="checkbox" name="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
-                    <span>Remember me</span>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="{{ route('password.forgot') }}" class="text-primary font-semibold hover:underline">Forgot password?</a>
                 </div>
                 <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-2.5 rounded-xl font-semibold text-sm transition shadow-sm">
                     Sign In
@@ -122,9 +125,12 @@
                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition shadow-sm" required>
                     @error('password')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-500">
-                    <input type="checkbox" name="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
-                    <span>Remember me</span>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="{{ route('password.forgot') }}" class="text-primary font-semibold hover:underline">Forgot password?</a>
                 </div>
                 <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold text-sm transition shadow-md hover:shadow-lg">
                     Sign In

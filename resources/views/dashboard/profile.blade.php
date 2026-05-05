@@ -140,6 +140,87 @@
             </div>
         </div>
     </div>
+
+    <!-- Change Password Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-full">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-lock text-orange-500 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900">Password</h2>
+                        <p class="text-sm text-gray-500">Keep your account secure</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed">Use a strong password with at least 8 characters, mixing letters and numbers.</p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Change Password</h2>
+
+                @if(session('password_success'))
+                <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-500"></i>
+                    {{ session('password_success') }}
+                </div>
+                @endif
+
+                <form method="POST" action="{{ route('profile.change-password') }}" class="space-y-5">
+                    @csrf
+
+                    <div>
+                        <label for="current_password" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-lock text-primary mr-2"></i>Current Password
+                        </label>
+                        <input type="password"
+                               id="current_password"
+                               name="current_password"
+                               placeholder="Enter your current password"
+                               class="w-full px-4 py-3 border @error('current_password') border-red-400 bg-red-50 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                        @error('current_password')
+                        <p class="mt-1 text-xs text-red-500 flex items-center gap-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-key text-primary mr-2"></i>New Password
+                        </label>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Min. 8 characters"
+                               class="w-full px-4 py-3 border @error('password') border-red-400 bg-red-50 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                        @error('password')
+                        <p class="mt-1 text-xs text-red-500 flex items-center gap-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-check-double text-primary mr-2"></i>Confirm New Password
+                        </label>
+                        <input type="password"
+                               id="password_confirmation"
+                               name="password_confirmation"
+                               placeholder="Repeat your new password"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-200">
+                        <button type="submit"
+                                class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-medium hover:shadow-lg transition-all">
+                            <i class="fas fa-lock mr-2"></i>Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Image Preview Script -->
