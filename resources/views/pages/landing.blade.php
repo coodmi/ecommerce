@@ -365,13 +365,17 @@
                             </div>
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between gap-2">
                             <div>
                                 <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
                             </div>
-                            <button onclick="event.preventDefault();" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition">
-                                <i class="fas fa-shopping-cart text-sm"></i>
-                            </button>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
+                                @csrf
+                                <button type="submit" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition flex items-center gap-1 text-xs font-semibold px-3">
+                                    <i class="fas fa-shopping-cart text-sm"></i>
+                                    <span class="hidden sm:inline">Add</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -602,13 +606,17 @@
                             </div>
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between gap-2">
                             <div>
                                 <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
                             </div>
-                            <button onclick="event.preventDefault();" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition">
-                                <i class="fas fa-shopping-cart text-sm"></i>
-                            </button>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
+                                @csrf
+                                <button type="submit" class="bg-gradient-to-r from-primary to-primary/80 text-white p-2 rounded-lg hover:shadow-lg transition flex items-center gap-1 text-xs font-semibold px-3">
+                                    <i class="fas fa-shopping-cart text-sm"></i>
+                                    <span class="hidden sm:inline">Add</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
