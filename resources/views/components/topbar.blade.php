@@ -21,9 +21,10 @@
         <div class="flex items-center space-x-3">
             <!-- Visit Site Button -->
             <a href="{{ url('/') }}" target="_blank"
-               class="hidden sm:flex items-center space-x-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl text-sm font-semibold transition-colors">
+               class="flex items-center gap-1.5 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl text-xs sm:text-sm font-semibold transition-colors">
                 <i class="fas fa-external-link-alt text-xs"></i>
-                <span>Visit Site</span>
+                <span class="hidden xs:inline sm:inline">Visit Site</span>
+                <span class="inline sm:hidden xs:hidden"><i class="fas fa-home text-xs"></i></span>
             </a>
 
             @if(Auth::check() && Auth::user()->isAdmin())
