@@ -120,6 +120,41 @@
                 </div>
             </div>
 
+            <!-- Contact Section -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mt-6">
+                <div class="p-8">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-2xl bg-green-500/10 text-green-600 flex items-center justify-center">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">WhatsApp Contact</h2>
+                            <p class="text-sm text-slate-500">Set WhatsApp number for floating button</p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-md">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">WhatsApp Number</label>
+                        <p class="text-xs text-slate-500 mb-4">Enter with country code (e.g., 8801234567890)</p>
+                        <input type="text" 
+                               name="whatsapp_number" 
+                               value="{{ $whatsappNumber }}" 
+                               placeholder="8801234567890"
+                               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
+                        <p class="text-xs text-slate-400 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            This number will be used for the WhatsApp floating button on all pages
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-slate-50 flex justify-end">
+                    <button type="submit" class="bg-primary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-primary/90 transition">
+                        <i class="fas fa-check-circle mr-2"></i>Save All Settings
+                    </button>
+                </div>
+            </div>
+
         </form>
     </div>
 </div>
