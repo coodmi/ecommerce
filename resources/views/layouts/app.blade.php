@@ -65,7 +65,6 @@
         $waPhone   = \App\Models\Setting::get('whatsapp_number', '');
         $callPhone = \App\Models\Setting::get('call_number', '');
     @endphp
-    @if($waPhone || $callPhone)
     <div x-data="{ open: false }" class="fixed bottom-24 right-5 z-50 flex flex-col items-center gap-3">
 
         <!-- Call Button -->
@@ -113,7 +112,6 @@
         </button>
 
     </div>
-    @endif
 
     <button id="scrollToTop" class="fixed bottom-8 right-6 bg-gradient-to-r from-primary to-primary/80 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible hover:scale-110 z-50">
         <i class="fas fa-arrow-up"></i>
