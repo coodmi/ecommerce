@@ -1,112 +1,135 @@
-<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
     @foreach($products as $product)
-    <div class="group relative bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 flex flex-col h-full">
+    @php
+        $primaryImage = $product->primaryImage ?? $product->images->first();
+        $imageUrl = $primaryImage ? $primaryImage->url : asset('images/placeholder-product.jpg');
+        $rating = (float)($product->rating ?? 0);
+    @endphp
 
-        <!-- Whole Card Clickable (below everything) -->
-        <a href="{{ route('product.details', $product->slug) }}" class="absolute inset-0 z-[1]" aria-label="{{ $product->name }}"></a>
+    <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
 
-        <!-- Image Area -->
-        <div class="relative aspect-[4/5] overflow-hidden">
-            @php
-                $primaryImage = $product->primaryImage ?? $product->images->first();
-                $imageUrl = $primaryImage ? $primaryImage->url : asset('images/placeholder-product.jpg');
-            @endphp
-            <img src="{{ $imageUrl }}"
-                 alt="{{ $product->name }}"
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <!-- ===== IMAGE AREA ===== -->
+        <div class="relative overflow-hidden aspect-[4/5]">
+
+            <!-- Product Image — clicking goes to detail -->
+            <a href="{{ route('product.details', $product->slug) }}" class="block w-full h-full">
+                <img src="{{ $imageUrl }}" alt="{{ $product->name }}"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            </a>
 
             <!-- Category Badge -->
-            <div class="absolute top-4 left-4 z-[3]">
-                <span class="px-4 py-2 bg-white/90 backdrop-blur-md text-slate-900 text-xs font-bold rounded-full shadow-sm">
-                    {{ $product->category->name }}
+            <div class="absolute top-3 left-3 z-10 pointer-events-none">
+                <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-gray-800 text-[11px] font-bold rounded-full shadow-sm">
+                    {{ $product->category->name ?? '' }}
                 </span>
             </div>
 
-            <!-- Hover Overlay — sits above image, below badge -->
-            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-all duration-500 z-[2] flex items-center justify-center gap-3 translate-y-4 group-hover:translate-y-0">
-                {{-- Eye: navigates to product --}}
-                <a href="{{ route('product.details', $product->slug) }}"
-                   class="w-12 h-12 bg-white text-slate-900 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg relative z-[4]">
-                    <i class="fas fa-eye text-lg"></i>
-                </a>
-                {{-- Wishlist --}}
-                <button type="button" onclick="event.preventDefault(); toggleWishlist({{ $product->id }})"
-                        class="w-12 h-12 bg-white text-slate-900 rounded-full flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all shadow-lg relative z-[4]">
-                    <i class="fas fa-heart text-lg"></i>
-                </button>
-                {{-- Add to Cart --}}
-                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="relative z-[4]" onclick="event.stopPropagation()">
-                    @csrf
-                    <button type="submit"
-                            class="w-12 h-12 bg-white text-slate-900 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg">
-                        <i class="fas fa-shopping-cart text-lg"></i>
-                    </button>
-                </form>
+            <!-- Sale Badge -->
+            @if($product->discount_price)
+            <div class="absolute top-3 right-3 z-10 pointer-events-none">
+                <span class="px-2 py-1 bg-red-500 text-white text-[10px] font-bold rounded-full">SALE</span>
             </div>
+            @endif
+
+            <!-- Out of Stock Overlay -->
+            @if($product->stock_quantity <= 0)
+            <div class="absolute inset-0 bg-white/60 flex items-center justify-center pointer-events-none z-10">
+                <span class="bg-red-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">Out of Stock</span>
+            </div>
+            @endif
         </div>
 
-        <!-- Content Area -->
-        <div class="p-3 sm:p-6 flex flex-col flex-1 relative z-[2]">
-            <h3 class="text-sm sm:text-lg font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
-                {{ $product->name }}
-            </h3>
+        <!-- ===== ACTION BAR (below image) ===== -->
+        <div class="flex items-center justify-center gap-2 px-3 py-2.5 border-b border-gray-100 bg-gray-50">
+            <!-- View -->
+            <a href="{{ route('product.details', $product->slug) }}"
+               class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm">
+                <i class="fas fa-eye text-[11px]"></i>
+                <span class="hidden sm:inline">View</span>
+            </a>
+            <!-- Wishlist -->
+            <button type="button" onclick="toggleWishlist({{ $product->id }})"
+                    class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all shadow-sm">
+                <i class="fas fa-heart text-[11px]"></i>
+                <span class="hidden sm:inline">Wishlist</span>
+            </button>
+            <!-- Quick Cart -->
+            @if($product->stock_quantity > 0)
+            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                @csrf
+                <button type="submit"
+                        class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm">
+                    <i class="fas fa-shopping-cart text-[11px]"></i>
+                    <span class="hidden sm:inline">Cart</span>
+                </button>
+            </form>
+            @endif
+        </div>
+
+        <!-- ===== CONTENT AREA ===== -->
+        <div class="p-3 sm:p-4 flex flex-col flex-1">
+
+            <!-- Name — clickable -->
+            <a href="{{ route('product.details', $product->slug) }}" class="block mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-gray-900 group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2 leading-snug">
+                    {{ $product->name }}
+                </h3>
+            </a>
 
             <!-- Rating -->
-            <div class="flex items-center mb-3">
+            <div class="flex items-center gap-1 mb-3">
                 <div class="flex text-yellow-400 text-xs">
-                    @php $rating = (float)($product->rating ?? 0); @endphp
                     @for($i = 1; $i <= 5; $i++)
-                        @if($i <= $rating)
-                            <i class="fas fa-star"></i>
-                        @elseif($i - 0.5 <= $rating)
-                            <i class="fas fa-star-half-alt"></i>
-                        @else
-                            <i class="far fa-star text-gray-200"></i>
+                        @if($i <= $rating) <i class="fas fa-star"></i>
+                        @elseif($i - 0.5 <= $rating) <i class="fas fa-star-half-alt"></i>
+                        @else <i class="far fa-star text-gray-200"></i>
                         @endif
                     @endfor
                 </div>
-                <span class="text-[10px] text-gray-400 font-bold ml-2">({{ number_format($rating, 1) }})</span>
+                <span class="text-[10px] text-gray-400 font-semibold">({{ number_format($rating, 1) }})</span>
             </div>
 
-            <!-- Price and Stock -->
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-                <div class="flex flex-col">
-                    <span class="text-xs text-slate-400 font-medium lowercase tracking-wider hidden sm:block">price start from</span>
-                    <span class="text-lg sm:text-2xl font-black text-slate-900">${{ number_format($product->base_price, 2) }}</span>
+            <!-- Price + Stock -->
+            <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-50">
+                <div>
+                    <span class="text-base sm:text-xl font-black text-gray-900">${{ number_format($product->base_price, 2) }}</span>
+                    @if($product->discount_price)
+                    <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                    @endif
                 </div>
                 @if($product->stock_quantity > 0)
-                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full uppercase tracking-widest">In Stock</span>
+                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full uppercase tracking-wide">In Stock</span>
                 @else
-                <span class="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1.5 rounded-full uppercase tracking-widest">Out of Stock</span>
+                <span class="text-[10px] font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full uppercase tracking-wide">Out of Stock</span>
                 @endif
             </div>
 
-            <!-- Colors & Sizes Preview -->
-            <div class="mt-3 flex items-center gap-4">
+            <!-- Colors & Sizes -->
+            @if($product->colors->count() > 0 || $product->sizes->count() > 0)
+            <div class="mt-2.5 flex items-center gap-3">
                 @if($product->colors->count() > 0)
-                <div class="flex -space-x-2">
-                    @foreach($product->colors->take(3) as $color)
-                    <div class="w-5 h-5 rounded-full border-2 border-white shadow-sm" style="background-color: {{ $color->color_code }}"></div>
+                <div class="flex -space-x-1.5">
+                    @foreach($product->colors->take(4) as $color)
+                    <div class="w-4 h-4 rounded-full border-2 border-white shadow-sm" style="background-color: {{ $color->color_code }}"></div>
                     @endforeach
-                    @if($product->colors->count() > 3)
-                    <div class="w-5 h-5 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[8px] font-bold text-slate-500">
-                        +{{ $product->colors->count() - 3 }}
-                    </div>
+                    @if($product->colors->count() > 4)
+                    <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[7px] font-bold text-gray-500">+{{ $product->colors->count() - 4 }}</div>
                     @endif
                 </div>
                 @endif
                 @if($product->sizes->count() > 0)
                 <div class="flex gap-1">
-                    @foreach($product->sizes->take(2) as $size)
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{{ $size->size_name }}</span>
+                    @foreach($product->sizes->take(3) as $size)
+                    <span class="text-[10px] font-semibold text-gray-400 uppercase">{{ $size->size_name }}</span>
                     @endforeach
                 </div>
                 @endif
             </div>
+            @endif
 
             <!-- Add to Cart Button -->
             @if($product->stock_quantity > 0)
-            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="relative z-[4] mt-3" onclick="event.stopPropagation()">
+            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-3">
                 @csrf
                 <button type="submit"
                         class="w-full py-2.5 bg-primary text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all">
@@ -119,6 +142,7 @@
             </div>
             @endif
         </div>
+
     </div>
     @endforeach
 </div>
