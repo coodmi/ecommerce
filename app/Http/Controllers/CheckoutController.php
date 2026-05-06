@@ -45,18 +45,28 @@ class CheckoutController extends Controller
             return response()->json(['success' => false, 'message' => 'Your cart is empty.'], 400);
         }
 
-        $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
-
+        // Always validate these core fields (hardcoded in the form)
         $rules = [
             'delivery_zone' => 'required|exists:delivery_zones,id',
+            'full_name'     => 'required|string|max:255',
+            'phone'         => 'required|string|max:50',
+            'email'         => 'nullable|email|max:255',
+            'full_address'  => 'required|string|max:1000',
+            'order_notes'   => 'nullable|string|max:1000',
         ];
+
+        // Also add any extra dynamic checkout fields
+        $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
+        $coreFields = ['full_name', 'phone', 'email', 'full_address', 'order_notes', 'delivery_zone'];
         foreach ($fields as $field) {
-            $rule = $field->is_required ? ['required'] : ['nullable'];
-            if ($field->type === 'email') $rule[] = 'email';
-            $rules[$field->name] = implode('|', $rule);
+            if (!in_array($field->name, $coreFields)) {
+                $rule = $field->is_required ? ['required'] : ['nullable'];
+                if ($field->type === 'email') $rule[] = 'email';
+                $rules[$field->name] = implode('|', $rule);
+            }
         }
 
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -66,9 +76,12 @@ class CheckoutController extends Controller
             ], 422);
         }
 
-        $validatedData = $validator->validated();
-        // Remove delivery_zone from checkout_details (it's stored separately)
-        $checkoutDetails = collect($validatedData)->except(['delivery_zone', 'shipping_cost', 'total_amount'])->toArray();
+        $validated = $validator->validated();
+
+        // Build checkout details (exclude internal fields)
+        $checkoutDetails = collect($validated)
+            ->except(['delivery_zone', 'shipping_cost', 'total_amount'])
+            ->toArray();
 
         try {
             DB::beginTransaction();
