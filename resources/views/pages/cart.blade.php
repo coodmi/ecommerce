@@ -81,12 +81,12 @@
                 <div class="space-y-3 mb-2">
                     <div class="flex justify-between items-center">
                         <span class="text-white/75 text-sm">Subtotal</span>
-                        <span class="font-semibold text-sm" id="cart-subtotal">${{ number_format($subtotal, 2) }}</span>
+                        <span class="font-semibold text-sm" id="cart-subtotal">৳{{ number_format($subtotal, 0) }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-white/75 text-sm">{{ $deliveryLabel }}</span>
                         @if($shipping > 0)
-                            <span class="font-semibold text-sm" id="cart-shipping">${{ number_format($shipping, 2) }}</span>
+                            <span class="font-semibold text-sm" id="cart-shipping">৳{{ number_format($shipping, 0) }}</span>
                         @else
                             <span class="font-bold text-sm text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
@@ -100,13 +100,19 @@
 
                 <div class="flex justify-between items-center py-4 border-t border-b border-white/20 my-4">
                     <span class="text-white/80 text-sm font-medium">Total</span>
-                    <span class="cart-total-amount font-bold" id="cart-total">${{ number_format($total, 2) }}</span>
+                    <span class="cart-total-amount font-bold" id="cart-total">৳{{ number_format($total, 0) }}</span>
                 </div>
 
                 <a href="{{ route('checkout.index') }}"
                    class="block w-full bg-white text-primary hover:bg-gray-100 py-3.5 rounded-xl font-bold text-sm text-center transition shadow-sm">
                     Checkout Now
                 </a>
+
+                @if($deliveryZones->isNotEmpty())
+                <p class="text-center text-white/60 text-xs mt-3">
+                    <i class="fas fa-info-circle mr-1"></i>Final delivery charge selected at checkout
+                </p>
+                @endif
 
                 <div class="mt-5 flex items-center justify-center gap-4 text-white/30">
                     <i class="fab fa-cc-visa text-2xl"></i>

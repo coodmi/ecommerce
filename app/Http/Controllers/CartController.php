@@ -18,18 +18,21 @@ class CartController extends Controller
             $subtotal += $details['price'] * $details['quantity'];
         }
 
-        $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+        // Zone-based delivery: show the lowest zone charge as the starting delivery charge
+        $deliveryZones         = \App\Models\DeliveryZone::active();
+        $deliveryCharge        = $deliveryZones->min('charge') ?? (float) \App\Models\Setting::get('delivery_charge', 0);
         $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
         $deliveryLabel         = \App\Models\Setting::get('delivery_label', 'Delivery Charge');
 
-        $shipping = 0;
-        if ($deliveryCharge > 0) {
-            $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+        // In cart we show the minimum possible shipping (user picks zone at checkout)
+        $shipping = $deliveryZones->isNotEmpty() ? $deliveryZones->min('charge') : $deliveryCharge;
+        if ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) {
+            $shipping = 0;
         }
 
         $total = $subtotal + $shipping;
 
-        return view('pages.cart', compact('cart', 'subtotal', 'total', 'shipping', 'deliveryCharge', 'deliveryFreeThreshold', 'deliveryLabel'));
+        return view('pages.cart', compact('cart', 'subtotal', 'total', 'shipping', 'deliveryCharge', 'deliveryFreeThreshold', 'deliveryLabel', 'deliveryZones'));
     }
 
     public function add(Request $request, $id)

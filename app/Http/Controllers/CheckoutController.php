@@ -63,12 +63,24 @@ class CheckoutController extends Controller
                 $subtotal += $details['price'] * $details['quantity'];
             }
 
-            $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
-            $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+            // Use the zone-based shipping cost sent from the frontend
             $shipping = 0;
-            if ($deliveryCharge > 0) {
-                $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+            if ($request->has('delivery_zone') && $request->delivery_zone) {
+                $zone = \App\Models\DeliveryZone::find($request->delivery_zone);
+                if ($zone) {
+                    $shipping = (float) $zone->charge;
+                }
+            } elseif ($request->has('shipping_cost')) {
+                $shipping = (float) $request->shipping_cost;
+            } else {
+                // Fallback to global setting
+                $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
+                $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
+                if ($deliveryCharge > 0) {
+                    $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
+                }
             }
+
             $total = $subtotal + $shipping;
 
             $order = Order::create([
