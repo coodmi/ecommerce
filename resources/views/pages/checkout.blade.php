@@ -297,6 +297,16 @@ function checkoutForm() {
         },
 
         submitOrder() {
+            // Client-side check: must select a delivery zone
+            if (!this.formData.delivery_zone) {
+                window.dispatchEvent(new CustomEvent('toast', {
+                    detail: { type: 'error', title: 'Select Delivery Zone', message: 'Please select a delivery zone to continue.' }
+                }));
+                // Scroll to delivery zone section
+                document.querySelector('[name="delivery_zone"]')?.closest('.space-y-5')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
             this.isSubmitting = true;
             this.errors = {};
 
@@ -322,9 +332,16 @@ function checkoutForm() {
                     setTimeout(() => { window.location.href = data.redirect; }, 1500);
                 } else if (data.errors) {
                     this.errors = data.errors;
+                    // Build a readable error list
+                    const msgs = Object.values(data.errors).flat().join(' ');
                     window.dispatchEvent(new CustomEvent('toast', {
-                        detail: { type: 'error', title: 'Check the form', message: 'Please fix the errors below.' }
+                        detail: { type: 'error', title: 'Please fix the errors', message: msgs }
                     }));
+                    // Scroll to first error
+                    setTimeout(() => {
+                        const firstErr = document.querySelector('[class*="text-red-500"]');
+                        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 } else {
                     window.dispatchEvent(new CustomEvent('toast', {
                         detail: { type: 'error', message: data.message || 'Something went wrong.' }

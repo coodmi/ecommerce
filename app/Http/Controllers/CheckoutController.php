@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
 {
@@ -46,14 +47,28 @@ class CheckoutController extends Controller
 
         $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
 
-        $rules = [];
+        $rules = [
+            'delivery_zone' => 'required|exists:delivery_zones,id',
+        ];
         foreach ($fields as $field) {
             $rule = $field->is_required ? ['required'] : ['nullable'];
             if ($field->type === 'email') $rule[] = 'email';
             $rules[$field->name] = implode('|', $rule);
         }
 
-        $validatedData = $request->validate($rules);
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors'  => $validator->errors(),
+                'message' => 'Please fix the errors below.',
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
+        // Remove delivery_zone from checkout_details (it's stored separately)
+        $checkoutDetails = collect($validatedData)->except(['delivery_zone', 'shipping_cost', 'total_amount'])->toArray();
 
         try {
             DB::beginTransaction();
@@ -63,22 +78,11 @@ class CheckoutController extends Controller
                 $subtotal += $details['price'] * $details['quantity'];
             }
 
-            // Use the zone-based shipping cost sent from the frontend
+            // Use the selected delivery zone charge
             $shipping = 0;
-            if ($request->has('delivery_zone') && $request->delivery_zone) {
-                $zone = \App\Models\DeliveryZone::find($request->delivery_zone);
-                if ($zone) {
-                    $shipping = (float) $zone->charge;
-                }
-            } elseif ($request->has('shipping_cost')) {
-                $shipping = (float) $request->shipping_cost;
-            } else {
-                // Fallback to global setting
-                $deliveryCharge        = (float) \App\Models\Setting::get('delivery_charge', 0);
-                $deliveryFreeThreshold = (float) \App\Models\Setting::get('delivery_free_threshold', 0);
-                if ($deliveryCharge > 0) {
-                    $shipping = ($deliveryFreeThreshold > 0 && $subtotal >= $deliveryFreeThreshold) ? 0 : $deliveryCharge;
-                }
+            $zone = \App\Models\DeliveryZone::find($request->delivery_zone);
+            if ($zone) {
+                $shipping = (float) $zone->charge;
             }
 
             $total = $subtotal + $shipping;
@@ -87,7 +91,7 @@ class CheckoutController extends Controller
                 'user_id'          => auth()->id(),
                 'total_amount'     => $total,
                 'status'           => 'pending',
-                'checkout_details' => $validatedData,
+                'checkout_details' => $checkoutDetails,
                 'payment_method'   => 'Cash on Delivery',
             ]);
 
