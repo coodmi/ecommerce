@@ -68,7 +68,7 @@
                                 <p class="text-xs text-gray-500 truncate">{{ $order->user->name ?? ($order->checkout_details['full_name'] ?? 'Guest') }}</p>
                                 <p class="text-xs text-gray-400">{{ $order->created_at->diffForHumans() }}</p>
                             </div>
-                            <span class="text-xs font-bold text-gray-900 flex-shrink-0">${{ number_format($order->total_amount, 2) }}</span>
+                            <span class="text-xs font-bold text-gray-900 flex-shrink-0">৳{{ number_format($order->total_amount, 0) }}</span>
                         </a>
                         @empty
                         <div class="px-4 py-6 text-center text-sm text-gray-400">

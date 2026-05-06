@@ -124,8 +124,8 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-center text-gray-600">{{ $item->quantity }}</td>
-                                    <td class="px-4 py-3 text-right text-gray-600">${{ number_format($item->price, 2) }}</td>
-                                    <td class="px-4 py-3 text-right font-semibold text-gray-800">${{ number_format($item->price * $item->quantity, 2) }}</td>
+                                    <td class="px-4 py-3 text-right text-gray-600">৳{{ number_format($item->price, 0) }}</td>
+                                    <td class="px-4 py-3 text-right font-semibold text-gray-800">৳{{ number_format($item->price * $item->quantity, 0) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -138,7 +138,7 @@
                     <div class="w-full max-w-xs space-y-2 text-sm">
                         <div class="flex justify-between text-gray-500">
                             <span>Subtotal</span>
-                            <span>${{ number_format($order->total_amount, 2) }}</span>
+                            <span>৳{{ number_format($order->total_amount, 0) }}</span>
                         </div>
                         <div class="flex justify-between text-gray-500">
                             <span>Shipping</span>
@@ -146,7 +146,7 @@
                         </div>
                         <div class="flex justify-between font-bold text-gray-900 text-base border-t border-gray-100 pt-2">
                             <span>Total</span>
-                            <span class="text-primary">${{ number_format($order->total_amount, 2) }}</span>
+                            <span class="text-primary">৳{{ number_format($order->total_amount, 0) }}</span>
                         </div>
                     </div>
                 </div>

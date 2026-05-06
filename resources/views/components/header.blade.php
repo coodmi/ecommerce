@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span><i class="fas fa-truck mr-2"></i>{{ $topBar['announcement'] ?? 'Free Shipping on Orders Over $50' }}</span>
+                    <span><i class="fas fa-truck mr-2"></i>{{ $topBar['announcement'] ?? 'Free Shipping on Orders Over ৳500' }}</span>
                 </div>
             </div>
         </div>

@@ -91,9 +91,9 @@
             <!-- Price + Stock -->
             <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
                 <div>
-                    <span class="text-base sm:text-xl font-black text-gray-900">${{ number_format($product->base_price, 2) }}</span>
+                    <span class="text-base sm:text-xl font-black text-gray-900">৳{{ number_format($product->base_price, 0) }}</span>
                     @if($product->discount_price)
-                    <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                    <span class="text-xs text-gray-400 line-through ml-1">৳{{ number_format($product->base_price, 0) }}</span>
                     @endif
                 </div>
                 @if($product->stock_quantity > 0)

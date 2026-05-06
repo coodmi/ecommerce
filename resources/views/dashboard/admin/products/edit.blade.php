@@ -71,7 +71,7 @@
                                     Base Price <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">৳</span>
                                     <input type="number"
                                            name="base_price"
                                            value="{{ old('base_price', $product->base_price) }}"
@@ -308,7 +308,7 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="relative">
-                                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">৳</span>
                                                 <input type="number"
                                                        :name="'variants[' + vIndex + '][price]'"
                                                        x-model="variant.price"

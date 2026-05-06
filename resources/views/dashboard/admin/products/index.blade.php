@@ -76,7 +76,7 @@
                             <div class="text-xs text-slate-400 font-medium">SKU: {{ $product->sku ?? 'N/A' }}</div>
                         </td>
                         <td class="px-6 py-4">
-                            <span class="font-black text-slate-900">${{ number_format($product->base_price, 2) }}</span>
+                            <span class="font-black text-slate-900">৳{{ number_format($product->base_price, 0) }}</span>
                         </td>
                         <td class="px-6 py-4">
                             <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-wider">

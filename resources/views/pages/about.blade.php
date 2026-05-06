@@ -249,7 +249,7 @@
                 [
                     'icon' => 'fa-shipping-fast',
                     'title' => 'Fast & Free Shipping',
-                    'description' => 'Free shipping on orders over $50. Express delivery available.',
+                    'description' => 'Free shipping on orders over ৳500. Express delivery available.',
                 ],
                 [
                     'icon' => 'fa-undo',

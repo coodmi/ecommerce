@@ -99,8 +99,8 @@
                         <div class="mt-auto pt-4 border-t border-gray-50">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <span class="text-2xl font-black text-gray-900">${{ $product->base_price }}</span>
-                                    <span class="text-sm text-gray-400 line-through ml-2">${{ number_format($product->base_price * 1.4, 2) }}</span>
+                                    <span class="text-2xl font-black text-gray-900">৳{{ number_format($product->base_price, 0) }}</span>
+                                    <span class="text-sm text-gray-400 line-through ml-2">৳{{ number_format($product->base_price * 1.4, 0) }}</span>
                                 </div>
                                 <div class="flex items-center text-yellow-400 text-xs">
                                     <i class="fas fa-star"></i>
@@ -168,8 +168,8 @@
                         </div>
 
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xl font-black text-primary">${{ $product->base_price }}</span>
-                            <span class="text-sm text-gray-400 line-through">${{ number_format($product->base_price * 1.3, 2) }}</span>
+                            <span class="text-xl font-black text-primary">৳{{ number_format($product->base_price, 0) }}</span>
+                            <span class="text-sm text-gray-400 line-through">৳{{ number_format($product->base_price * 1.3, 0) }}</span>
                         </div>
                         <div class="flex items-center gap-3">
                            <button @click.stop="window.location='{{ route('product.details', $product->slug) }}'"

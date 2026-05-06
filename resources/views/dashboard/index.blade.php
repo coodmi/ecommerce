@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <h3 class="text-gray-500 text-xs font-medium mb-1">Total Revenue</h3>
-                <p class="dash-stat text-gray-900">${{ number_format($totalRevenue, 2) }}</p>
+                <p class="dash-stat text-gray-900">৳{{ number_format($totalRevenue, 0) }}</p>
             </div>
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
@@ -97,7 +97,7 @@
                             <td class="py-3 px-4 font-semibold text-gray-900">#{{ $order->id }}</td>
                             <td class="py-3 px-4 text-gray-600">{{ $order->user->name ?? 'Guest' }}</td>
                             <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $cls }}">{{ ucfirst($order->status) }}</span></td>
-                            <td class="py-3 px-4 text-right font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</td>
+                            <td class="py-3 px-4 text-right font-bold text-gray-900">৳{{ number_format($order->total_amount, 0) }}</td>
                         </tr>
                         @empty
                         <tr><td colspan="4" class="py-8 text-center text-gray-400">No orders yet.</td></tr>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <span class="px-2.5 py-1 rounded-lg text-xs font-semibold border {{ $cls }}">{{ ucfirst($order->status) }}</span>
-                    <span class="font-bold text-gray-900 text-sm">${{ number_format($order->total_amount, 2) }}</span>
+                    <span class="font-bold text-gray-900 text-sm">৳{{ number_format($order->total_amount, 0) }}</span>
                 </div>
             </div>
             @empty

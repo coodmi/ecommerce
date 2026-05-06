@@ -366,9 +366,9 @@
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
                         <div class="mb-2">
-                            <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
+                            <span class="text-lg font-bold text-primary">৳{{ number_format($product->base_price, 0) }}</span>
                             @if($product->discount_price)
-                            <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                            <span class="text-xs text-gray-400 line-through ml-1">৳{{ number_format($product->base_price, 0) }}</span>
                             @endif
                         </div>
                         <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">
@@ -607,9 +607,9 @@
                             <span class="text-xs text-gray-500 ml-1">({{ rand(50, 200) }})</span>
                         </div>
                         <div class="mb-2">
-                            <span class="text-lg font-bold text-primary">${{ number_format($product->base_price, 2) }}</span>
+                            <span class="text-lg font-bold text-primary">৳{{ number_format($product->base_price, 0) }}</span>
                             @if($product->discount_price)
-                            <span class="text-xs text-gray-400 line-through ml-1">${{ number_format($product->base_price, 2) }}</span>
+                            <span class="text-xs text-gray-400 line-through ml-1">৳{{ number_format($product->base_price, 0) }}</span>
                             @endif
                         </div>
                         <form action="{{ route('cart.add', $product->id) }}" method="POST" onclick="event.stopPropagation()">

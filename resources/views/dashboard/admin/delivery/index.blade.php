@@ -26,9 +26,9 @@
     {{-- Global defaults info --}}
     <div class="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-blue-700 flex flex-wrap gap-4">
         <span><i class="fas fa-info-circle mr-1"></i> Global default:</span>
-        <span class="font-semibold">{{ $globalLabel }}: ${{ number_format($globalCharge, 2) }}</span>
+        <span class="font-semibold">{{ $globalLabel }}: ৳{{ number_format($globalCharge, 0) }}</span>
         @if($globalFreeThreshold > 0)
-        <span>· Free above <span class="font-semibold">${{ number_format($globalFreeThreshold, 2) }}</span></span>
+        <span>· Free above <span class="font-semibold">৳{{ number_format($globalFreeThreshold, 0) }}</span></span>
         @endif
         <a href="{{ route('admin.settings.index') }}" class="text-blue-600 underline hover:text-blue-800">Change global</a>
     </div>
@@ -89,10 +89,10 @@
                                 </div>
                             </td>
                             <td class="px-5 py-3.5 text-gray-500 text-xs">{{ $product->category->name ?? '—' }}</td>
-                            <td class="px-5 py-3.5 font-semibold text-gray-800">${{ number_format($product->base_price, 2) }}</td>
+                            <td class="px-5 py-3.5 font-semibold text-gray-800">৳{{ number_format($product->base_price, 0) }}</td>
                             <td class="px-5 py-3.5">
                                 <div class="relative">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">$</span>
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">৳</span>
                                     <input type="number"
                                            name="charges[{{ $product->id }}]"
                                            value="{{ $product->delivery_charge !== null ? number_format($product->delivery_charge, 2, '.', '') : '' }}"

@@ -24,7 +24,7 @@
         <div class="px-4 py-4 grid grid-cols-2 gap-2">
             <div class="bg-slate-800/50 rounded-lg p-3 backdrop-blur border border-slate-700/50">
                 <p class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Today's Sales</p>
-                <p class="text-lg font-bold text-white">$2,450</p>
+                <p class="text-lg font-bold text-white">৳2,450</p>
             </div>
             <div class="bg-slate-800/50 rounded-lg p-3 backdrop-blur border border-slate-700/50">
                 <p class="text-[10px] uppercase font-bold tracking-wider text-slate-400">New Orders</p>

@@ -93,7 +93,7 @@
                     </div>                    @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
                     <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
                         <i class="fas fa-tag mr-1"></i>
-                        Add ${{ number_format($deliveryFreeThreshold - $subtotal, 2) }} more for free shipping
+                        Add ৳{{ number_format($deliveryFreeThreshold - $subtotal, 0) }} more for free shipping
                     </div>
                     @endif
                 </div>
@@ -166,12 +166,12 @@ function cartPage() {
                     priceEl.innerText = data.item_total;
                     this.total = data.total;
                     this.itemCount = data.cart_count;
-                    document.getElementById('cart-subtotal').textContent = '$' + data.subtotal;
-                    document.getElementById('cart-total').textContent = '$' + data.total;
+                    document.getElementById('cart-subtotal').textContent = '৳' + data.subtotal;
+                    document.getElementById('cart-total').textContent = '৳' + data.total;
                     const shippingEl = document.getElementById('cart-shipping');
                     if (shippingEl) {
                         if (parseFloat(data.shipping) > 0) {
-                            shippingEl.textContent = '$' + data.shipping;
+                            shippingEl.textContent = '৳' + data.shipping;
                             shippingEl.className = 'font-semibold text-white';
                         } else {
                             shippingEl.textContent = 'FREE';

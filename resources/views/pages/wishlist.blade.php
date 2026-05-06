@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
-                        <span class="text-2xl font-black text-slate-900">${{ number_format($product->base_price, 2) }}</span>
+                        <span class="text-2xl font-black text-slate-900">৳{{ number_format($product->base_price, 0) }}</span>
                         <form action="{{ route('cart.add', $product->id) }}" method="POST">
                             @csrf
                             <button type="submit" class="w-11 h-11 bg-slate-900 text-white rounded-xl flex items-center justify-center hover:bg-primary transition-all shadow-lg scale-90 hover:scale-100">

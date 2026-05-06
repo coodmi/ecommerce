@@ -78,12 +78,12 @@
                                 @if($item->size)
                                 <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Size: {{ $item->size }}</span>
                                 @endif
-                                <span class="text-[10px] text-slate-400 font-medium px-2 py-0.5">Unit Price: ${{ number_format($item->price, 2) }}</span>
+                                <span class="text-[10px] text-slate-400 font-medium px-2 py-0.5">Unit Price: ৳{{ number_format($item->price, 0) }}</span>
                             </div>
                         </div>
                         <div class="text-right">
                             <div class="text-xs text-slate-400 font-black uppercase tracking-widest mb-1">Qty: {{ $item->quantity }}</div>
-                            <div class="font-black text-slate-900">${{ number_format($item->price * $item->quantity, 2) }}</div>
+                            <div class="font-black text-slate-900">৳{{ number_format($item->price * $item->quantity, 0) }}</div>
                         </div>
                     </div>
                     @endforeach
@@ -91,7 +91,7 @@
                 <div class="p-4 sm:p-6 bg-slate-50 border-t border-gray-100">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-slate-900 text-sm uppercase tracking-wide">Total Amount Paid</span>
-                        <span class="text-xl font-bold text-slate-900">${{ number_format($order->total_amount, 2) }}</span>
+                        <span class="text-xl font-bold text-slate-900">৳{{ number_format($order->total_amount, 0) }}</span>
                     </div>
                 </div>
             </div>
