@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - Shankhobazar</title>
+    @php
+        $siteName = \App\Models\Setting::get('site_name', 'Shankhabazar');
+        $favicon  = \App\Models\Setting::get('favicon', '');
+    @endphp
+    <title>@yield('title', 'Dashboard') - {{ $siteName }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Favicon -->
+    @if($favicon)
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $favicon) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/' . $favicon) }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

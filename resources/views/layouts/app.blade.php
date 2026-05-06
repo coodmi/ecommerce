@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Shankhobazar - Your Premium Shopping Destination')</title>
+    @php
+        $siteName  = \App\Models\Setting::get('site_name', config('app.name'));
+        $siteTitle = \App\Models\Setting::get('site_title', 'Your Premium Shopping Destination');
+        $favicon   = \App\Models\Setting::get('favicon', '');
+    @endphp
+    <title>@yield('title', $siteName . ($siteTitle ? ' - ' . $siteTitle : ''))</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Favicon -->
+    @if($favicon)
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $favicon) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/' . $favicon) }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -12,9 +12,93 @@
     </div>
 
     <div class="max-w-4xl">
-        <form action="{{ route('admin.settings.update') }}" method="POST">
+        <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
+            <!-- Site Identity Section -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+                <div class="p-8">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                            <i class="fas fa-globe text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">Site Identity</h2>
+                            <p class="text-sm text-slate-500">Set your site name, title, and favicon</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Left: text fields -->
+                        <div class="space-y-5">
+                            <!-- Site Name -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Site Name</label>
+                                <p class="text-xs text-slate-500 mb-2">Appears in the browser tab, emails, and throughout the site.</p>
+                                <input type="text"
+                                       name="site_name"
+                                       value="{{ $siteName }}"
+                                       placeholder="e.g. Shankhabazar"
+                                       class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
+                            </div>
+
+                            <!-- Site Title / Tagline -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Site Tagline / Title</label>
+                                <p class="text-xs text-slate-500 mb-2">Shown after the site name in browser tabs (e.g. "Your Premium Shopping Destination").</p>
+                                <input type="text"
+                                       name="site_title"
+                                       value="{{ $siteTitle }}"
+                                       placeholder="e.g. Your Premium Shopping Destination"
+                                       class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm transition">
+                                <p class="text-xs text-slate-400 mt-1">
+                                    <i class="fas fa-eye mr-1"></i>
+                                    Browser tab will show: <strong id="titlePreview">{{ $siteName }} - {{ $siteTitle }}</strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right: favicon -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Favicon</label>
+                            <p class="text-xs text-slate-500 mb-3">The small icon shown in browser tabs. Recommended: 32×32px PNG or ICO.</p>
+
+                            <div class="flex items-start gap-5">
+                                <!-- Current favicon preview -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden" id="faviconPreviewWrap">
+                                        @if($favicon)
+                                            <img src="{{ asset('storage/' . $favicon) }}" alt="Favicon" class="w-12 h-12 object-contain" id="faviconPreview">
+                                        @else
+                                            <i class="fas fa-image text-slate-300 text-2xl" id="faviconPlaceholder"></i>
+                                        @endif
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 text-center mt-1">Current</p>
+                                </div>
+
+                                <!-- Upload -->
+                                <div class="flex-1">
+                                    <label for="favicon_input"
+                                           class="flex flex-col items-center justify-center w-full h-20 border-2 border-dashed border-slate-200 rounded-2xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+                                        <i class="fas fa-cloud-upload-alt text-slate-400 text-xl mb-1"></i>
+                                        <span class="text-xs text-slate-500 font-medium">Click to upload</span>
+                                        <span class="text-[10px] text-slate-400">PNG, JPG, ICO, SVG (max 512KB)</span>
+                                    </label>
+                                    <input type="file" id="favicon_input" name="favicon" accept=".png,.jpg,.jpeg,.ico,.svg,.webp" class="hidden"
+                                           onchange="previewFavicon(event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-slate-50 flex justify-end">
+                    <button type="submit" class="bg-primary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-primary/90 transition">
+                        <i class="fas fa-check-circle mr-2"></i>Save All Settings
+                    </button>
+                </div>
+            </div>
+
             <!-- Appearance Section -->
             <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="p-8 border-b border-slate-50">
@@ -184,7 +268,6 @@
     document.getElementById('primary_color').addEventListener('input', function(e) {
         const color = e.target.value;
         document.getElementById('color_code').value = color;
-        // Dynamically update CSS variable for live preview
         document.documentElement.style.setProperty('--primary-color', color);
     });
 
@@ -193,5 +276,26 @@
         document.getElementById('secondary_color_code').value = color;
         document.documentElement.style.setProperty('--secondary-color', color);
     });
+
+    // Live title preview
+    function updateTitlePreview() {
+        const name  = document.querySelector('[name="site_name"]').value || 'Site Name';
+        const title = document.querySelector('[name="site_title"]').value || '';
+        document.getElementById('titlePreview').textContent = title ? name + ' - ' + title : name;
+    }
+    document.querySelector('[name="site_name"]')?.addEventListener('input', updateTitlePreview);
+    document.querySelector('[name="site_title"]')?.addEventListener('input', updateTitlePreview);
+
+    // Favicon preview
+    function previewFavicon(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const wrap = document.getElementById('faviconPreviewWrap');
+            wrap.innerHTML = '<img src="' + e.target.result + '" class="w-12 h-12 object-contain" id="faviconPreview">';
+        };
+        reader.readAsDataURL(file);
+    }
 </script>
 @endsection
