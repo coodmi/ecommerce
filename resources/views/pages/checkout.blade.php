@@ -265,9 +265,9 @@
 <script>
 function checkoutForm() {
     return {
-        subtotal: {{ $total }},
+        subtotal: {{ (float) $total }},
         shippingCost: 0,
-        deliveryZones: {!! json_encode($deliveryZones->mapWithKeys(fn($z) => [$z->id => $z->charge])->toArray()) !!},
+        deliveryZones: {!! json_encode($deliveryZones->mapWithKeys(fn($z) => [$z->id => (float) $z->charge])->toArray()) !!},
         formData: {
             full_name: '',
             phone: '',
@@ -284,7 +284,7 @@ function checkoutForm() {
         isSubmitting: false,
 
         get grandTotal() {
-            return this.subtotal + this.shippingCost;
+            return parseFloat(this.subtotal) + parseFloat(this.shippingCost);
         },
 
         formatNumber(num) {
@@ -292,8 +292,8 @@ function checkoutForm() {
         },
 
         updateShipping() {
-            const zoneId = this.formData.delivery_zone;
-            this.shippingCost = this.deliveryZones[zoneId] || 0;
+            const zoneId = parseInt(this.formData.delivery_zone);
+            this.shippingCost = parseFloat(this.deliveryZones[zoneId]) || 0;
         },
 
         submitOrder() {
