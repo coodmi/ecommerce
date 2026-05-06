@@ -45,7 +45,7 @@ class CheckoutController extends Controller
             return response()->json(['success' => false, 'message' => 'Your cart is empty.'], 400);
         }
 
-        // Always validate these core fields (hardcoded in the form)
+        // Validate hardcoded form fields only
         $rules = [
             'delivery_zone' => 'required|exists:delivery_zones,id',
             'full_name'     => 'required|string|max:255',
@@ -54,17 +54,6 @@ class CheckoutController extends Controller
             'full_address'  => 'required|string|max:1000',
             'order_notes'   => 'nullable|string|max:1000',
         ];
-
-        // Also add any extra dynamic checkout fields
-        $fields = CheckoutField::where('is_active', true)->orderBy('sort_order')->get();
-        $coreFields = ['full_name', 'phone', 'email', 'full_address', 'order_notes', 'delivery_zone'];
-        foreach ($fields as $field) {
-            if (!in_array($field->name, $coreFields)) {
-                $rule = $field->is_required ? ['required'] : ['nullable'];
-                if ($field->type === 'email') $rule[] = 'email';
-                $rules[$field->name] = implode('|', $rule);
-            }
-        }
 
         $validator = Validator::make($request->all(), $rules);
 
