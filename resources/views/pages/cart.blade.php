@@ -85,12 +85,33 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-white/75 text-sm">{{ $deliveryLabel }}</span>
-                        @if($shipping > 0)
+                        @if($deliveryZones->isNotEmpty())
+                            @php
+                                $minCharge = $deliveryZones->min('charge');
+                                $maxCharge = $deliveryZones->max('charge');
+                            @endphp
+                            @if($minCharge == $maxCharge)
+                                <span class="font-semibold text-sm text-yellow-300" id="cart-shipping">৳{{ number_format($minCharge, 0) }}</span>
+                            @else
+                                <span class="font-semibold text-sm text-yellow-300" id="cart-shipping">৳{{ number_format($minCharge, 0) }} – ৳{{ number_format($maxCharge, 0) }}</span>
+                            @endif
+                        @elseif($shipping > 0)
                             <span class="font-semibold text-sm" id="cart-shipping">৳{{ number_format($shipping, 0) }}</span>
                         @else
                             <span class="font-bold text-sm text-yellow-300" id="cart-shipping">FREE</span>
                         @endif
-                    </div>                    @if($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
+                    </div>
+
+                    @if($deliveryZones->isNotEmpty())
+                    <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2 space-y-1">
+                        @foreach($deliveryZones as $zone)
+                        <div class="flex justify-between">
+                            <span><i class="fas {{ $zone->icon }} mr-1"></i>{{ $zone->name }}</span>
+                            <span class="font-semibold">৳{{ number_format($zone->charge, 0) }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                    @elseif($deliveryCharge > 0 && $deliveryFreeThreshold > 0 && $shipping > 0)
                     <div class="text-xs text-white/60 bg-white/10 rounded-lg px-3 py-2">
                         <i class="fas fa-tag mr-1"></i>
                         Add ৳{{ number_format($deliveryFreeThreshold - $subtotal, 0) }} more for free shipping
@@ -110,7 +131,7 @@
 
                 @if($deliveryZones->isNotEmpty())
                 <p class="text-center text-white/60 text-xs mt-3">
-                    <i class="fas fa-info-circle mr-1"></i>Final delivery charge selected at checkout
+                    <i class="fas fa-info-circle mr-1"></i>Select your zone at checkout
                 </p>
                 @endif
 
