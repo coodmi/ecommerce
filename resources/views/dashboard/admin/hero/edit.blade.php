@@ -93,23 +93,56 @@
             <h2 class="text-sm font-semibold text-gray-800 mb-1 flex items-center gap-2">
                 <i class="fas fa-images text-primary text-xs"></i> Slider Background Images
             </h2>
-            <p class="text-xs text-gray-400 mb-4">Paste image URLs (Unsplash, CDN, etc.) or leave blank to skip that slide. At least 1 required.</p>
+            <p class="text-xs text-gray-400 mb-4">Device থেকে ছবি আপলোড করুন। JPG, PNG, WEBP — সর্বোচ্চ 4MB। সর্বনিম্ন ১টি ছবি দিতে হবে।</p>
 
-            <div class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 @for($i = 1; $i <= 4; $i++)
                 @php $imgVal = $hero['slider_images'][$i-1] ?? ''; @endphp
-                <div class="flex items-start gap-3">
-                    <span class="mt-2.5 text-xs font-bold text-gray-400 w-5 text-center flex-shrink-0">{{ $i }}</span>
-                    <div class="flex-1 space-y-2">
-                        <input type="text" name="slider_image_{{ $i }}" value="{{ $imgVal }}"
-                               placeholder="https://example.com/image.jpg"
-                               class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none">
+                <div class="space-y-2">
+                    <p class="text-xs font-semibold text-gray-500">Slide {{ $i }}</p>
+
+                    {{-- Upload Box --}}
+                    <label for="file_upload_{{ $i }}"
+                           class="flex flex-col items-center justify-center gap-2 h-32 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition group relative"
+                           id="upload_label_{{ $i }}">
+
+                        {{-- Show current image as background if exists --}}
                         @if($imgVal)
-                        <div class="h-20 rounded-lg overflow-hidden border border-gray-100">
-                            <img src="{{ $imgVal }}" class="w-full h-full object-cover" alt="Slide {{ $i }} preview">
+                        <img src="{{ $imgVal }}" id="preview_img_{{ $i }}"
+                             class="absolute inset-0 w-full h-full object-cover rounded-xl opacity-60" alt="">
+                        <div class="relative z-10 flex flex-col items-center gap-1">
+                            <i class="fas fa-camera text-white text-lg drop-shadow"></i>
+                            <span class="text-xs text-white font-medium drop-shadow">পরিবর্তন করুন</span>
+                        </div>
+                        @else
+                        <img src="" id="preview_img_{{ $i }}"
+                             class="absolute inset-0 w-full h-full object-cover rounded-xl opacity-60 hidden" alt="">
+                        <div id="upload_placeholder_{{ $i }}" class="flex flex-col items-center gap-1">
+                            <i class="fas fa-cloud-upload-alt text-gray-300 group-hover:text-primary text-2xl transition"></i>
+                            <span class="text-xs text-gray-400 group-hover:text-primary transition">ছবি আপলোড করুন</span>
+                        </div>
+                        <div id="upload_done_{{ $i }}" class="hidden flex-col items-center gap-1">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-xs text-green-600 font-medium" id="file_name_{{ $i }}"></span>
                         </div>
                         @endif
-                    </div>
+                    </label>
+
+                    <input type="file" id="file_upload_{{ $i }}" name="slider_image_file_{{ $i }}"
+                           accept="image/jpeg,image/png,image/gif,image/webp"
+                           class="hidden"
+                           onchange="previewHeroImage(this, {{ $i }})">
+
+                    {{-- Remove button if image exists --}}
+                    @if($imgVal)
+                    <input type="hidden" name="slider_image_keep_{{ $i }}" id="keep_{{ $i }}" value="1">
+                    <button type="button" onclick="clearHeroImage({{ $i }})"
+                            class="w-full text-xs text-red-400 hover:text-red-600 transition flex items-center justify-center gap-1 py-1">
+                        <i class="fas fa-trash-alt"></i> ছবি সরান
+                    </button>
+                    @else
+                    <input type="hidden" name="slider_image_keep_{{ $i }}" id="keep_{{ $i }}" value="0">
+                    @endif
                 </div>
                 @endfor
             </div>
@@ -148,3 +181,60 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function previewHeroImage(input, index) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = document.getElementById('preview_img_' + index);
+        const placeholder = document.getElementById('upload_placeholder_' + index);
+        const done = document.getElementById('upload_done_' + index);
+        const nameEl = document.getElementById('file_name_' + index);
+
+        // Show image preview inside the upload box
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+
+        // Hide placeholder, show done state
+        if (placeholder) placeholder.classList.add('hidden');
+        if (done) {
+            done.classList.remove('hidden');
+            done.classList.add('flex');
+        }
+        if (nameEl) nameEl.textContent = file.name;
+
+        // Mark as keep
+        document.getElementById('keep_' + index).value = '1';
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearHeroImage(index) {
+    // Clear file input
+    const fileInput = document.getElementById('file_upload_' + index);
+    if (fileInput) fileInput.value = '';
+
+    // Hide preview image
+    const img = document.getElementById('preview_img_' + index);
+    if (img) { img.src = ''; img.classList.add('hidden'); }
+
+    // Show placeholder again
+    const placeholder = document.getElementById('upload_placeholder_' + index);
+    if (placeholder) placeholder.classList.remove('hidden');
+
+    const done = document.getElementById('upload_done_' + index);
+    if (done) { done.classList.add('hidden'); done.classList.remove('flex'); }
+
+    // Mark as remove
+    document.getElementById('keep_' + index).value = '0';
+
+    // Hide remove button
+    const btn = document.querySelector('[onclick="clearHeroImage(' + index + ')"]');
+    if (btn) btn.classList.add('hidden');
+}
+</script>
+@endpush
